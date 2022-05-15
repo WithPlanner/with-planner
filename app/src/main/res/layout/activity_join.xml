@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".JoinActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/btn_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="이메일을 입력해주세요."
+            android:layout_marginRight="10dp"/>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="중복확인"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="pw"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="비밀번호를 입력해주세요."/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="pw확인"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/repassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="비밀번호를 다시 한 번 입력해주세요."/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="닉네임을 입력해주세요."
+            android:layout_marginRight="10dp"/>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="중복확인"
+            android:textSize="10sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="주소"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/address1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="주소를 입력해주세요."/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="상세주소"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/address2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:hint="상세주소를 입력해주세요."/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/joinBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가입하기"
+        android:textSize="20sp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</LinearLayout>
