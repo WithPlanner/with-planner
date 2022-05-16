@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="120dp"
     android:layout_height="120dp"
-    android:layout_marginRight="5dp">
+    android:layout_marginRight="4dp"
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/rvImageArea"
@@ -13,8 +13,9 @@
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_launcher_background"
+        android:alpha="0.7"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rvTextArea"
@@ -22,9 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="text"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/rvImageArea"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

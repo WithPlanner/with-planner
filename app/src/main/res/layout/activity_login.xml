@@ -6,24 +6,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".LoginActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:src="@drawable/logo"
-            android:layout_marginTop="50dp"
+            android:src="@drawable/logo_intro_300x300"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/purple_200"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="4dp">
             <EditText
                 android:id="@+id/email"
+                android:inputType="textEmailAddress"
                 android:hint="아이디 또는 이메일을 입력해주세요."
+                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -32,21 +36,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/purple_200">
+            android:layout_marginBottom="30dp">
             <EditText
                 android:id="@+id/password"
+                android:inputType="textPassword"
                 android:hint="비밀번호를 입력해주세요."
+                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
 
         <Button
-            android:id="@+id/joinBtn"
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="로그인"
+            android:textSize="20sp"
+            android:background="@drawable/round_btn"
+            android:layout_marginRight="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="가입하기"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="아직 회원가입을 안하셨나요?"
+                android:textColor="@color/gray"
+                android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/joinBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원가입 "
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="4dp"/>
+
+        </LinearLayout>
     </LinearLayout>
 </layout>

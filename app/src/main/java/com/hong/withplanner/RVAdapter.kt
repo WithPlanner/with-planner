@@ -42,6 +42,7 @@ class RVAdapter (val context : Context, val List : MutableList<ContentsModel>) :
 
         fun bindItems(item: ContentsModel) {
             val rvImg = itemView.findViewById<ImageView>(R.id.rvImageArea)
+            rvImg.clipToOutline = true
             val rvText = itemView.findViewById<TextView>(R.id.rvTextArea)
 
             rvText.text = item.titleText
