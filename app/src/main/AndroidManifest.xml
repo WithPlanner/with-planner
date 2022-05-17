@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
         <activity
+            android:name=".CommunityInfoBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".JoinActivity"
             android:exported="false" />
         <activity

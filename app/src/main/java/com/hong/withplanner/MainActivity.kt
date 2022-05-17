@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter.itemClick = object : RVAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, MyCalendarActivity::class.java)
+//                val intent = Intent(this@MainActivity, MyCalendarActivity::class.java)
+                val intent = Intent(this@MainActivity, CommunitySelectActivity::class.java)
                 startActivity(intent)
             }
         }
