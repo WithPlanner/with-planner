@@ -7,8 +7,8 @@
         android:layout_height="match_parent"
         tools:context=".SurveyActivity1"
         android:layout_marginTop="100dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
+        android:layout_marginRight="14dp"
+        android:layout_marginLeft="14dp">
 
         <TextView
             android:id="@+id/textView"
@@ -41,10 +41,12 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <Button
+            android:id="@+id/joinBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:text="시작하기"
             android:textSize="20sp"
+            android:background="@drawable/round_btn"
             android:layout_marginBottom="100dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
