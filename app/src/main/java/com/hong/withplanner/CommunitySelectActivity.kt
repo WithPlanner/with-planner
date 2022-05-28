@@ -18,7 +18,7 @@ class CommunitySelectActivity : AppCompatActivity() {
         }
 
         binding.joinBtn.setOnClickListener{
-            startActivity(Intent(this, CommunityMainActivity::class.java))
+            startActivity(Intent(this, CommunityMainLocationActivity::class.java))
         }
 
     }

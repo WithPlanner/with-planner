@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.hong.withplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,6 +25,9 @@
             android:name=".SurveyActivity1"
             android:exported="false" />
         <activity
+            android:name=".SurveyActivity2"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
@@ -42,9 +46,6 @@
             android:name=".CommunityTalkBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityMainActivity"
-            android:exported="false" />
-        <activity
             android:name=".CommunityCalendarActivity"
             android:exported="false" />
         <activity
@@ -53,6 +54,25 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".CommunityCreateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CommunitySearchLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityAuthenticateLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityMainLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityMainPostActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
