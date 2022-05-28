@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val rv = binding.recyclerView1
+        val rv = binding.myRecyclerView
+
         val rvAdapter = RVAdapter(this ,items)
         rv.adapter = rvAdapter
 
