@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CategoryActivity"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginLeft="14dp">
+
+            <LinearLayout
+                android:id="@+id/top_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_arrow_back_48px"
+                    android:id="@+id/backBtn"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#00ff0000"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="카테고리 선택"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="3"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="완료"
+                    android:id="@+id/okBtn"
+                    android:textSize="18sp"
+                    android:backgroundTint="#ffffff"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="미라클 모닝"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:id="@+id/categoryBtn1"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="관계 형성(커뮤니케이션)"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:id="@+id/categoryBtn2"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="디지털 디톡스"
+                android:id="@+id/categoryBtn3"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="멘탈 관리"
+                android:id="@+id/categoryBtn4"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="운동"
+                android:id="@+id/categoryBtn5"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="홈 트레이닝"
+                android:id="@+id/categoryBtn6"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="스트레칭"
+                android:id="@+id/categoryBtn7"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="시간 관리"
+                android:id="@+id/categoryBtn8"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="취미 생활"
+                android:id="@+id/categoryBtn9"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="다이어트"
+                android:id="@+id/categoryBtn10"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="외국어 공부"
+                android:id="@+id/categoryBtn11"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="글쓰기 연습 및 필사"
+                android:id="@+id/categoryBtn12"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="나이트 루틴"
+                android:id="@+id/categoryBtn13"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="집 정돈"
+                android:id="@+id/categoryBtn14"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="취업 준비"
+                android:id="@+id/categoryBtn15"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="건강 습관 형성"
+                android:id="@+id/categoryBtn16"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_gray"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="독서"
+                android:id="@+id/categoryBtn17"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:textSize="14sp"
+                android:textAlignment="viewStart" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/light_gray"/>
+        </LinearLayout>
+    </ScrollView>
+</layout>

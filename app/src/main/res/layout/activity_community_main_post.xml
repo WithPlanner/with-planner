@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".CommunityMainActivity"
+        tools:context=".CommunityMainPostActivity"
         android:orientation="vertical"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp">
@@ -27,15 +27,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/menuBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/ic_menu_48px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
                 android:id="@+id/mainImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -48,81 +39,202 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp">
+
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
                 android:text="습관 이름"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_marginRight="8dp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/validTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:text="습관 이름"
-                android:textSize="10sp"
                 android:textColor="@color/gray"
-                android:layout_marginRight="16dp"/>
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="24dp"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
-                        android:layout_width="40dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="팀원"
-                        android:textSize="10sp"
+                        android:layout_marginRight="10dp"
+                        android:text="현재인원/최대인원"
                         android:textColor="@color/black"
-                        android:layout_marginRight="10dp"/>
+                        android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/teamCountTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
-                        android:textSize="10sp"
+                        android:layout_marginRight="10dp"
+                        android:text="2/10"
                         android:textColor="@color/black"
-                        android:layout_marginRight="10dp"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:text="생성날짜"
-                        android:textSize="10sp"
                         android:textColor="@color/black"
-                        android:layout_marginRight="10dp"/>
+                        android:textSize="10sp" />
+
                     <TextView
                         android:id="@+id/dateTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:text="2022-01-23"
-                        android:textSize="10sp"
                         android:textColor="@color/black"
-                        android:layout_marginRight="10dp"/>
+                        android:textSize="10sp" />
                 </LinearLayout>
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/calendarBtn"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:src="@drawable/ic_calendar_month_48px"/>
+                android:src="@drawable/ic_calendar_month_48px" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="매주"
+                android:layout_margin="8dp"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:gravity="center" />
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="월"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="화"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="수"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="목"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="금"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="토"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="일"
+                android:layout_marginLeft="4dp"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/round_btn"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="3:30"
+                android:textSize="13sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="에 게시물로 인증"
+                android:textSize="13sp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"/>
+
         </LinearLayout>
 
-        <LinearLayout
+    </LinearLayout>
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black" />
@@ -171,7 +283,7 @@
                     android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black" />
