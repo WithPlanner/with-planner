@@ -47,6 +47,26 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:text="이름"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이름을 입력해주세요."
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
                 android:text="email"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -130,6 +150,33 @@
                 android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:text="중복확인"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="우편번호"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/zipcode"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:hint="우편번호를 입력해주세요."
+                android:textSize="18sp" />
+
+            <Button
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:text="찾기"
                 android:textSize="10sp" />
         </LinearLayout>
 

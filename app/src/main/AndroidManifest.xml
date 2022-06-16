@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
         <activity
+            android:name=".JoinLocActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingActivity"
             android:exported="false" />
         <activity
@@ -75,7 +81,6 @@
         <activity
             android:name=".CommunityMainPostActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
