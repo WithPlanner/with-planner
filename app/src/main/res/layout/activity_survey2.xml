@@ -37,12 +37,14 @@
                     android:text="1.     해당하는 학년은?"/>
 
                 <RadioGroup
+                    android:id="@+id/question1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/answer1_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -51,6 +53,7 @@
                         android:text="1학년" />
 
                     <RadioButton
+                        android:id="@+id/answer1_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -58,6 +61,7 @@
                         android:textSize="14sp"
                         android:text="2학년" />
                     <RadioButton
+                        android:id="@+id/answer1_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -65,6 +69,7 @@
                         android:textSize="14sp"
                         android:text="3학년" />
                     <RadioButton
+                        android:id="@+id/answer1_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -87,11 +92,13 @@
                     android:textSize="18sp"
                     android:text="2.     나는 평소 많은 시간을 집에서 보낸다."/>
                 <RadioGroup
+                    android:id="@+id/question2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer2_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -100,6 +107,7 @@
                         android:text="예" />
 
                     <RadioButton
+                        android:id="@+id/answer2_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -122,11 +130,13 @@
                     android:textSize="18sp"
                     android:text="3.     나는 비교적 활동적인 편이다."/>
                 <RadioGroup
+                    android:id="@+id/question3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer3_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -134,6 +144,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer3_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -155,11 +166,13 @@
                     android:textSize="18sp"
                     android:text="4.     나는 현재 건강을 챙겨야 할 필요가 있다."/>
                 <RadioGroup
+                    android:id="@+id/question4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer4_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -167,6 +180,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer4_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -188,11 +202,13 @@
                     android:textSize="18sp"
                     android:text="5.     나는 일을 미루는 습관이 있다."/>
                 <RadioGroup
+                    android:id="@+id/question5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer5_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -200,6 +216,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer5_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -221,11 +238,13 @@
                     android:textSize="18sp"
                     android:text="6.     내 생활패턴은 올빼미다."/>
                 <RadioGroup
+                    android:id="@+id/question6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer6_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -233,6 +252,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer6_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -254,11 +274,13 @@
                     android:textSize="18sp"
                     android:text="7.     나는 스마트폰을 하루 6시간 이상 사용한다."/>
                 <RadioGroup
+                    android:id="@+id/question7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer7_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -266,6 +288,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer7_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -287,11 +310,13 @@
                     android:textSize="18sp"
                     android:text="8.     나는 학교 통학 시간이 1시간 이상이다.\n         (직장인이라면 회사라고 가정)"/>
                 <RadioGroup
+                    android:id="@+id/question8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/answer8_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -299,6 +324,7 @@
                         android:layout_weight="1"
                         android:text="예"/>
                     <RadioButton
+                        android:id="@+id/answer8_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
@@ -312,7 +338,7 @@
                 android:id="@+id/startBtn"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="시작하기"
+                android:text="제출하기"
                 android:textSize="20sp"
                 android:background="@drawable/round_btn"
                 android:layout_marginTop="8dp"

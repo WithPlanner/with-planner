@@ -1,7 +1,8 @@
-package com.hong.withplanner
+package com.hong.withplanner.community
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.hong.withplanner.R
 
 class CommunityMainBoardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

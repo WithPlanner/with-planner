@@ -1,10 +1,10 @@
 package com.hong.withplanner
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.hong.withplanner.community.CommunityCreateActivity
 
 class CategoryActivity : AppCompatActivity() {
     private lateinit var binding : com.hong.withplanner.databinding.ActivityCategoryBinding
@@ -16,7 +16,7 @@ class CategoryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_category)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
 
-        val myIntent = Intent(this,CommunityCreateActivity::class.java)
+        val myIntent = Intent(this, CommunityCreateActivity::class.java)
 
         //카테고리 버튼
         binding.categoryBtn1.setOnClickListener{
