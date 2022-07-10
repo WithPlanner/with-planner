@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.MainActivity
 import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityJoinBinding
-import kotlinx.android.synthetic.main.activity_join.*
 
 class JoinActivity : AppCompatActivity() {
     private lateinit var binding : ActivityJoinBinding
