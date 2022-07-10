@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.databinding.ActivityLoginBinding
+import com.hong.withplanner.join.JoinActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -12,16 +13,22 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
+        // 로그인 버튼
         binding.loginBtn.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-        binding.joinBtn.setOnClickListener{
-            startActivity(Intent(this, JoinActivity::class.java))
 
+            val email = binding.email.text.toString()
+            val password = binding.password.text.toString()
+
+            // 토큰 받아와서 확인하기, 아이디, 비밀번호 찾기, 자동로그인 구현 필요
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+        // 회원가입 버튼
+        binding.joinBtn.setOnClickListener{
+            startActivity(Intent(this, EmailActivity::class.java))
         }
 
     }

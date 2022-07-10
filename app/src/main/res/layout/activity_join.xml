@@ -9,7 +9,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="14dp"
         android:orientation="vertical"
-        tools:context=".JoinActivity">
+        tools:context=".join.JoinActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -79,6 +79,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/checkMailBtn"
                 android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:text="중복확인"
@@ -101,7 +102,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="비밀번호를 입력해주세요."
+                android:hint="비밀번호를 입력해주세요(6글자 이상)."
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -146,6 +147,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/checkNicknameBtn"
                 android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:text="중복확인"
@@ -173,6 +175,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/findAddressBtn"
                 android:layout_width="76dp"
                 android:layout_height="wrap_content"
                 android:text="찾기"

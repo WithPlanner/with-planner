@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
         <activity
-            android:name=".JoinLocActivity"
+            android:name=".join.JoinLocActivity"
             android:exported="false" />
         <activity
             android:name=".EmailActivity"
@@ -22,13 +22,13 @@
             android:name=".SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityInfoBoardActivity"
+            android:name=".community.CommunityInfoBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".JoinActivity"
+            android:name=".join.JoinActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunitySelectActivity"
+            android:name=".community.CommunitySelectActivity"
             android:exported="false" />
         <activity
             android:name=".SurveyActivity1"
@@ -49,13 +49,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CommunityMainBoardActivity"
+            android:name=".community.CommunityMainBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityTalkBoardActivity"
+            android:name=".community.CommunityTalkBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityCalendarActivity"
+            android:name=".community.CommunityCalendarActivity"
             android:exported="false" />
         <activity
             android:name=".MyCalendarActivity"
@@ -64,22 +64,22 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".CommunityCreateActivity"
+            android:name=".community.CommunityCreateActivity"
             android:exported="true" />
         <activity
-            android:name=".CommunitySearchLocationActivity"
+            android:name=".community.CommunitySearchLocationActivity"
             android:exported="false" />
         <activity
             android:name=".CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityAuthenticateLocationActivity"
+            android:name=".community.CommunityAuthenticateLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityMainLocationActivity"
+            android:name=".community.CommunityMainLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityMainPostActivity"
+            android:name=".community.CommunityMainPostActivity"
             android:exported="false" />
     </application>
 

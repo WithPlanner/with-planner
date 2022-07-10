@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.databinding.ActivitySurvey1Binding
-import com.hong.withplanner.databinding.ActivitySurvey2Binding
 
 
 class SurveyActivity1 : AppCompatActivity() {
@@ -17,7 +17,7 @@ class SurveyActivity1 : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_survey1)
 
         binding.joinBtn.setOnClickListener {
-            startActivity(Intent(this, CommunityMainLocationActivity::class.java))
+            startActivity(Intent(this, SurveyActivity2::class.java))
         }
     }
 }
