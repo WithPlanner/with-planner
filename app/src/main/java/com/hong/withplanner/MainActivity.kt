@@ -7,6 +7,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.community.CommunitySelectActivity
 import com.hong.withplanner.databinding.ActivityMainBinding
 import com.hong.withplanner.join.JoinActivity
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         rvAdapter.itemClick = object : RVAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
 //                val intent = Intent(this@MainActivity, MyCalendarActivity::class.java)
-                val intent = Intent(this@MainActivity, SurveyActivity1::class.java)
+                val intent = Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
                 startActivity(intent)
             }
         }

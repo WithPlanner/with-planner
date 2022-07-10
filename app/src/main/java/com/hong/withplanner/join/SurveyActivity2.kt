@@ -47,7 +47,7 @@ class SurveyActivity2 : AppCompatActivity() {
             }
 
             // 제출시 survey1,2 스택에서 없애는 부분 구현하기
-            startActivity(Intent(this, CommunityMainLocationActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }
