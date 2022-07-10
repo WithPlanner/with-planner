@@ -1,5 +1,6 @@
 package com.hong.withplanner
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,14 +11,23 @@ import com.hong.withplanner.databinding.ActivityMyCalendarBinding
 
 class MyCalendarActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMyCalendarBinding
+    private lateinit var binding: ActivityMyCalendarBinding
     private val items =  mutableListOf<ContentsModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_calendar)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_calendar)
+
+        // 뒤로가기
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+        // 설정
+        binding.settingBtn.setOnClickListener{
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
+
         items.add(
             ContentsModel(
                 "구움양과 by 런던케이크",
@@ -47,5 +57,9 @@ class MyCalendarActivity : AppCompatActivity() {
         }
 
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

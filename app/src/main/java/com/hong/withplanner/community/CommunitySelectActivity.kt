@@ -1,9 +1,10 @@
-package com.hong.withplanner
+package com.hong.withplanner.community
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityCommunitySelectBinding
 
 class CommunitySelectActivity : AppCompatActivity() {

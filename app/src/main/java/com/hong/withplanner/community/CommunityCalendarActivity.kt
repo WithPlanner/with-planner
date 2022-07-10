@@ -1,4 +1,4 @@
-package com.hong.withplanner
+package com.hong.withplanner.community
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,9 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hong.withplanner.ContentsModel
+import com.hong.withplanner.R
+import com.hong.withplanner.RVAdapter
 import com.hong.withplanner.databinding.ActivityCommunityCalendarBinding
 
 class CommunityCalendarActivity : AppCompatActivity() {
