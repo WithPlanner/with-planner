@@ -26,11 +26,15 @@ class SurveyActivity2 : AppCompatActivity() {
             for(i in questions.indices){
                 // question1
                 if(i==0){
-                    when(questions[i].checkedRadioButtonId) {
-                        R.id.answer1_1 -> answers[0] = 1
-                        R.id.answer1_2 -> answers[0] = 2
-                        R.id.answer1_3 -> answers[0] = 3
-                        R.id.answer1_4 -> answers[0] = 4
+                    val checkedRadioBtnId = questions[i].checkedRadioButtonId
+                    if(checkedRadioBtnId!=-1) {
+                        val answer = findViewById<RadioButton>(checkedRadioBtnId).text
+                        when (answer) {
+                            "1학년" -> answers[0] = 1
+                            "2학년" -> answers[0] = 2
+                            "3학년" -> answers[0] = 3
+                            "4학년" -> answers[0] = 4
+                        }
                     }
                 }
                 // question2-8
