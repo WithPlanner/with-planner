@@ -16,12 +16,12 @@ class EmailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_email)
 
-        binding.authBtn.setOnClickListener{
-            val email = binding.email.text.toString().trim()
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
 
-            binding.backBtn.setOnClickListener {
-                onBackPressed()
-            }
+        binding.authBtn.setOnClickListener {
+            val email = binding.email.text.toString().trim()
 
             // if문으로 인증 성공시 join 페이지로
 

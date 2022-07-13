@@ -1,4 +1,4 @@
-package com.hong.withplanner
+package com.hong.withplanner.main
 
 import android.content.Context
 import android.util.Log
@@ -9,9 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.hong.withplanner.R
 
 class RVAdapter (val context : Context, val List : MutableList<ContentsModel>) : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.rv_item, parent, false)
 
         return ViewHolder(v)
@@ -24,7 +25,7 @@ class RVAdapter (val context : Context, val List : MutableList<ContentsModel>) :
     var itemClick: ItemClick? = null
 
 
-    override fun onBindViewHolder(holder: RVAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         if (itemClick != null) {
             holder?.itemView.setOnClickListener { v ->

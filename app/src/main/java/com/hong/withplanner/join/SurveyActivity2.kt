@@ -2,13 +2,12 @@ package com.hong.withplanner
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.databinding.ActivitySurvey2Binding
+import com.hong.withplanner.main.MainActivity
 
 class SurveyActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey2Binding

@@ -3,12 +3,9 @@ package com.hong.withplanner
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.databinding.ActivityLoginBinding
-import com.hong.withplanner.join.JoinActivity
+import com.hong.withplanner.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 

@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.MainActivity
 import com.hong.withplanner.R
 import com.hong.withplanner.SurveyActivity1
-import com.hong.withplanner.SurveyActivity2
 import com.hong.withplanner.databinding.ActivityJoinBinding
 
 class JoinActivity : AppCompatActivity() {

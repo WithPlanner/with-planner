@@ -7,7 +7,10 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hong.withplanner.community.CommunityCreateActivity
 import com.hong.withplanner.databinding.ActivityMyCalendarBinding
+import com.hong.withplanner.main.ContentsModel
+import com.hong.withplanner.main.RVAdapter
 
 class MyCalendarActivity : AppCompatActivity() {
 
@@ -26,6 +29,10 @@ class MyCalendarActivity : AppCompatActivity() {
         // 설정
         binding.settingBtn.setOnClickListener{
             startActivity(Intent(this, SettingActivity::class.java))
+        }
+        // 습관모임 만들기
+        binding.makeBtn.setOnClickListener{
+            startActivity(Intent(this, CommunityCreateActivity::class.java))
         }
 
         items.add(
