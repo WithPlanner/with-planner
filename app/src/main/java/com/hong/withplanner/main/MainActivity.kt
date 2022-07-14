@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hong.withplanner.MyCalendarActivity
 import com.hong.withplanner.R
+import com.hong.withplanner.community.CommunityJoinActivity
 import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.community.CommunityMainPostActivity
 import com.hong.withplanner.databinding.ActivityMainBinding
-import kotlin.reflect.typeOf
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
-
+        // 가능하면 함수 합치기
         viewForRV()     // 회원님을 위한 습관모임
         viewMyRV()     // 회원님이 참여하는 습관모임
         viewHotRV()     // 회원님이 참여하는 습관모임
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter.itemClick = object : RVAdapter.ItemClick{
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
+                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter.itemClick = object : RVAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
+                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 
         rvAdapter.itemClick = object : RVAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
+                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
             }
         }
