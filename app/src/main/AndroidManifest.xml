@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hong.withplanner"
+    package="com.shop.withplanner"
     >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,34 +15,34 @@
         android:theme="@style/Theme.WithPlanner"
         android:usesCleartextTraffic="true">>
         <activity
-            android:name=".join.JoinLocActivity"
+            android:name="com.shop.withplanner.join.JoinLocActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailActivity"
+            android:name="com.shop.withplanner.EmailActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name="com.shop.withplanner.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityInfoBoardActivity"
+            android:name="com.shop.withplanner.community.CommunityInfoBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".join.JoinActivity"
+            android:name="com.shop.withplanner.join.JoinActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunitySelectActivity"
+            android:name="com.shop.withplanner.community.CommunitySelectActivity"
             android:exported="false" />
         <activity
-            android:name=".SurveyActivity1"
+            android:name="com.shop.withplanner.SurveyActivity1"
             android:exported="false" />
         <activity
-            android:name=".SurveyActivity2"
+            android:name="com.shop.withplanner.SurveyActivity2"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name="com.shop.withplanner.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.shop.withplanner.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,40 +51,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".not_used.CommunityMainBoardActivity"
+            android:name="com.shop.withplanner.not_used.CommunityMainBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".not_used.CommunityTalkBoardActivity"
+            android:name="com.shop.withplanner.not_used.CommunityTalkBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityCalendarActivity"
+            android:name="com.shop.withplanner.community.CommunityCalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".MyCalendarActivity"
+            android:name="com.shop.withplanner.MyCalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".main.MainActivity"
+            android:name="com.shop.withplanner.main.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".community.CommunityCreateActivity"
+            android:name="com.shop.withplanner.community.CommunityCreateActivity"
             android:exported="true" />
         <activity
-            android:name=".community.CommunitySearchLocationActivity"
+            android:name="com.shop.withplanner.community.CommunitySearchLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".CategoryActivity"
+            android:name="com.shop.withplanner.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityAuthenticateLocationActivity"
+            android:name="com.shop.withplanner.community.CommunityAuthenticateLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityMainLocationActivity"
+            android:name="com.shop.withplanner.community.CommunityMainLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityMainPostActivity"
+            android:name="com.shop.withplanner.community.CommunityMainPostActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityJoinActivity"
+            android:name="com.shop.withplanner.community.CommunityJoinActivity"
             android:exported="false"
             android:noHistory="true" />
     </application>
