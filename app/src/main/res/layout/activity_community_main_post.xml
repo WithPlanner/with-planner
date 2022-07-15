@@ -6,10 +6,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".community.CommunityMainPostActivity"
-        android:orientation="vertical"
         android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp">
+        android:layout_marginRight="14dp"
+        android:orientation="vertical"
+        tools:context=".community.CommunityMainPostActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,8 +30,8 @@
                 android:id="@+id/mainImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_background"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher_background" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,200 +39,212 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
-
-            <TextView
-                android:id="@+id/titleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
-                android:text="습관 이름"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/validTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:text="습관 이름"
-                android:textColor="@color/gray"
-                android:textSize="10sp" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="24dp"
-                android:orientation="vertical">
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:text="습관 이름"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/validTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:text="습관 이름"
+                    android:textColor="@color/gray"
+                    android:textSize="10sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="24dp"
+                    android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="현재인원/최대인원"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/teamCountTextView"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="현재인원/최대인원"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/teamCountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="2/10"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="2/10"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="생성날짜"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/dateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="2022-01-23"
+                            android:textColor="@color/black"
+                            android:textSize="10sp" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="생성날짜"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:id="@+id/dateTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="2022-01-23"
-                        android:textColor="@color/black"
-                        android:textSize="10sp" />
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/calendarBtn"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/ic_calendar_month_48px" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/calendarBtn"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@drawable/ic_calendar_month_48px" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="매주"
-                android:layout_margin="8dp"
-                android:textSize="13sp"
-                android:textColor="@color/black"
-                android:gravity="center" />
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="월"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="화"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="수"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="목"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="금"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="토"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:text="일"
-                android:layout_marginLeft="4dp"
-                android:textSize="10sp"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/round_btn"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="3:30"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:textColor="@color/black"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="에 게시물로 인증"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:text="매주"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="월"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="화"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="수"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="목"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="금"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="토"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_btn"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="일"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="3:30"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="에 게시물로 인증"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -248,41 +260,44 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="방소개"
-                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:layout_marginBottom="4dp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/contentTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="이 방은 아침 일찍 일어나는 습관을 만들고자 하는 사람들을 위한 방입니다. 함께 건강한 삶을 일궈나갈 분들을 환영합니다!"
-                android:textSize="10sp"
                 android:textColor="@color/black"
-                android:layout_marginBottom="4dp"/>
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right">
+
                 <TextView
                     android:id="@+id/contentDateTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:text="2022-01-23"
-                    android:textSize="10sp"
                     android:textColor="@color/gray"
-                    android:layout_marginRight="8dp"/>
+                    android:textSize="10sp" />
+
                 <TextView
                     android:id="@+id/contentEditBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="수정"
-                    android:textSize="10sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -292,7 +307,16 @@
             android:id="@+id/recyclerView1"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:orientation="horizontal"
-            android:layout_margin="8dp"/>
+            android:layout_margin="8dp"
+            android:orientation="horizontal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/postBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/write_post" />
+
     </LinearLayout>
 </layout>

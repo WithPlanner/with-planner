@@ -2,13 +2,12 @@ package com.hong.withplanner
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.databinding.ActivitySurvey2Binding
+import com.hong.withplanner.main.MainActivity
 
 class SurveyActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey2Binding
@@ -26,11 +25,15 @@ class SurveyActivity2 : AppCompatActivity() {
             for(i in questions.indices){
                 // question1
                 if(i==0){
-                    when(questions[i].checkedRadioButtonId) {
-                        R.id.answer1_1 -> answers[0] = 1
-                        R.id.answer1_2 -> answers[0] = 2
-                        R.id.answer1_3 -> answers[0] = 3
-                        R.id.answer1_4 -> answers[0] = 4
+                    val checkedRadioBtnId = questions[i].checkedRadioButtonId
+                    if(checkedRadioBtnId!=-1) {
+                        val answer = findViewById<RadioButton>(checkedRadioBtnId).text
+                        when (answer) {
+                            "1학년" -> answers[0] = 1
+                            "2학년" -> answers[0] = 2
+                            "3학년" -> answers[0] = 3
+                            "4학년" -> answers[0] = 4
+                        }
                     }
                 }
                 // question2-8
@@ -47,7 +50,7 @@ class SurveyActivity2 : AppCompatActivity() {
             }
 
             // 제출시 survey1,2 스택에서 없애는 부분 구현하기
-            startActivity(Intent(this, CommunityMainLocationActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }

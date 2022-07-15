@@ -66,6 +66,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"/>
             <TextView
+                android:id="@+id/destination"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="고정목적지"
@@ -99,6 +100,7 @@
                 android:layout_margin="10dp"/>
 
             <ImageButton
+                android:id="@+id/findLocBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@color/white"
@@ -106,6 +108,7 @@
                 android:src="@drawable/ic_mylocation" />
 
             <TextView
+                android:id="@+id/currentLoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

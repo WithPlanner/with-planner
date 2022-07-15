@@ -1,4 +1,4 @@
-package com.hong.withplanner
+package com.hong.withplanner.main
 
 data class ContentsModel (
     val titleText : String = "",

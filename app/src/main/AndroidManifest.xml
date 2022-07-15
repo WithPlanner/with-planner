@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hong.withplanner">
+    package="com.hong.withplanner"
+    >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -50,10 +51,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".community.CommunityMainBoardActivity"
+            android:name=".not_used.CommunityMainBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityTalkBoardActivity"
+            android:name=".not_used.CommunityTalkBoardActivity"
             android:exported="false" />
         <activity
             android:name=".community.CommunityCalendarActivity"
@@ -62,7 +63,7 @@
             android:name=".MyCalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true" />
         <activity
             android:name=".community.CommunityCreateActivity"
@@ -82,6 +83,10 @@
         <activity
             android:name=".community.CommunityMainPostActivity"
             android:exported="false" />
+        <activity
+            android:name=".community.CommunityJoinActivity"
+            android:exported="false"
+            android:noHistory="true" />
     </application>
 
 </manifest>

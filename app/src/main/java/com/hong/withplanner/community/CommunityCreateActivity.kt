@@ -29,7 +29,6 @@ class CommunityCreateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_community_create)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_create)
 
         //1. 요일 선택 (linear) 클릭시 이벤트

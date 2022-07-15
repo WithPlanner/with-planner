@@ -12,7 +12,6 @@ class SurveyActivity1 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey1Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_survey1)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_survey1)
 

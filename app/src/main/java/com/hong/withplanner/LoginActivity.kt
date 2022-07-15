@@ -4,15 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.databinding.ActivityLoginBinding
 import com.hong.withplanner.dto.Token
-import com.hong.withplanner.join.JoinActivity
 import com.hong.withplanner.retrofit.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.hong.withplanner.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,8 +30,15 @@ class LoginActivity : AppCompatActivity() {
         // 로그인 버튼
         binding.loginBtn.setOnClickListener {
 
-            val email = binding.email.text.toString()
-            val password = binding.password.text.toString()
+            val email = binding.email.text.toString().trim()
+            val password = binding.password.text.toString().trim()
+
+            if(email.isEmpty()) {
+                binding.email.error = "메일주소를 입력해주세요."
+            }
+            else if(password.isEmpty()) {
+                binding.password.error = "비밀번호를 입력해주세요."
+            }
 
             body.put("email", email)
             body.put("password", password)
@@ -54,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
                 }
             })
+
         }
         // 회원가입 버튼
         binding.joinBtn.setOnClickListener{
