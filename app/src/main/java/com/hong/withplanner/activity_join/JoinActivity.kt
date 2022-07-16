@@ -1,4 +1,4 @@
-package com.hong.withplanner.join
+package com.hong.withplanner.activity_join
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,18 +1,18 @@
-package com.hong.withplanner.main
+package com.hong.withplanner.activity_etc
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hong.withplanner.MyCalendarActivity
 import com.hong.withplanner.R
-import com.hong.withplanner.community.CommunityJoinActivity
-import com.hong.withplanner.community.CommunityMainLocationActivity
-import com.hong.withplanner.community.CommunityMainPostActivity
+import com.hong.withplanner.recyler_view.ContentsModel
+import com.hong.withplanner.recyler_view.ContentsAdapter
+import com.hong.withplanner.activity_community.CommunityJoinActivity
+import com.hong.withplanner.activity_community.CommunityMainLocationActivity
+import com.hong.withplanner.activity_community.CommunityMainPostActivity
 import com.hong.withplanner.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -71,10 +71,10 @@ class MainActivity : AppCompatActivity() {
     private fun viewForRV() {
         val rv = binding.forRecyclerView
 
-        val rvAdapter = RVAdapter(this, forRV_Items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this, forRV_Items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick{
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick{
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
@@ -85,12 +85,12 @@ class MainActivity : AppCompatActivity() {
     private fun viewMyRV() {
         val rv = binding.myRecyclerView
 
-        val rvAdapter = RVAdapter(this ,myRV_Items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this ,myRV_Items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick {
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
+                val intent = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -99,10 +99,10 @@ class MainActivity : AppCompatActivity() {
     private fun viewHotRV() {
         val rv = binding.hotRecyclerView
 
-        val rvAdapter = RVAdapter(this ,hotRV_Items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this ,hotRV_Items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick {
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
@@ -113,10 +113,10 @@ class MainActivity : AppCompatActivity() {
     private fun viewRecRV() {
         val rv = binding.recentRecyclerView
 
-        val rvAdapter = RVAdapter(this ,recRV_Items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this ,recRV_Items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick {
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)

@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.hong.withplanner.R
-import com.hong.withplanner.community.CommunityAuthenticateLocationActivity
+import com.hong.withplanner.activity_community.CommunityAuthenticateLocationActivity
 import com.hong.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
-import android.util.Log
 
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
@@ -39,6 +38,9 @@ class MyLocDialog() : DialogFragment() {
 
             if(location.isEmpty()){
                 binding.location.error = "목적지를 설정해주세요."
+            }
+            else if(locationAlias.isEmpty()){
+                binding.locationAlias.error = "별칭을 입력해주세요."
             }
             else{
                 val intent = Intent(activity, CommunityAuthenticateLocationActivity::class.java)

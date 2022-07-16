@@ -1,12 +1,11 @@
 package com.hong.withplanner
 
 import android.content.Intent
-import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.databinding.ActivityEmailBinding
-import com.hong.withplanner.join.JoinActivity
+import com.hong.withplanner.activity_join.JoinActivity
 
 class EmailActivity : AppCompatActivity() {
 
@@ -23,7 +22,7 @@ class EmailActivity : AppCompatActivity() {
         binding.authBtn.setOnClickListener {
             val email = binding.email.text.toString().trim()
 
-            // if문으로 인증 성공시 join 페이지로
+            // if문으로 인증 성공시 activity_join 페이지로
 
             intent = Intent(this, JoinActivity::class.java)
             intent.putExtra("email", email)

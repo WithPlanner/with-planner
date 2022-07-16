@@ -1,4 +1,4 @@
-package com.hong.withplanner.community
+package com.hong.withplanner.activity_community
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.CategoryActivity
+import com.hong.withplanner.activity_etc.CategoryActivity
 import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityCommunityCreateBinding
 import java.text.SimpleDateFormat

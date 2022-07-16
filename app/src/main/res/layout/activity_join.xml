@@ -10,7 +10,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="14dp"
         android:orientation="vertical"
-        tools:context=".join.JoinActivity">
+        tools:context=".activity_join.JoinActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

@@ -1,10 +1,11 @@
-package com.hong.withplanner
+package com.hong.withplanner.activity_etc
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.community.CommunityCreateActivity
+import com.hong.withplanner.R
+import com.hong.withplanner.activity_community.CommunityCreateActivity
 
 class CategoryActivity : AppCompatActivity() {
     private lateinit var binding : com.hong.withplanner.databinding.ActivityCategoryBinding

@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.hong.withplanner.community.CommunityMainLocationActivity
 import com.hong.withplanner.databinding.ActivitySurvey1Binding
 
 

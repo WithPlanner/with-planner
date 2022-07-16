@@ -1,4 +1,4 @@
-package com.hong.withplanner.community
+package com.hong.withplanner.activity_community
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hong.withplanner.main.ContentsModel
+import com.hong.withplanner.recyler_view.ContentsModel
 import com.hong.withplanner.R
-import com.hong.withplanner.main.RVAdapter
+import com.hong.withplanner.recyler_view.ContentsAdapter
 import com.hong.withplanner.databinding.ActivityCommunityCalendarBinding
 
 class CommunityCalendarActivity : AppCompatActivity() {
@@ -21,6 +21,11 @@ class CommunityCalendarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_community_calendar)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_calendar)
+
+        binding.backBtn.setOnClickListener{
+            onBackPressed()
+        }
+
         items.add(
             ContentsModel(
                 "구움양과 by 런던케이크",
@@ -41,14 +46,17 @@ class CommunityCalendarActivity : AppCompatActivity() {
         )
 
         val rv = binding.recyclerView
-        val rvAdapter = RVAdapter(this ,items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this ,items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick {
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
             }
         }
 
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

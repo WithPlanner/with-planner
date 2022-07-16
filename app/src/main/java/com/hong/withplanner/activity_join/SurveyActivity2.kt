@@ -6,8 +6,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.hong.withplanner.activity_etc.MainActivity
 import com.hong.withplanner.databinding.ActivitySurvey2Binding
-import com.hong.withplanner.main.MainActivity
 
 class SurveyActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey2Binding

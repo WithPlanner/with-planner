@@ -1,4 +1,4 @@
-package com.hong.withplanner
+package com.hong.withplanner.activity_etc
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,10 +7,11 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hong.withplanner.community.CommunityCreateActivity
+import com.hong.withplanner.R
+import com.hong.withplanner.activity_community.CommunityCreateActivity
 import com.hong.withplanner.databinding.ActivityMyCalendarBinding
-import com.hong.withplanner.main.ContentsModel
-import com.hong.withplanner.main.RVAdapter
+import com.hong.withplanner.recyler_view.ContentsModel
+import com.hong.withplanner.recyler_view.ContentsAdapter
 
 class MyCalendarActivity : AppCompatActivity() {
 
@@ -55,10 +56,10 @@ class MyCalendarActivity : AppCompatActivity() {
         )
 
         val rv = binding.recyclerView
-        val rvAdapter = RVAdapter(this ,items)
-        rv.adapter = rvAdapter
+        val contentsAdapter = ContentsAdapter(this ,items)
+        rv.adapter = contentsAdapter
 
-        rvAdapter.itemClick = object : RVAdapter.ItemClick {
+        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
             }
         }

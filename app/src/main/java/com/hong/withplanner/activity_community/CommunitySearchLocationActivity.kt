@@ -1,4 +1,4 @@
-package com.hong.withplanner.community
+package com.hong.withplanner.activity_community
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

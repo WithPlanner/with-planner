@@ -1,4 +1,4 @@
-package com.hong.withplanner.main
+package com.hong.withplanner.recyler_view
 
 import android.content.Context
 import android.util.Log
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hong.withplanner.R
 
-class RVAdapter (val context : Context, val List : MutableList<ContentsModel>) : RecyclerView.Adapter<RVAdapter.ViewHolder>() {
+class ContentsAdapter (val context : Context, val List : MutableList<ContentsModel>) : RecyclerView.Adapter<ContentsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.rv_item, parent, false)
 

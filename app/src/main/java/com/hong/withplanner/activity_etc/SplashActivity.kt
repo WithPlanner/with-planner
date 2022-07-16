@@ -1,10 +1,10 @@
-package com.hong.withplanner
+package com.hong.withplanner.activity_etc
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.hong.withplanner.main.MainActivity
+import com.hong.withplanner.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

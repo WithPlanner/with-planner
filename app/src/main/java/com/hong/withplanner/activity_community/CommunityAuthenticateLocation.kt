@@ -1,4 +1,4 @@
-package com.hong.withplanner.community
+package com.hong.withplanner.activity_community
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,6 +8,7 @@ import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityCommunityAuthenticateLocationBinding
 import android.content.Intent
 import androidx.appcompat.app.AlertDialog
+import com.hong.withplanner.activity_etc.MainActivity
 
 class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCommunityAuthenticateLocationBinding
@@ -32,7 +33,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
 
             // 고정위치와 현재위치가 같으면 실행
             // 인증확인 다이얼로그
-            intent = Intent(this, CommunityMainLocationActivity::class.java)
+            intent = Intent(this, MainActivity::class.java)
             val builder = AlertDialog.Builder(this).setTitle(habitName)
                 .setMessage("오늘 ${habitName} 인증을 완료했습니다.")
                 .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->

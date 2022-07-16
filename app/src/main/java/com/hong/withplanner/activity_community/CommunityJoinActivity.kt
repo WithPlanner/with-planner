@@ -1,4 +1,4 @@
-package com.hong.withplanner.community
+package com.hong.withplanner.activity_community
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityCommunityJoinBinding
-import com.hong.withplanner.main.MainActivity
 
 
 class CommunityJoinActivity: AppCompatActivity() {

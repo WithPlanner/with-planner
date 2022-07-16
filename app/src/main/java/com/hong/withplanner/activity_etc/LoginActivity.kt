@@ -1,11 +1,12 @@
-package com.hong.withplanner
+package com.hong.withplanner.activity_etc
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import com.hong.withplanner.EmailActivity
+import com.hong.withplanner.R
 import com.hong.withplanner.databinding.ActivityLoginBinding
-import com.hong.withplanner.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
