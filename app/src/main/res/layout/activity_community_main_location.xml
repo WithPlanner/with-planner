@@ -119,6 +119,7 @@
                 </LinearLayout>
             </LinearLayout>
             <ImageButton
+                android:id="@+id/locAuthBtn"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:backgroundTint="@color/white"
@@ -223,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="3:30"
-                    android:textSize="13sp"
+                    android:textSize="10sp"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="8dp"
                     android:textColor="@color/black"/>
@@ -232,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="에 현재 위치로 인증"
-                    android:textSize="13sp"
+                    android:textSize="10sp"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/black"/>
 
