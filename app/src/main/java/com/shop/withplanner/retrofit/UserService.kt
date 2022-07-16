@@ -1,6 +1,7 @@
 package com.shop.withplanner.retrofit
 
-import com.hong.withplanner.dto.EmailAuth
+import com.shop.withplanner.dto.AuthNumber
+import com.shop.withplanner.dto.EmailAuth
 import retrofit2.Call
 import com.shop.withplanner.dto.Token
 import retrofit2.http.*
@@ -17,4 +18,11 @@ interface UserService {
     fun checkValidEmail(
         @Query("email") email: String
     ): Call<EmailAuth>
+
+    @Headers( "content-type: application/json")
+    @GET("/sign_up/check_valid_email")
+    fun confirmAuthNumber(
+        @Query("email") email: String,
+        @Query("authNumber") authNumber: Int
+    ): Call<AuthNumber>
 }
