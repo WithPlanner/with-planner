@@ -22,7 +22,7 @@
             android:id="@+id/backBtn"
             android:layout_height="40dp"
             android:src="@drawable/ic_arrow_back_48px"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:layout_gravity="center"
             android:backgroundTint="#00ff0000"/>
         <TextView
@@ -34,8 +34,9 @@
             android:gravity="center"
             android:textSize="18sp"
             android:textColor="@color/black"
-            android:layout_weight="3"/>
+            android:layout_weight="3.3"/>
         <Button
+            android:id="@+id/doneBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="완료"
@@ -60,14 +61,16 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="horizontal">
-            <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+            <ImageView
+                android:id="@+id/cameraBtn"
+                android:layout_width="150sp"
+                android:layout_height="150sp"
+                android:scaleType="centerCrop"
                 android:layout_gravity="center"
                 android:layout_margin="40dp"
                 android:background="@drawable/round_btn"
                 android:backgroundTint="@color/light_gray"
-                android:src="@drawable/ic_photo_24dp" />
+                android:src="@drawable/ic_photo_128px" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -86,10 +89,10 @@
         android:layout_height="2dp"
         android:background="@color/light_gray"/>
     <EditText
+        android:id="@+id/communityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-
         android:hint="습관 모임 이름을 작성해주세요"/>
     <View
         android:layout_width="match_parent"
@@ -293,6 +296,7 @@
         android:orientation="vertical"
         android:id="@+id/write_linear">
         <TextView
+            android:id="@+id/introduce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

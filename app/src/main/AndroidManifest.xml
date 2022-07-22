@@ -4,6 +4,11 @@
     package="com.hong.withplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--갤러리 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--카메라 권한-->
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
         <activity
-            android:name=".CommunityPostBoardActivity"
+            android:name=".activity_community.CommunityPostBoardActivity"
             android:exported="false" />
         <activity
             android:name=".activity_join.JoinLocActivity"
@@ -68,7 +73,8 @@
             android:exported="true" />
         <activity
             android:name=".activity_community.CommunityCreateActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:noHistory="true"/>
         <activity
             android:name=".activity_community.CommunitySearchLocationActivity"
             android:exported="false" />
@@ -88,9 +94,6 @@
             android:name=".activity_community.CommunityJoinActivity"
             android:exported="false"
             android:noHistory="true" />
-        <activity
-            android:name=".activity_community.CommunityPostBoardActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

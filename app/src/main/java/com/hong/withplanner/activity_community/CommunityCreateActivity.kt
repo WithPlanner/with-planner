@@ -1,5 +1,6 @@
 package com.hong.withplanner.activity_community
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.content.Context
@@ -10,28 +11,51 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.activity_etc.CategoryActivity
 import com.hong.withplanner.R
-import com.hong.withplanner.databinding.ActivityCommunityCreateBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class CommunityCreateActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityCommunityCreateBinding
+    private lateinit var binding : com.hong.withplanner.databinding.ActivityCommunityCreateBinding
     val checkedDays =  booleanArrayOf(false,false,false,false,false,false,false) //체크된 요일
     val dayList= arrayOf<String>("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
     var theNumberList= arrayOf(1,2,3,4,5,6,7,8,9,10)
     var category = " " //카테고리
 
+    // 공용저장소 권한 확인
+    private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+        result.forEach {
+            if (!it.value) {
+                Toast.makeText(applicationContext, "권한 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_create)
 
-        //1. 요일 선택 (linear) 클릭시 이벤트
+        //1. 사진 선택
+        checkPermission.launch(permissionList)
+
+        val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
+            ActivityResultCallback { binding.cameraBtn.setImageURI(it) }
+            )
+        binding.cameraBtn.setOnClickListener(View.OnClickListener {
+            loadImage.launch("image/*") })
+
+
+        //2. 요일 선택 (linear) 클릭시 이벤트
         binding.chooseDayLinear.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("요일 선택")    // 제목
@@ -57,15 +81,15 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
             builder.show()
         }
-        //2. 시간 선택(linear) 클릭시 이벤트
+        //3. 시간 선택(linear) 클릭시 이벤트
         binding.chooseTimeLinear.setOnClickListener {
             getTime(binding.timeTextView,this)
         }
-        //3. 위치 선택(linear) 클릭시 이벤트
+        //4. 위치 선택(linear) 클릭시 이벤트
         binding.chooseLocationLinear.setOnClickListener {
             startActivity(Intent(this, CommunitySearchLocationActivity::class.java))
         }
-        //4. 뒤로가기 버튼 클릭시 이벤트
+        //5. 뒤로가기 버튼 클릭시 이벤트
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
@@ -102,6 +126,17 @@ class CommunityCreateActivity : AppCompatActivity() {
             println(category)
             binding.categoryTv.text = category
         }
+
+        // 완료버튼
+        binding.doneBtn.setOnClickListener{
+            val communityName = binding.communityName.text.toString().trim()
+            val introduce = binding.introduce.text.toString().trim()
+
+
+            val intent = Intent(this, CommunityMainLocationActivity::class.java)
+            startActivity(intent)
+
+        }
     }
 
     override fun onBackPressed() {
@@ -119,5 +154,5 @@ class CommunityCreateActivity : AppCompatActivity() {
         timePickerDialog.setButton(TimePickerDialog.BUTTON_POSITIVE,"확인",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = SimpleDateFormat("HH시 mm분").format(cal.time) })
         timePickerDialog.setButton(TimePickerDialog.BUTTON_NEGATIVE,"취소",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = " " })
         timePickerDialog.show()
-
-}}
+    }
+}
