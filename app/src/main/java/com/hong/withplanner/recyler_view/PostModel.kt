@@ -1,7 +1,5 @@
 package com.hong.withplanner.recyler_view
 
-import java.util.*
-
 class PostModel(
     val post_name: String,
     val post_icon: String,

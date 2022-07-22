@@ -3,75 +3,40 @@ package com.hong.withplanner.activity_etc
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.R
 import com.hong.withplanner.activity_community.CommunityCreateActivity
+import com.hong.withplanner.recyler_view.CategoryAdapter
+import com.hong.withplanner.recyler_view.CategoryModel
 
 class CategoryActivity : AppCompatActivity() {
     private lateinit var binding : com.hong.withplanner.databinding.ActivityCategoryBinding
-    private lateinit var category:String
-
+    lateinit var category: String
+    val categoryList = mutableListOf<CategoryModel>()
+    val categoryNameList = listOf("미라클 모닝", "관계 형성(커뮤니케이션)", "디지털 디톡스", "멘탈 관리", "운동",
+        "홈 트레이닝", "스트레칭", "시간 관리", "취미 생활", "다이어트", "외국어 공부", "글쓰기 연습 및 필사",
+        "나이트 루틴", "집 정돈", "취업 준비", "건강 습관 형성", "독서")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
 
         val myIntent = Intent(this, CommunityCreateActivity::class.java)
 
-        //카테고리 버튼
-        binding.categoryBtn1.setOnClickListener{
-            category=binding.categoryBtn1.getText().toString()
+        // 리스트뷰
+        for(name in categoryNameList) {
+            categoryList.add(CategoryModel(name))
         }
-        binding.categoryBtn2.setOnClickListener{
-            category=binding.categoryBtn2.getText().toString()
-        }
-        binding.categoryBtn3.setOnClickListener{
-            category=binding.categoryBtn3.getText().toString()
-        }
-        binding.categoryBtn4.setOnClickListener{
-            category=binding.categoryBtn4.getText().toString()
-        }
-        binding.categoryBtn5.setOnClickListener{
-            category=binding.categoryBtn5.getText().toString()
-        }
-        binding.categoryBtn6.setOnClickListener{
-            category=binding.categoryBtn6.getText().toString()
-        }
-        binding.categoryBtn7.setOnClickListener{
-            category=binding.categoryBtn7.getText().toString()
 
+        val categoryLVAdapter = CategoryAdapter(categoryList)
+        binding.categoryLV.adapter = categoryLVAdapter
+
+        // 카테고리 선택시 해당 카테고리 이름 저장
+        binding.categoryLV.setOnItemClickListener { parent, view, position, id ->
+            category = categoryList[position].category_name
         }
-        binding.categoryBtn8.setOnClickListener{
-            category=binding.categoryBtn8.getText().toString()
-        }
-        binding.categoryBtn9.setOnClickListener{
-            category=binding.categoryBtn9.getText().toString()
-        }
-        binding.categoryBtn10.setOnClickListener{
-            category=binding.categoryBtn10.getText().toString()
-        }
-        binding.categoryBtn11.setOnClickListener{
-            category=binding.categoryBtn11.getText().toString()
-        }
-        binding.categoryBtn12.setOnClickListener{
-            category=binding.categoryBtn12.getText().toString()
-        }
-        binding.categoryBtn13.setOnClickListener{
-            category=binding.categoryBtn13.getText().toString()
-        }
-        binding.categoryBtn14.setOnClickListener{
-            category=binding.categoryBtn14.getText().toString()
-        }
-        binding.categoryBtn15.setOnClickListener{
-            category=binding.categoryBtn15.getText().toString()
-        }
-        binding.categoryBtn16.setOnClickListener{
-            category=binding.categoryBtn16.getText().toString()
-        }
-        binding.categoryBtn17.setOnClickListener{
-            category=binding.categoryBtn17.getText().toString()
-        }
+
 
         //뒤로가기 버튼
         binding.backBtn.setOnClickListener{
@@ -80,8 +45,8 @@ class CategoryActivity : AppCompatActivity() {
         binding.okBtn.setOnClickListener{
             myIntent.putExtra("category",category)
             startActivity(myIntent)
+            finish()
         }
-
 
     }
 

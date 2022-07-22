@@ -51,13 +51,33 @@ class CommunityCreateActivity : AppCompatActivity() {
 
         val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback {
-                binding.cameraBtn.setImageURI(it) }
+                binding.imageText.visibility = View.INVISIBLE
+                binding.imageBtn.setImageURI(it) }
         )
-        binding.cameraBtn.setOnClickListener(View.OnClickListener {
+        binding.imageBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })
 
 
-        //2. 요일 선택 (linear) 클릭시 이벤트
+        //2. 카테고리 선택
+        binding.categoryLinear.setOnClickListener{
+            startActivity(Intent(this, CategoryActivity::class.java))
+        }
+        // 카테고리를 받아왔다면 바인딩
+        if(intent.hasExtra("category")){
+            category= intent.getStringExtra("category").toString()
+            binding.categoryTv.text = category
+        }
+
+
+        //3. 인증방식
+        binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
+            when(checkId){
+                R.id.postAuthBtn -> binding.chooseLocationLinear.visibility = View.GONE
+                R.id.locAuthBtn -> binding.chooseLocationLinear.visibility = View.VISIBLE
+            }}
+
+
+        //4. 요일 선택 (linear) 클릭시 이벤트
         binding.chooseDayLinear.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("요일 선택")    // 제목
@@ -83,25 +103,25 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
             builder.show()
         }
-        //3. 시간 선택(linear) 클릭시 이벤트
+
+
+        //5. 시간 선택(linear) 클릭시 이벤트
         binding.chooseTimeLinear.setOnClickListener {
             getTime(binding.timeTextView,this)
         }
-        //4. 위치 선택(linear) 클릭시 이벤트
+
+
+        //6. 위치 선택(linear) 클릭시 이벤트
         binding.chooseLocationLinear.setOnClickListener {
             startActivity(Intent(this, CommunitySearchLocationActivity::class.java))
         }
-        //5. 뒤로가기 버튼 클릭시 이벤트
+
+
+        //7. 뒤로가기 버튼 클릭시 이벤트
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
 
-        //인증방식 라디오 버튼 클릭 시
-        binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
-            when(checkId){
-                R.id.authRadioBtn1 -> binding.chooseLocationLinear.visibility = View.GONE
-                R.id.authRadioBtn2 -> binding.chooseLocationLinear.visibility=View.VISIBLE
-            }}
 
         binding.theNumberSpinner.adapter=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, theNumberList)
 
@@ -120,19 +140,19 @@ class CommunityCreateActivity : AppCompatActivity() {
                 * */
             }
         }
-        binding.categoryLinear.setOnClickListener{
-            startActivity(Intent(this, CategoryActivity::class.java))
-        }
-        if(intent.hasExtra("category")){
-            category= intent.getStringExtra("category").toString()
-            println(category)
-            binding.categoryTv.text = category
-        }
 
         // 완료버튼
         binding.doneBtn.setOnClickListener{
             val communityName = binding.communityName.text.toString().trim()
+            val category = binding.categoryTv.text.toString()
             val introduce = binding.introduce.text.toString().trim()
+            var authType: String
+
+            binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
+                when(checkId){
+                    R.id.postAuthBtn -> authType = "post"
+                    R.id.locAuthBtn -> authType = "map"
+                }}
 
 
             val intent = Intent(this, CommunityMainLocationActivity::class.java)

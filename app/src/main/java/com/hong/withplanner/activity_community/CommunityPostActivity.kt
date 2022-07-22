@@ -37,7 +37,9 @@ class CommunityPostActivity : AppCompatActivity() {
         // 사진 선택
         val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback {
-                binding.imageArea.setImageURI(it) })
+                binding.imageArea.visibility = View.VISIBLE
+                binding.imageArea.setImageURI(it)
+            })
         binding.imageBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })
 

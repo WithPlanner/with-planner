@@ -67,13 +67,13 @@
                     android:id="@+id/imageBtn"
                     android:layout_width="130sp"
                     android:layout_height="130sp"
-                    android:layout_marginLeft="5sp"
                     android:background="@drawable/round_btn"
                     android:backgroundTint="@color/light_gray"
                     android:src="@drawable/ic_photo_24dp" />
 
                 <ImageView
                     android:id="@+id/imageArea"
+                    android:visibility="gone"
                     android:layout_width="130sp"
                     android:layout_height="130sp"
                     android:layout_margin="10sp"
