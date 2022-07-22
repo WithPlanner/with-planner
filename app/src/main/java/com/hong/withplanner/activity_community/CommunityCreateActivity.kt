@@ -18,12 +18,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.hong.withplanner.activity_etc.CategoryActivity
 import com.hong.withplanner.R
+import com.hong.withplanner.databinding.ActivityCommunityCreateBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class CommunityCreateActivity : AppCompatActivity() {
-    private lateinit var binding : com.hong.withplanner.databinding.ActivityCommunityCreateBinding
+    private lateinit var binding : ActivityCommunityCreateBinding
     val checkedDays =  booleanArrayOf(false,false,false,false,false,false,false) //체크된 요일
     val dayList= arrayOf<String>("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
@@ -49,8 +50,9 @@ class CommunityCreateActivity : AppCompatActivity() {
         checkPermission.launch(permissionList)
 
         val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
-            ActivityResultCallback { binding.cameraBtn.setImageURI(it) }
-            )
+            ActivityResultCallback {
+                binding.cameraBtn.setImageURI(it) }
+        )
         binding.cameraBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })
 
@@ -135,7 +137,7 @@ class CommunityCreateActivity : AppCompatActivity() {
 
             val intent = Intent(this, CommunityMainLocationActivity::class.java)
             startActivity(intent)
-
+            finish()
         }
     }
 

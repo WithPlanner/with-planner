@@ -20,7 +20,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_main_post)
 
         binding.backBtn.setOnClickListener {
@@ -33,6 +32,10 @@ class CommunityMainPostActivity : AppCompatActivity() {
 
         binding.arrowBtn.setOnClickListener{
             startActivity(Intent(this, CommunityPostBoardActivity::class.java))
+        }
+
+        binding.postBtn.setOnClickListener{
+            startActivity(Intent(this, CommunityPostActivity::class.java))
         }
 
         // 리사이클러뷰

@@ -50,9 +50,7 @@
     <LinearLayout
         android:id="@+id/photo_linear"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_height="200dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -60,26 +58,22 @@
             android:layout_height="180dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/cameraBtn"
                 android:layout_width="150sp"
                 android:layout_height="150sp"
                 android:scaleType="centerCrop"
                 android:layout_gravity="center"
-                android:layout_margin="40dp"
-                android:background="@drawable/round_btn"
-                android:backgroundTint="@color/light_gray"
+                android:layout_marginTop="0sp"
                 android:src="@drawable/ic_photo_128px" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="사진 선택"/>
 
-                android:layout_margin="40dp"
-                android:textSize="14sp"
-                android:text="사진 선택"
-                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>

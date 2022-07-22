@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hong.withplanner">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--갤러리 권한-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:remove="android:maxSdkVersion"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--카메라 권한-->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 갤러리 권한 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:remove="android:maxSdkVersion" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 카메라 권한 -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
+        <activity
+            android:name=".activity_community.CommunityPostActivity"
+            android:exported="false" />
         <activity
             android:name=".activity_community.CommunityPostBoardActivity"
             android:exported="false" />
@@ -73,8 +76,7 @@
             android:exported="true" />
         <activity
             android:name=".activity_community.CommunityCreateActivity"
-            android:exported="true"
-            android:noHistory="true"/>
+            android:exported="true" />
         <activity
             android:name=".activity_community.CommunitySearchLocationActivity"
             android:exported="false" />

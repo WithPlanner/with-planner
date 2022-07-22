@@ -14,6 +14,10 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_community_search_location)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_search_location)
 
+        binding.doneBtn.setOnClickListener{
+            finish()
+        }
+
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }

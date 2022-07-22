@@ -9,6 +9,7 @@ import com.hong.withplanner.R
 import com.hong.withplanner.activity_community.CommunityAuthenticateLocationActivity
 import com.hong.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
+import com.hong.withplanner.activity_community.CommunitySearchLocationActivity
 
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
@@ -27,7 +28,7 @@ class MyLocDialog() : DialogFragment() {
 
         // 지도 버튼
         binding.addLocBtn.setOnClickListener{
-
+            startActivity(Intent(activity, CommunitySearchLocationActivity::class.java))
         }
 
         // 확인버튼
