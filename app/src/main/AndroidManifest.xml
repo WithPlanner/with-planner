@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hong.withplanner">
+    package="com.shop.withplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 저장소 권한 -->
@@ -19,40 +19,40 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner">
         <activity
-            android:name=".activity_community.CommunityPostActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityPostActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityPostBoardActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityPostBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_join.JoinLocActivity"
+            android:name="com.shop.withplanner.activity_join.JoinLocActivity"
             android:exported="false" />
         <activity
-            android:name=".EmailActivity"
+            android:name="com.shop.withplanner.EmailActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.SettingActivity"
+            android:name="com.shop.withplanner.activity_etc.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".not_used.CommunityInfoBoardActivity"
+            android:name="com.shop.withplanner.not_used.CommunityInfoBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_join.JoinActivity"
+            android:name="com.shop.withplanner.activity_join.JoinActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunitySelectActivity"
+            android:name="com.shop.withplanner.activity_community.CommunitySelectActivity"
             android:exported="false" />
         <activity
-            android:name=".SurveyActivity1"
+            android:name="com.shop.withplanner.SurveyActivity1"
             android:exported="false" />
         <activity
-            android:name=".SurveyActivity2"
+            android:name="com.shop.withplanner.SurveyActivity2"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.LoginActivity"
+            android:name="com.shop.withplanner.activity_etc.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.SplashActivity"
+            android:name="com.shop.withplanner.activity_etc.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,40 +61,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".not_used.CommunityMainBoardActivity"
+            android:name="com.shop.withplanner.not_used.CommunityMainBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".not_used.CommunityTalkBoardActivity"
+            android:name="com.shop.withplanner.not_used.CommunityTalkBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityCalendarActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityCalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.MyCalendarActivity"
+            android:name="com.shop.withplanner.activity_etc.MyCalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.MainActivity"
+            android:name="com.shop.withplanner.activity_etc.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".activity_community.CommunityCreateActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityCreateActivity"
             android:exported="true" />
         <activity
-            android:name=".activity_community.CommunitySearchLocationActivity"
+            android:name="com.shop.withplanner.activity_community.CommunitySearchLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_etc.CategoryActivity"
+            android:name="com.shop.withplanner.activity_etc.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityAuthenticateLocationActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityAuthenticateLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityMainLocationActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityMainLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityMainPostActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityMainPostActivity"
             android:exported="false" />
         <activity
-            android:name=".activity_community.CommunityJoinActivity"
+            android:name="com.shop.withplanner.activity_community.CommunityJoinActivity"
             android:exported="false"
             android:noHistory="true" />
     </application>
