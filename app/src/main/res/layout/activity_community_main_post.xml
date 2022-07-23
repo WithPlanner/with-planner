@@ -9,7 +9,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:orientation="vertical"
-        tools:context=".community.CommunityMainPostActivity">
+        tools:context=".activity_community.CommunityMainPostActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -303,20 +303,52 @@
             android:layout_height="2dp"
             android:background="@color/black" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView1"
+        <LinearLayout
+            android:id="@+id/currentPost"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_margin="8dp"
-            android:orientation="horizontal" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/postBtn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:src="@drawable/write_post" />
+            android:layout_margin="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최신 게시글"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:id="@+id/arrowBtn"
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:src="@drawable/ic_right_arrow"
+                android:layout_marginTop="4sp"
+                android:layout_marginRight="8sp"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/postBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginRight="10sp"
+                android:layout_marginBottom="30sp"
+                android:src="@drawable/write_post" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 </layout>

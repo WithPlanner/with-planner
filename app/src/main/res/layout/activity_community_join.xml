@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".community.CommunityJoinActivity"
+        tools:context=".activity_community.CommunityJoinActivity"
         android:layout_marginTop="12dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp">
