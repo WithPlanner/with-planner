@@ -9,6 +9,8 @@ import com.shop.withplanner.R
 import com.shop.withplanner.community.CommunityAuthenticateLocationActivity
 import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
+import com.shop.withplanner.SurveyActivity2
+import com.shop.withplanner.map.MapActivity
 
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
@@ -25,9 +27,11 @@ class MyLocDialog() : DialogFragment() {
     ): View? {
         binding = DlgMyLocBinding.inflate(inflater, container, false)
 
-        // 지도 버튼
-        binding.addLocBtn.setOnClickListener{
-
+        // 지도 버튼 - 추후 수정.
+        binding.helpBtn.setOnClickListener{
+            val intent = Intent(activity, MapActivity::class.java)
+            startActivity(intent)
+            dismiss()
         }
 
         // 확인버튼

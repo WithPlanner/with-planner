@@ -4,7 +4,11 @@
     package="com.shop.withplanner"
     >
 
+    <!--인터넷 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--위치 권한 설정-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -13,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner"
-        android:usesCleartextTraffic="true">>
+        android:usesCleartextTraffic="true">
+
+        <!-- 카카오 키 등록-->
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value ="${kakaoMapAppKey}" />
         <activity
             android:name="com.shop.withplanner.join.JoinLocActivity"
             android:exported="false" />
@@ -87,6 +94,9 @@
             android:name="com.shop.withplanner.community.CommunityJoinActivity"
             android:exported="false"
             android:noHistory="true" />
+        <activity
+            android:name="com.shop.withplanner.map.MapActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

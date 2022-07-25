@@ -1,4 +1,4 @@
-package com.hong.withplanner
+package com.shop.withplanner
 
 import org.junit.Test
 
