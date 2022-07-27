@@ -9,7 +9,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginTop="12dp"
         android:layout_marginRight="14dp"
-        tools:context=".join.JoinLocActivity">
+        tools:context=".activity_join.JoinLocActivity">
 
         <EditText
             android:id="@+id/searchText"
