@@ -2,6 +2,7 @@ package com.shop.withplanner.retrofit
 
 import com.shop.withplanner.dto.AuthNumber
 import com.shop.withplanner.dto.EmailAuth
+import com.shop.withplanner.dto.Result
 import retrofit2.Call
 import com.shop.withplanner.dto.Token
 import retrofit2.http.*
@@ -25,4 +26,10 @@ interface UserService {
         @Query("email") email: String,
         @Query("authNumber") authNumber: Int
     ): Call<AuthNumber>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/sign_up/submit")
+    fun signup(
+        @Body params: HashMap<String, String>,
+    ): Call<Result>
 }
