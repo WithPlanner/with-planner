@@ -18,7 +18,7 @@
             android:id="@+id/backBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_arrow_back_48px"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,6 @@
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="15dp"
             android:text="최신 게시글"
             android:layout_gravity="center"

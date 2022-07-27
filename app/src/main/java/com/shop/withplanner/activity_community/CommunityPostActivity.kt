@@ -62,13 +62,11 @@ class CommunityPostActivity : AppCompatActivity() {
                 Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
             else{
-                val intent = Intent(this, CommunityMainPostActivity::class.java)
 
                 // 인증확인 다이얼로그
                 val builder = AlertDialog.Builder(this).setTitle(habitName)
                     .setMessage("오늘의 ${habitName} 인증을 완료했습니다.")
                     .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                        startActivity(intent)
                         finish()
                     }).show()
             }

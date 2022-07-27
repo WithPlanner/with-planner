@@ -184,10 +184,10 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_arrow_forward_24px"/>
             <TextView
+                android:id="@+id/dayTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/dayTextView"
-                android:text="선택한 인증요일 보여주는 텍뷰~"
+                android:hint="인증 요일을 선택하세요."
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center">
@@ -215,10 +215,10 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/ic_arrow_forward_24px"/>
             <TextView
+                android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="타임피커에서 선택한 시간 보여주는 텍뷰~"
-                android:id="@+id/timeTextView"
+                android:hint="인증 시간을 선택하세요."
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/black"
                 android:layout_gravity="center"/>
@@ -262,10 +262,10 @@
         android:background="@color/light_gray"/>
 
     <LinearLayout
+        android:id="@+id/theNumber_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/theNumber_linear">
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -274,9 +274,9 @@
             android:layout_margin="10dp"
             android:textSize="18sp"/>
         <Spinner
+            android:id="@+id/theNumber_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/theNumber_spinner"
             android:spinnerMode="dialog"
             android:layout_gravity="center">
         </Spinner>
@@ -292,7 +292,6 @@
         android:orientation="vertical"
         android:id="@+id/write_linear">
         <TextView
-            android:id="@+id/introduce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -301,6 +300,7 @@
             android:text="내용"/>
 
         <EditText
+            android:id="@+id/introduce"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
