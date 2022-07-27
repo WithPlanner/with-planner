@@ -21,6 +21,12 @@ interface UserService {
     ): Call<EmailAuth>
 
     @Headers( "content-type: application/json")
+    @POST("/sign_up/check_dup_nickname")
+    fun checkDupNick(
+        @Query("nickname") nickname: String
+    ): Call<Result>
+
+    @Headers( "content-type: application/json")
     @GET("/sign_up/check_valid_email")
     fun confirmAuthNumber(
         @Query("email") email: String,
