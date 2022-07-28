@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linear_search_location"
-        android:layout_weight="7"
+
         android:orientation="horizontal">
         <EditText
             android:id="@+id/location"
@@ -60,6 +60,7 @@
             android:layout_weight="6"
             android:hint="인증할 위치를 검색해주세요"/>
         <ImageButton
+            android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/outline_search_24"
@@ -67,6 +68,13 @@
             android:backgroundTint="@color/white"/>
 
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E8EAF6"
+       />
+
 
 </LinearLayout>
 </layout>

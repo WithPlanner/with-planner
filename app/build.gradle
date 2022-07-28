@@ -3,6 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+//localProperties에 저장한 값.
+Properties properties = new Properties()
+properties .load(project.rootProject.file('local.properties').newDataInputStream())
+def kakao_map_app_key = properties.getProperty('com.kakao.sdk.AppKey')
+
 android {
     compileSdk 32
 
@@ -12,8 +17,11 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //AndroidManifest.xml에서 사용하는 local.properties 에 저장한 값 불러오기
+        manifestPlaceholders = [kakaoMapAppKey : kakao_map_app_key]
+        buildConfigField "String" ,"kakaoMapRestApiKey" ,properties["com.kakao.sdk.RestApiKey"]
     }
 
     buildTypes {
@@ -54,7 +62,17 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
+
+    //map - kakao map
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/libDaumMapAndroid.jar')
+
+    //map - google map api
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.0'
+
     // cardView
     implementation 'androidx.cardview:cardview:1.0.0'
 
 }
+

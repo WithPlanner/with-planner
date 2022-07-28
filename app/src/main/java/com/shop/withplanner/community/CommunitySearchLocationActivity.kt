@@ -1,4 +1,4 @@
-package com.shop.withplanner.activity_community
+package com.shop.withplanner.community
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +13,6 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_search_location)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_search_location)
-
-        binding.doneBtn.setOnClickListener{
-            finish()
-        }
 
         binding.backBtn.setOnClickListener{
             onBackPressed()

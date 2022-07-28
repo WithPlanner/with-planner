@@ -4,11 +4,18 @@
     package="com.shop.withplanner"
     >
 
+    <!--인터넷 권한 설정-->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--위치 권한 설정-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <!-- 저장소 권한 -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- 카메라 권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -20,6 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner"
         android:usesCleartextTraffic="true">
+
+
+        <!-- 카카오 키 등록-->
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value ="${kakaoMapAppKey}" />
+
         <activity
             android:name="com.shop.withplanner.activity_community.CommunityPostActivity"
             android:exported="false" />
@@ -99,6 +111,9 @@
             android:name="com.shop.withplanner.activity_community.CommunityJoinActivity"
             android:exported="false"
             android:noHistory="true" />
+        <activity
+            android:name="com.shop.withplanner.map.MapActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

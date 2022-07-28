@@ -1,8 +1,13 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.content.pm.Signature
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +20,8 @@ import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //getHashKey();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         // 나중에 서버에서 커뮤니티 정보 받아올 것
@@ -125,4 +133,26 @@ class MainActivity : AppCompatActivity() {
         }
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
     }
+
+    //카카오맵 이용을 위한 해시키 출력 메소드
+    fun getHashKey() {
+        var packageInfo: PackageInfo = PackageInfo()
+        try {
+            packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+        for (signature: Signature in packageInfo.signatures) {
+            try {
+                var md: MessageDigest = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                Log.e("KEY_HASH", Base64.encodeToString(md.digest(), Base64.DEFAULT))
+            } catch (e: NoSuchAlgorithmException) {
+                Log.e("KEY_HASH", "Unable to get MessageDigest. signature = " + signature, e)
+            }
+        }
+    }
+
+
 }

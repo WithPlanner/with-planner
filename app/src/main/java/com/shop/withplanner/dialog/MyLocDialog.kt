@@ -26,6 +26,7 @@ class MyLocDialog() : DialogFragment() {
     ): View? {
         binding = DlgMyLocBinding.inflate(inflater, container, false)
 
+
         // 지도 버튼
         binding.addLocBtn.setOnClickListener{
             startActivity(Intent(activity, CommunitySearchLocationActivity::class.java))
