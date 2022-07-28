@@ -31,10 +31,6 @@ class JoinActivity : AppCompatActivity() {
         binding.checkNicknameBtn.setOnClickListener{
             nicknameChecked = true
         }
-        // 주소, 우편번호 찾기
-        binding.findAddressBtn.setOnClickListener{
-            // 찾기로 자동입력시키기
-        }
 
         // 가입하기 버튼 클릭 시 행동
         binding.joinBtn.setOnClickListener{
@@ -42,14 +38,10 @@ class JoinActivity : AppCompatActivity() {
             val password = binding.password.text.toString().trim()
             val repassword = binding.repassword.text.toString().trim()
             val nickname = binding.nickname.text.toString().trim()
-            val zipcode = binding.zipcode.text.toString().trim()
-            val address1 = binding.address1.text.toString().trim()
-            val address2 = binding.address2.text.toString().trim()
 
             var readyToJoin = true          // 가입조건 충족여부 확인 변수
 
-            if(name.isEmpty() || password.isEmpty() || repassword.isEmpty()
-                || nickname.isEmpty() || zipcode.isEmpty() || address1.isEmpty() || address2.isEmpty()){
+            if(name.isEmpty() || password.isEmpty() || repassword.isEmpty() || nickname.isEmpty()){
                 Toast.makeText(this, "입력란을 모두 입력해주세요.", Toast.LENGTH_LONG).show()
                 readyToJoin = false
             }
