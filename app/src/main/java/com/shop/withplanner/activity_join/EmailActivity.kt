@@ -34,8 +34,6 @@ class EmailActivity : AppCompatActivity() {
         binding.sendBtn.setOnClickListener {
             // if문으로 인증 성공시 activity_join 페이지로
             email = binding.email.text.toString().trim()
-            intent.putExtra("email", email)
-            startActivity(intent)
 
             RetrofitService.userService.checkValidEmail(email)
                 ?.enqueue(object : Callback<EmailAuth> {

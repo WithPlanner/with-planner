@@ -38,4 +38,10 @@ interface UserService {
     fun signup(
         @Body params: HashMap<String, String>,
     ): Call<Result>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/investigation")
+    fun recommendCommunity(
+        @Body params: HashMap<String, String>,
+    ): Call<Result>
 }

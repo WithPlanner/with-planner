@@ -2,15 +2,23 @@ package com.shop.withplanner
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivitySurvey2Binding
+import com.shop.withplanner.dto.Result
+import com.shop.withplanner.retrofit.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SurveyActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey2Binding
+    val body = HashMap<String, String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,6 +56,31 @@ class SurveyActivity2 : AppCompatActivity() {
                     }
                 }
             }
+
+            body.put("q1", answers[0].toString());
+            body.put("q2", answers[1].toString())
+            body.put("q3", answers[2].toString())
+            body.put("q4", answers[3].toString())
+            body.put("q5", answers[4].toString())
+            body.put("q6", answers[5].toString())
+            body.put("q7", answers[6].toString())
+            body.put("q8", answers[7].toString())
+
+            RetrofitService.userService.recommendCommunity(body)?.enqueue(object : Callback<Result> {
+                override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                    if(response.isSuccessful) {
+                        var result: Result? = response.body()
+                        Toast.makeText(this@SurveyActivity2, result!!.msg, Toast.LENGTH_LONG).show()
+                    } else {
+                        Log.d("SURVEY", "onResponse 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<Result>, t: Throwable) {
+                    Log.d("SURVEY", "onFailure 에러: " + t.message.toString())
+                }
+
+            })
 
             // 제출시 survey1,2 스택에서 없애는 부분 구현하기
             startActivity(Intent(this, MainActivity::class.java))
