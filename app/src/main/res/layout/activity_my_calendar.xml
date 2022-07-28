@@ -10,7 +10,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="14dp"
         android:layout_marginLeft="14dp"
-        tools:context=".MyCalendarActivity">
+        tools:context=".activity_etc.MyCalendarActivity">
 
         <ImageView
             android:id="@+id/backBtn"

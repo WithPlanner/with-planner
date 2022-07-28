@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.shop.withplanner.R
-import com.shop.withplanner.community.CommunityAuthenticateLocationActivity
+import com.shop.withplanner.activity_community.CommunityAuthenticateLocationActivity
 import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
-import com.shop.withplanner.SurveyActivity2
-import com.shop.withplanner.map.MapActivity
+import com.shop.withplanner.activity_community.CommunitySearchLocationActivity
 
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
@@ -27,11 +26,10 @@ class MyLocDialog() : DialogFragment() {
     ): View? {
         binding = DlgMyLocBinding.inflate(inflater, container, false)
 
-        // 지도 버튼 - 추후 수정.
-        binding.helpBtn.setOnClickListener{
-            val intent = Intent(activity, MapActivity::class.java)
-            startActivity(intent)
-            dismiss()
+
+        // 지도 버튼
+        binding.addLocBtn.setOnClickListener{
+            startActivity(Intent(activity, CommunitySearchLocationActivity::class.java))
         }
 
         // 확인버튼
@@ -42,6 +40,9 @@ class MyLocDialog() : DialogFragment() {
 
             if(location.isEmpty()){
                 binding.location.error = "목적지를 설정해주세요."
+            }
+            else if(locationAlias.isEmpty()){
+                binding.locationAlias.error = "별칭을 입력해주세요."
             }
             else{
                 val intent = Intent(activity, CommunityAuthenticateLocationActivity::class.java)

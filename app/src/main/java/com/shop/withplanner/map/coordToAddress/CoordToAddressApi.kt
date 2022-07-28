@@ -18,6 +18,6 @@ class CoordToAddressApi {
             @Header("Authorization") key : String,
             @Query("x") x:String, //경도(longitude)
             @Query("y") y:String //위도(latitude)
-        ): Call<ResCoordToAddress>
+        ): Call<DtoCoordToAddress>
     }
 }
