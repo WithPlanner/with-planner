@@ -27,6 +27,23 @@ class MyLocDialog() : DialogFragment() {
         binding = DlgMyLocBinding.inflate(inflater, container, false)
 
 
+        binding.helpBtn.setOnClickListener{
+            // 서버에 저장 필요
+            val location = binding.location.text.toString().trim()
+            val locationAlias = binding.locationAlias.text.toString().trim()
+
+            if(location.isEmpty()){
+                binding.location.error = "목적지를 설정해주세요."
+            }
+            else if(locationAlias.isEmpty()){
+                binding.locationAlias.error = "별칭을 입력해주세요."
+            }
+            else{
+                val intent = Intent(activity, CommunityAuthenticateLocationActivity::class.java)
+                startActivity(intent)
+                dismiss()
+            }
+        }
         // 지도 버튼
         binding.addLocBtn.setOnClickListener{
             startActivity(Intent(activity, CommunitySearchLocationActivity::class.java))

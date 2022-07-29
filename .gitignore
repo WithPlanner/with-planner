@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,kotlin,androidstudio,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,kotlin,androidstudio,windows
 
+# 카카오맵 jar 파일
+!/*/libs/libDaumMapAndroid.jar
+
 ### Kotlin ###
 # Compiled class file
 *.class
