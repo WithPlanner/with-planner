@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,kotlin,androidstudio,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,kotlin,androidstudio,windows
 
+
 ### Kotlin ###
 # Compiled class file
 *.class
@@ -22,6 +23,10 @@
 *.zip
 *.tar.gz
 *.rar
+
+# 카카오맵 jar 파일
+!app/libs/
+!app/libs/libDaumMapAndroid.jar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
