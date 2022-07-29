@@ -58,13 +58,13 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
         val icon: ImageView = itemView.findViewById(R.id.iconImg)
         val date: TextView = itemView.findViewById(R.id.date)
         val habit: TextView = itemView.findViewById(R.id.habbit)
-        val comment: TextView = itemView.findViewById(R.id.comment)
+        val comment: TextView = itemView.findViewById(R.id.content)
 
         fun bindItems(item: PostModel) {
             nname.text = item.post_name
             date.text = item.post_date
             habit.text = item.post_habit
-            comment.text = item.post_comment
+            comment.text = item.post_content
             Glide.with(itemView).load(item.post_icon).into(icon)
         }
     }
@@ -76,13 +76,13 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
         val date: TextView = itemView.findViewById(R.id.date)
         val habit: TextView = itemView.findViewById(R.id.habbit)
         val image: ImageView = itemView.findViewById(R.id.image)
-        val comment: TextView = itemView.findViewById(R.id.comment)
+        val comment: TextView = itemView.findViewById(R.id.content)
 
         fun bindItems(item: PostModel) {
             nname.text = item.post_name
             date.text = item.post_date
             habit.text = item.post_habit
-            comment.text = item.post_comment
+            comment.text = item.post_content
             Glide.with(itemView).load(item.post_img).into(image)
             Glide.with(itemView).load(item.post_icon).into(icon)
         }

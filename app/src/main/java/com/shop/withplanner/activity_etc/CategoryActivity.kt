@@ -21,7 +21,7 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
 
-        val myIntent = Intent(this, CommunityCreateActivity::class.java)
+        val intent = Intent(this, CommunityCreateActivity::class.java)
 
         // 리스트뷰
         for(name in categoryNameList) {
@@ -41,10 +41,13 @@ class CategoryActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
+
+
+        // 완료버튼
         binding.okBtn.setOnClickListener{
-            myIntent.putExtra("category",category)
-            startActivity(myIntent)
-            finish()
+            intent.putExtra("category", category)   // 이전 activity에 값 전달
+            setResult(RESULT_OK, intent)
+            if(!isFinishing) finish()
         }
 
     }

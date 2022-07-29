@@ -41,7 +41,7 @@
 
             <EditText
                 android:id="@+id/location"
-                android:layout_width="220dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:hint="목적지를 입력해주세요."
@@ -73,7 +73,7 @@
 
             <EditText
                 android:id="@+id/locationAlias"
-                android:layout_width="260sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="목적지 별칭을 입력해주세요."
                 android:textSize="18sp"
