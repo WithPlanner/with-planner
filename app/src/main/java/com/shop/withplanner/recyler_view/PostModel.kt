@@ -5,7 +5,7 @@ class PostModel(
     val post_icon: String,
     val post_date: String,
     val post_habit: String,
-    val post_content: String?,
+    val post_content: String,
     val type: Int,       // 게시물 타입
     val post_img: String?,
 ){
