@@ -32,6 +32,17 @@
             app:layout_constraintTop_toBottomOf="@+id/backBtn"/>
 
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="43dp"
+            android:src="@drawable/ic_arrow_forward_24px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView1"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

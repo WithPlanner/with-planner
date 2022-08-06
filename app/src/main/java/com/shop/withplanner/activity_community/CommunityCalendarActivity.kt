@@ -34,11 +34,6 @@ class CommunityCalendarActivity : AppCompatActivity() {
         rv.adapter = userAdapter
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-//        userAdapter.itemClick = object : ContentsAdapter.ItemClick {
-//            override fun onClick(view: View, position: Int) {
-//            }
-//        }
-
 
         binding.backBtn.setOnClickListener{
             onBackPressed()
