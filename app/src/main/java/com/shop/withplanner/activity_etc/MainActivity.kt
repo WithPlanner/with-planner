@@ -20,6 +20,8 @@ import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
+import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -31,9 +33,16 @@ class MainActivity : AppCompatActivity() {
     private val hotRV_Items =  mutableListOf<ContentsModel>()
     private val recRV_Items =  mutableListOf<ContentsModel>()
 
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getHashKey();
+
+        RetrofitService.communityService.mainListing(sharedManager.getToken())
+
+
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         // 나중에 서버에서 커뮤니티 정보 받아올 것

@@ -44,24 +44,24 @@ class LoginActivity : AppCompatActivity() {
             body.put("email", email)
             body.put("password", password)
 
-//            RetrofitService.userService.login(body)?.enqueue(object : Callback<Token> {
-//                override fun onResponse(call: Call<Token>, response: Response<Token>) {
-//                    if(response.isSuccessful){
-//                        // 정상적으로 통신이 성고된 경우
-//                        var result: Token? = response.body()
-//                        Log.d("LOGIN", "onResponse 성공: " + result?.toString());
-//                        startActivity(intent)
-//                    }else{
-//                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-//                        Log.d("LOGIN", "onResponse 실패")
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Token>, t: Throwable) {
-//                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-//                    Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
-//                }
-//            })
+            RetrofitService.userService.login(body)?.enqueue(object : Callback<Token> {
+                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                    if(response.isSuccessful){
+                        // 정상적으로 통신이 성고된 경우
+                        var result: Token? = response.body()
+                        Log.d("LOGIN", "onResponse 성공: " + result?.toString());
+                        startActivity(intent)
+                    }else{
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Log.d("LOGIN", "onResponse 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<Token>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
+                }
+            })
             startActivity(intent)
 
         }

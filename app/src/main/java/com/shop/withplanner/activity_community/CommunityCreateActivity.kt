@@ -6,8 +6,8 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -20,7 +20,14 @@ import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.activity_etc.CategoryActivity
-import com.shop.withplanner.community.CommunitySearchLocationActivity
+import com.shop.withplanner.retrofit.RetrofitService
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okio.BufferedSink
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +35,7 @@ import java.util.*
 class CommunityCreateActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCommunityCreateBinding
     val checkedDays =  booleanArrayOf(false,false,false,false,false,false,false) //체크된 요일
-    val dayList= arrayOf<String>("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
+    val dayList= arrayOf<String>("월", "화", "수", "목", "금", "토", "일")
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
     var theNumberList= arrayOf(1,2,3,4,5,6,7,8,9,10)
     var numberOfPerson = 1  // 인원을 담는 변수
@@ -144,7 +151,7 @@ class CommunityCreateActivity : AppCompatActivity() {
             // 이미지, 위치정보도 저장해야함
             val communityName = binding.communityName.text.toString().trim()
             val category = binding.categoryTv.text.toString()
-            var authType: String
+            var authType: String = ""
             val day = binding.dayTextView.text.toString()
             val time = binding.timeTextView.text.toString()
             val numbOfPerson = numberOfPerson.toString()
@@ -162,11 +169,26 @@ class CommunityCreateActivity : AppCompatActivity() {
                 Toast.makeText(this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else{
+
+//                val requestFile : RequestBody = RequestBody.create("image/*".toMediaType(), File(loadImage))
+                val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
+                val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
+                val categoryRequestBody : RequestBody = category.toPlainRequestBody()
+                val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
+                val dayRequestBody : RequestBody = day.toPlainRequestBody()
+                val timeRequestBody : RequestBody = time.toPlainRequestBody()
+
+                if(authType.equals("post")) {
+//                    RetrofitService.communityService.makePostCommunity()
+                } else if (authType.equals("map")) {
+//                    RetrofitService.communityService.makeMapCommunity()
+                }
                 val intent = Intent(this, CommunityMainLocationActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
+        
     }
 
     override fun onBackPressed() {
@@ -185,4 +207,13 @@ class CommunityCreateActivity : AppCompatActivity() {
         timePickerDialog.setButton(TimePickerDialog.BUTTON_NEGATIVE,"취소",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = " " })
         timePickerDialog.show()
     }
+
+    inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
+        override fun contentType(): MediaType = "image/jpeg".toMediaType()
+        override fun writeTo(sink: BufferedSink) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 99, sink.outputStream())
+        }
+    }
+
+    private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())
 }
