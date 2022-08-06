@@ -13,6 +13,7 @@ class SharedManager(context:Context) {
         prefs["nickname"] = user.nickname
         prefs["email"] = user.email
         prefs["password"] = user.password
+        prefs["token"] = user.token
     }
 
     fun getCurrentUser(): User {

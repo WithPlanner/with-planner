@@ -60,7 +60,9 @@ class CommunityCreateActivity : AppCompatActivity() {
         val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback {
                 binding.imageText.visibility = View.INVISIBLE
-                binding.imageBtn.setImageURI(it) }
+                binding.imageBtn.setImageURI(it)
+                Log.d("TAG:", it.toString())
+            }
         )
         binding.imageBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })

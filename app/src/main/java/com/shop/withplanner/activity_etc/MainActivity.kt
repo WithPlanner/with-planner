@@ -20,6 +20,7 @@ import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
+import com.shop.withplanner.shared_preferences.SharedManager
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
