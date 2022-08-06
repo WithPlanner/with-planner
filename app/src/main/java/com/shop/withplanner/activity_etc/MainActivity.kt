@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getHashKey();
-        Log.d("MAIN","token = " + sharedManager.getToken())
 
         RetrofitService.communityService.mainListing(sharedManager.getToken())
             ?.enqueue(object : Callback<MainList> {
