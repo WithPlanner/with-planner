@@ -8,6 +8,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -67,7 +68,9 @@ class CommunityCreateActivity : AppCompatActivity() {
             ActivityResultCallback {
                 binding.imageText.visibility = View.INVISIBLE
                 binding.imageBtn.setImageURI(it)
+
                 imgFile = File(it.toString())
+                Log.d("TAG:", it.toString())
             }
         )
         binding.imageBtn.setOnClickListener(View.OnClickListener {

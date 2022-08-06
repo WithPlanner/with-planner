@@ -13,14 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.shop.withplanner.activity_etc.MyCalendarActivity
 import com.shop.withplanner.R
 import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
-import com.shop.withplanner.dto.EmailAuth
+
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
