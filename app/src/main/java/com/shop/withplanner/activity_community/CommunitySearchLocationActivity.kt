@@ -1,5 +1,6 @@
 package com.shop.withplanner.activity_community
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunitySearchLocationBinding
+import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
 import com.shop.withplanner.map.searchKeyword.DtoSearchKeyword
 import com.shop.withplanner.map.searchKeyword.KakaoKeywordApiRetrofitClient
@@ -40,10 +42,6 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
             searchKeyword(text, pageNum)
         }
 
-        binding.doneBtn.setOnClickListener{
-            finish()
-        }
-
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
@@ -57,9 +55,21 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
                 resultName = locationItems[position].name
                 var longitude = locationItems[position].longitude
                 var latitude = locationItems[position].latitude
-            }
-        })
-    }
+                var roadAddress = locationItems[position].name
+                var address = locationItems[position].address
+
+                val nextIntent = Intent(this@CommunitySearchLocationActivity, MyLocDialog::class.java)
+                val fragment = MyLocDialog()
+                var bundle = Bundle()
+                bundle.putString("resultName",resultName)
+                bundle.putDouble("longitude",longitude)
+                bundle.putDouble("latitude",latitude)
+                bundle.putString("roadAddress",roadAddress)
+                bundle.putString("address",address)
+                fragment.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌.
+
+                fragment.show(supportFragmentManager,"프래그먼트로 전환")
+        }} ) }
 
     private fun searchKeyword(keyword : String, page: Int){
         searchKeywordApi.getSearchKeyword(SearchKeywordApi.API_KEY , keyword, page)

@@ -260,6 +260,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                     response: Response<DtoCoordToAddress>
                 ) {
                     kakaoList.value = response.body()
+                    Log.d("주소", kakaoList.value!!.documents[0].toString())
                     setLocation(kakaoList.value!!.documents[0].road_address.address_name)
 
                 }
@@ -273,7 +274,6 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     fun setLocation(addressName:String){
         binding.currentLoc.text = addressName
     }
-
     }
 
 
