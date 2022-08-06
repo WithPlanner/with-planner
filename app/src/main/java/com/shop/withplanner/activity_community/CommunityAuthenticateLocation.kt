@@ -1,4 +1,4 @@
-package com.shop.withplanner.community
+package com.shop.withplanner.activity_community
 
 import android.Manifest
 import android.content.Context
@@ -24,11 +24,12 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
 import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
-import com.shop.withplanner.map.coordToAddress.ResCoordToAddress
+import com.shop.withplanner.map.coordToAddress.DtoCoordToAddress
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
 import retrofit2.Response
+import com.shop.withplanner.activity_etc.MainActivity
 
 
 class CommunityAuthenticateLocationActivity : AppCompatActivity() {
@@ -41,6 +42,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     lateinit var mLastLocation: Location
     // 위치 정보 요청의 매개변수를 저장하는 변수
     internal lateinit var mLocationRequest: LocationRequest
+    // retrofit 구성 관련 변수.
+    private val coordToLocApi = KakaoApiRetrofitClient.apiService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +77,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
             val habitName = "습관이름"
             // 고정위치와 현재위치가 같으면 실행
             // 인증확인 다이얼로그
-            intent = Intent(this, CommunityMainLocationActivity::class.java)
+            intent = Intent(this, MainActivity::class.java)
             val builder = AlertDialog.Builder(this).setTitle(habitName)
                 .setMessage("오늘 ${habitName} 인증을 완료했습니다.")
                 .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
@@ -211,6 +214,10 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
             mFusedLocationProviderClient?.requestLocationUpdates(
@@ -240,26 +247,25 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private val coordToLocApi = KakaoApiRetrofitClient.apiService
     fun callCoordToLoc(
         longitude : String,
         latitude : String
     ){
-        val kakaoList = MutableLiveData<ResCoordToAddress>()
+        val kakaoList = MutableLiveData<DtoCoordToAddress>()
 
         coordToLocApi.getAddreess(CoordToAddressApi.API_KEY,longitude,latitude)
-            .enqueue(object : retrofit2.Callback<ResCoordToAddress>{
+            .enqueue(object : retrofit2.Callback<DtoCoordToAddress>{
                 override fun onResponse(
-                    call: Call<ResCoordToAddress>,
-                    response: Response<ResCoordToAddress>
+                    call: Call<DtoCoordToAddress>,
+                    response: Response<DtoCoordToAddress>
                 ) {
                     kakaoList.value = response.body()
-                    Log.i("카카오", "${kakaoList.value!!.documents[0].road_address}")
+                    Log.d("주소", kakaoList.value!!.documents[0].toString())
                     setLocation(kakaoList.value!!.documents[0].road_address.address_name)
 
                 }
 
-                override fun onFailure(call: Call<ResCoordToAddress>, t: Throwable) {
+                override fun onFailure(call: Call<DtoCoordToAddress>, t: Throwable) {
                     t.printStackTrace()
                 }
             })
@@ -268,8 +274,6 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     fun setLocation(addressName:String){
         binding.currentLoc.text = addressName
     }
-
-
     }
 
 

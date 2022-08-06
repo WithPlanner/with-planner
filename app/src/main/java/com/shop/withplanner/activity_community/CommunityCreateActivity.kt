@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -30,7 +31,7 @@ class CommunityCreateActivity : AppCompatActivity() {
     val dayList= arrayOf<String>("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
     var theNumberList= arrayOf(1,2,3,4,5,6,7,8,9,10)
-    var category = " " //카테고리
+    var numberOfPerson = 1  // 인원을 담는 변수
 
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -40,6 +41,13 @@ class CommunityCreateActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "권한 동의가 필요합니다.", Toast.LENGTH_SHORT).show()
                 finish()
             }
+        }
+    }
+    // 카테고리 값 전달을 위한 ActivityResultHandler
+    val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if(result.resultCode == RESULT_OK) {
+            val category = result.data?.getStringExtra("category")
+            binding.categoryTv.text = category
         }
     }
 
@@ -61,12 +69,8 @@ class CommunityCreateActivity : AppCompatActivity() {
 
         //2. 카테고리 선택
         binding.categoryLinear.setOnClickListener{
-            startActivity(Intent(this, CategoryActivity::class.java))
-        }
-        // 카테고리를 받아왔다면 바인딩
-        if(intent.hasExtra("category")){
-            category= intent.getStringExtra("category").toString()
-            binding.categoryTv.text = category
+            val intent = Intent(this, CategoryActivity::class.java)
+            getResult.launch(intent)
         }
 
 
@@ -123,43 +127,45 @@ class CommunityCreateActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-
+        //8. 인원 선택(linear) 클릭시 이벤트
         binding.theNumberSpinner.adapter=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, theNumberList)
 
         // https://velog.io/@1106laura/Retrofit%EC%97%90%EC%84%9C-Multipart-%EC%84%9C%EB%B2%84-%ED%86%B5%EC%8B%A0-with-Kotlin
         binding.theNumberSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-                /* 이런식으로 작성.
-                when (position){
-                0->{}
-                1->{}
-                2->{}
-                ...
-                else->{}
-                }
-                * */
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                numberOfPerson = parent?.getItemAtPosition(pos) as Int
             }
         }
 
         // 완료버튼
         binding.doneBtn.setOnClickListener{
+            // 이미지, 위치정보도 저장해야함
             val communityName = binding.communityName.text.toString().trim()
             val category = binding.categoryTv.text.toString()
-            val introduce = binding.introduce.text.toString().trim()
             var authType: String
+            val day = binding.dayTextView.text.toString()
+            val time = binding.timeTextView.text.toString()
+            val numbOfPerson = numberOfPerson.toString()
+            val introduce = binding.introduce.text.toString().trim()
 
+            // 인증방식
             binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
                 when(checkId){
                     R.id.postAuthBtn -> authType = "post"
                     R.id.locAuthBtn -> authType = "map"
                 }}
 
-
-            val intent = Intent(this, CommunityMainLocationActivity::class.java)
-            startActivity(intent)
-            finish()
+            if(communityName.isEmpty() || category.isEmpty() || day.isEmpty() || time.isEmpty() ||
+                    numbOfPerson.isEmpty() || introduce.isEmpty()) {
+                Toast.makeText(this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val intent = Intent(this, CommunityMainLocationActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 

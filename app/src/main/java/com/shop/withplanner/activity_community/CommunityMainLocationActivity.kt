@@ -50,7 +50,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
         // 리사이클러뷰
         val destination = "도서관"
-        for(i in 1..3) {
+        for(i in 1..6) {
             postItems.add(
                 PostModel(
                     "수정이",

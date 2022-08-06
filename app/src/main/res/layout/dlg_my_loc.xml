@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,18 +40,19 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/location"
-                android:layout_width="220dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:hint="목적지를 입력해주세요."
+                android:text="목적지를 입력해주세요."
+                android:textColor="@color/light_gray"
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/addLocBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_add_location_alt_48px" />
         </LinearLayout>
 
@@ -73,7 +75,7 @@
 
             <EditText
                 android:id="@+id/locationAlias"
-                android:layout_width="260sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="목적지 별칭을 입력해주세요."
                 android:textSize="18sp"
@@ -105,4 +107,5 @@
             app:layout_constraintTop_toBottomOf="@+id/helpBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
