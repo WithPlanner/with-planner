@@ -22,11 +22,8 @@ import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.activity_etc.CategoryActivity
 import com.shop.withplanner.retrofit.RetrofitService
 import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import okio.BufferedSink
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +36,7 @@ class CommunityCreateActivity : AppCompatActivity() {
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
     var theNumberList= arrayOf(1,2,3,4,5,6,7,8,9,10)
     var numberOfPerson = 1  // 인원을 담는 변수
+    lateinit var imgFile : File
 
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -68,7 +66,9 @@ class CommunityCreateActivity : AppCompatActivity() {
         val loadImage = registerForActivityResult(ActivityResultContracts.GetContent(),
             ActivityResultCallback {
                 binding.imageText.visibility = View.INVISIBLE
-                binding.imageBtn.setImageURI(it) }
+                binding.imageBtn.setImageURI(it)
+                imgFile = File(it.toString())
+            }
         )
         binding.imageBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })
@@ -169,14 +169,14 @@ class CommunityCreateActivity : AppCompatActivity() {
                 Toast.makeText(this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else{
-
-//                val requestFile : RequestBody = RequestBody.create("image/*".toMediaType(), File(loadImage))
-                val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
-                val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
-                val categoryRequestBody : RequestBody = category.toPlainRequestBody()
-                val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
-                val dayRequestBody : RequestBody = day.toPlainRequestBody()
-                val timeRequestBody : RequestBody = time.toPlainRequestBody()
+                val requestFile = RequestBody.create(MediaType.parse("image/*"),  imgFile)
+                val imgRequestBody = MultipartBody.Part.createFormData("communityImg", imgFile.name, requestFile)
+//                val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
+//                val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
+//                val categoryRequestBody : RequestBody = category.toPlainRequestBody()
+//                val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
+//                val dayRequestBody : RequestBody = day.toPlainRequestBody()
+//                val timeRequestBody : RequestBody = time.toPlainRequestBody()
 
                 if(authType.equals("post")) {
 //                    RetrofitService.communityService.makePostCommunity()
@@ -208,12 +208,12 @@ class CommunityCreateActivity : AppCompatActivity() {
         timePickerDialog.show()
     }
 
-    inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
-        override fun contentType(): MediaType = "image/jpeg".toMediaType()
-        override fun writeTo(sink: BufferedSink) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 99, sink.outputStream())
-        }
-    }
-
-    private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())
+//    inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
+//        override fun contentType(): MediaType = "image/jpeg".toMediaType()
+//        override fun writeTo(sink: BufferedSink) {
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 99, sink.outputStream())
+//        }
+//    }
+//
+//    private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())
 }

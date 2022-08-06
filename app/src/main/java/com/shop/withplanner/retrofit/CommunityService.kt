@@ -2,6 +2,7 @@ package com.shop.withplanner.retrofit
 
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.dto.Result
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -18,7 +19,7 @@ interface CommunityService {
     @POST("make/post")
     fun makePostCommunity(
         @Header("X-AUTH-TOKEN") token : String?,
-        @Part communityImg: RequestBody,
+        @Part communityImg: MultipartBody.Part,
         @Part data: HashMap<String, RequestBody>
     ) : Call<Result>
 

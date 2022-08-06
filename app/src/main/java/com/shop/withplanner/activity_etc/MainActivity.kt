@@ -20,8 +20,13 @@ import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
+import com.shop.withplanner.dto.EmailAuth
+import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -38,8 +43,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //getHashKey();
+        Log.d("MAIN","token = " + sharedManager.getToken())
 
         RetrofitService.communityService.mainListing(sharedManager.getToken())
+            ?.enqueue(object : Callback<MainList> {
+                override fun onResponse(call: Call<MainList>, response: Response<MainList>) {
+                    if(response.isSuccessful) {
+                        var result: MainList? = response.body()
+                        if (result?.isSuccess == true) {
+                            Log.d("MAIN", "onResponse 성공" + result?.toString())
+                        }
+                    } else {
+                        Log.d("MAIN", "onResponse 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<MainList>, t: Throwable) {
+                    Log.d("MAIN", "onFailure 에러: " + t.message.toString())
+                }
+
+            } )
 
 
 
