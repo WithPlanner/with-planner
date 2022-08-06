@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.activity_etc.CategoryActivity
+import com.shop.withplanner.community.CommunitySearchLocationActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -125,6 +126,7 @@ class CommunityCreateActivity : AppCompatActivity() {
 
         binding.theNumberSpinner.adapter=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, theNumberList)
 
+        // https://velog.io/@1106laura/Retrofit%EC%97%90%EC%84%9C-Multipart-%EC%84%9C%EB%B2%84-%ED%86%B5%EC%8B%A0-with-Kotlin
         binding.theNumberSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
