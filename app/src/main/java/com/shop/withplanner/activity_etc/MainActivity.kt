@@ -13,16 +13,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-import com.shop.withplanner.activity_etc.MyCalendarActivity
 import com.shop.withplanner.R
 import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.activity_community.CommunityJoinActivity
 import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMainBinding
+import com.shop.withplanner.dto.CommunityList
+import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import retrofit2.Call
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val recommendRV_Items =  mutableListOf<ContentsModel>()
     private val hotRV_Items =  mutableListOf<ContentsModel>()
     private val newRV_Items =  mutableListOf<ContentsModel>()
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +69,24 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        Log.d("Why", sharedManager.getToken())
         // 커뮤니티 리스팅
+        RetrofitService.userService.getCommunityList("Bearer ${sharedManager.getToken()}")?.enqueue(object: Callback<CommunityList> {
+            override fun onResponse(call: Call<CommunityList>, response: Response<CommunityList>) {
+                if(response.isSuccessful) {
+                    val communityList = response.body()
+                    Log.d("getCommunityList", communityList.toString())
+
+                }
+                else {
+                    Log.d("getCommunityList", "onResponse 실패: " + response.errorBody()?.string()!!)
+                    sharedManager.getToken()
+                }
+            }
+            override fun onFailure(call: Call<CommunityList>, t: Throwable) {
+                Log.d("getCommunityList", "onFailure 에러: " + t.message.toString())
+            }
+        })
         val recRV = binding.recommendRecyclerView
         val myRV = binding.myRecyclerView
         val hotRV = binding.hotRecyclerView

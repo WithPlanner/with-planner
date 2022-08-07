@@ -1,10 +1,8 @@
 package com.shop.withplanner.retrofit
 
-import com.shop.withplanner.dto.AuthNumber
-import com.shop.withplanner.dto.EmailAuth
-import com.shop.withplanner.dto.Result
+import android.graphics.Bitmap
+import com.shop.withplanner.dto.*
 import retrofit2.Call
-import com.shop.withplanner.dto.Token
 import retrofit2.http.*
 
 interface UserService {
@@ -44,4 +42,10 @@ interface UserService {
     fun recommendCommunity(
         @Body params: HashMap<String, String>,
     ): Call<Result>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @GET("/main")
+    fun getCommunityList(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<CommunityList>
 }
