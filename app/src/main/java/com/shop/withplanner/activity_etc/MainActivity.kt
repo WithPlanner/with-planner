@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private val myRV_Items =  mutableListOf<ContentsModel>()
-    private val forRV_Items =  mutableListOf<ContentsModel>()
+    private val recommendRV_Items =  mutableListOf<ContentsModel>()
     private val hotRV_Items =  mutableListOf<ContentsModel>()
-    private val recRV_Items =  mutableListOf<ContentsModel>()
+    private val newRV_Items =  mutableListOf<ContentsModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
               )
             )
-            forRV_Items.add(
+            recommendRV_Items.add(
                 ContentsModel(
                     "뜨개 by 뜨개왕",
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
@@ -57,78 +57,40 @@ class MainActivity : AppCompatActivity() {
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                 )
             )
-            recRV_Items.add(
+            newRV_Items.add(
                 ContentsModel(
                     "미라클모닝 by 굿모닝",
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                 )
             )
         }
-        // 가능하면 함수 합치기
-        viewForRV()     // 회원님을 위한 습관모임
-        viewMyRV()     // 회원님이 참여하는 습관모임
-        viewHotRV()     // 회원님이 참여하는 습관모임
-        viewRecRV()     // 회원님이 참여하는 습관모임
+        // 커뮤니티 리스팅
+        val recRV = binding.recommendRecyclerView
+        val myRV = binding.myRecyclerView
+        val hotRV = binding.hotRecyclerView
+        val newRV = binding.newRecyclerView
+        val intent_join = Intent(this@MainActivity, CommunityJoinActivity::class.java)
+        val intent_mainpost = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
+
+        viewCommunityList(recRV, recommendRV_Items, intent_join)     // 회원님을 위한 습관모임
+        viewCommunityList(myRV, myRV_Items, intent_mainpost)     // 회원님이 참여하는 습관모임
+        viewCommunityList(hotRV, hotRV_Items, intent_join)     // 가장 활성화된 습관모임
+        viewCommunityList(newRV, newRV_Items, intent_join)     // 최신 습관모임
 
 
         // 마이페이지로
         binding.myBtn.setOnClickListener{
             startActivity(Intent(this, MyCalendarActivity::class.java))
         }
-
-
     }
-    private fun viewForRV() {
-        val rv = binding.forRecyclerView
 
-        val contentsAdapter = ContentsAdapter(this, forRV_Items)
+    // 커뮤니티 리스팅 함수
+    private fun viewCommunityList(rv: RecyclerView, items: MutableList<ContentsModel>, intent: Intent) {
+        val contentsAdapter = ContentsAdapter(this, items)
         rv.adapter = contentsAdapter
 
         contentsAdapter.itemClick = object : ContentsAdapter.ItemClick{
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-    }
-    private fun viewMyRV() {
-        val rv = binding.myRecyclerView
-
-        val contentsAdapter = ContentsAdapter(this ,myRV_Items)
-        rv.adapter = contentsAdapter
-
-        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-    }
-    private fun viewHotRV() {
-        val rv = binding.hotRecyclerView
-
-        val contentsAdapter = ContentsAdapter(this ,hotRV_Items)
-        rv.adapter = contentsAdapter
-
-        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-    }
-    private fun viewRecRV() {
-        val rv = binding.recentRecyclerView
-
-        val contentsAdapter = ContentsAdapter(this ,recRV_Items)
-        rv.adapter = contentsAdapter
-
-        contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
                 startActivity(intent)
             }
         }
