@@ -1,5 +1,6 @@
 package com.shop.withplanner.retrofit
 
+import com.shop.withplanner.dto.CommunityPostMain
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.dto.Result
@@ -10,12 +11,6 @@ import retrofit2.http.*
 import java.time.LocalTime
 
 interface CommunityService {
-
-    @Headers( "content-type: application/json")
-    @GET("/main")
-    fun mainListing(
-        @Header("X-AUTH-TOKEN") token : String?,
-    ) : Call<MainList>
 
     @Multipart
     @POST("make/post")
@@ -30,6 +25,12 @@ interface CommunityService {
         @Part("time") time : RequestBody
     ) : Call<MakeCommunity>
 
+    @Headers( "content-type: application/json")
+    @GET("/main")
+    fun mainListing(
+        @Header("X-AUTH-TOKEN") token : String?,
+    ) : Call<MainList>
+
     @Multipart
     @POST("make/loc")
     fun makeMapCommunity(
@@ -42,4 +43,11 @@ interface CommunityService {
         @Part("day") day : RequestBody,
         @Part("time") time : RequestBody
     ) : Call<MakeCommunity>
+
+    @Headers( "content-type: application/json")
+    @GET("community/post/{communityIdx}")
+    fun getPostCommunityMain(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Path("communityIdx") communityIdx : Long
+    ) : Call<CommunityPostMain>
 }

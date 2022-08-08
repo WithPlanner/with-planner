@@ -6,7 +6,6 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -221,6 +220,10 @@ class CommunityCreateActivity : AppCompatActivity() {
                             if(response.isSuccessful) {
                                 var result : MakeCommunity? = response.body()
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
+                                var intent = Intent(context, CommunityMainPostActivity::class.java)
+                                intent.putExtra("communityId", result!!.result.id.toLong())
+                                startActivity(intent)
+                                finish()
                             } else {
                                 Log.d("MakeCommunity", "onResponse 실패");
                             }
@@ -241,6 +244,10 @@ class CommunityCreateActivity : AppCompatActivity() {
                             if(response.isSuccessful) {
                                 var result : MakeCommunity? = response.body()
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
+                                var intent = Intent(context, CommunityMainLocationActivity::class.java)
+                                intent.putExtra("communityId", result!!.result.id)
+                                startActivity(intent)
+                                finish()
                             } else {
                                 Log.d("MakeCommunity", "onResponse 실패");
                             }
@@ -251,9 +258,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                         }
                     })
                 }
-                val intent = Intent(this, CommunityMainLocationActivity::class.java)
-                startActivity(intent)
-                finish()
+
             }
         }
         
@@ -268,7 +273,7 @@ class CommunityCreateActivity : AppCompatActivity() {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            textview.text = SimpleDateFormat("HH:mm").format(cal.time)
+            textview.text = SimpleDateFormat("kk:mm").format(cal.time)
         }
         var timePickerDialog=TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true)
         timePickerDialog.setButton(TimePickerDialog.BUTTON_POSITIVE,"확인",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = SimpleDateFormat("HH시 mm분").format(cal.time) })

@@ -3,19 +3,26 @@ package com.shop.withplanner.activity_community
 import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityPostBinding
+import com.shop.withplanner.dto.CommunityPostMain
+import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
+import retrofit2.Call
+import retrofit2.Response
 
 class CommunityPostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityPostBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
