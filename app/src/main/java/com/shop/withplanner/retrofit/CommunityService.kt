@@ -1,11 +1,13 @@
 package com.shop.withplanner.retrofit
 
 import com.shop.withplanner.dto.MainList
+import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.dto.Result
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.time.LocalTime
 
 interface CommunityService {
 
@@ -20,14 +22,24 @@ interface CommunityService {
     fun makePostCommunity(
         @Header("X-AUTH-TOKEN") token : String?,
         @Part communityImg: MultipartBody.Part,
-        @Part data: HashMap<String, RequestBody>
-    ) : Call<Result>
+        @Part("name") name : RequestBody,
+        @Part("introduce") introduce : RequestBody,
+        @Part("category") category : RequestBody,
+        @Part("headCount") headCount : RequestBody,
+        @Part("day") day : RequestBody,
+        @Part("time") time : RequestBody
+    ) : Call<MakeCommunity>
 
     @Multipart
     @POST("make/loc")
     fun makeMapCommunity(
         @Header("X-AUTH-TOKEN") token : String?,
-        @Part communityImg: RequestBody,
-        @Part data: HashMap<String, RequestBody>
-    ) : Call<Result>
+        @Part communityImg: MultipartBody.Part,
+        @Part("name") name : RequestBody,
+        @Part("introduce") introduce : RequestBody,
+        @Part("category") category : RequestBody,
+        @Part("headCount") headCount : RequestBody,
+        @Part("day") day : RequestBody,
+        @Part("time") time : RequestBody
+    ) : Call<MakeCommunity>
 }

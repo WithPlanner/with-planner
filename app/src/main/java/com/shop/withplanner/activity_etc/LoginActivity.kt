@@ -55,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
 
                         val currentUser = User(result?.token)
                         sharedManager.saveCurrentUser(currentUser)  // token 저장
-                        Log.d("TAG:", sharedManager.getToken())
 
                         Log.d("LOGIN", "onResponse 성공: " + result?.toString());
                         startActivity(intent)

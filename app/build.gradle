@@ -79,4 +79,7 @@ dependencies {
 
     //okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.12.13'
+
+    //composable
+    implementation 'androidx.activity:activity-compose:1.5.1'
 }

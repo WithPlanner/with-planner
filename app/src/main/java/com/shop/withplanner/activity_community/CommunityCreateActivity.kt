@@ -6,8 +6,13 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
+import android.database.Cursor
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -19,25 +24,34 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
-import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.activity_etc.CategoryActivity
+import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
+import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Response
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class CommunityCreateActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCommunityCreateBinding
-    val checkedDays =  booleanArrayOf(false,false,false,false,false,false,false) //체크된 요일
-    val dayList= arrayOf<String>("월", "화", "수", "목", "금", "토", "일")
+    val checkedDays = booleanArrayOf(false, false, false, false, false, false, false) //체크된 요일
+    val dayList = arrayOf<String>("월", "화", "수", "목", "금", "토", "일")
     val checkedItemList= ArrayList<String>() //선택된 요일(항목)을 담는 리스트
     var theNumberList= arrayOf(1,2,3,4,5,6,7,8,9,10)
     var numberOfPerson = 1  // 인원을 담는 변수
     lateinit var imgFile : File
+    var authType: String = "post"
+
+    val context : Context = this
+
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
 
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -49,6 +63,7 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
         }
     }
+
     // 카테고리 값 전달을 위한 ActivityResultHandler
     val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if(result.resultCode == RESULT_OK) {
@@ -69,10 +84,23 @@ class CommunityCreateActivity : AppCompatActivity() {
                 binding.imageText.visibility = View.INVISIBLE
                 binding.imageBtn.setImageURI(it)
 
-                imgFile = File(it.toString())
-                Log.d("TAG:", it.toString())
+                // API level 28 이하는 MediaStore.Images.Media.getBitmap 사용 (deprecated)
+                // 그 이상부터 ImageDecoder.createSource 사용
+                val bitmap = it?.let {
+                    if (Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images
+                            .Media.getBitmap(context.contentResolver, it)
+                    } else {
+                        val source = ImageDecoder
+                            .createSource(context.contentResolver, it)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+                }
+
+                imgFile = UriUtil.toFile(context, it!!)
             }
         )
+
         binding.imageBtn.setOnClickListener(View.OnClickListener {
             loadImage.launch("image/*") })
 
@@ -149,23 +177,24 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
         }
 
+        // 인증방식
+        binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
+            when(checkId){
+                R.id.postAuthBtn -> authType = "post"
+                R.id.locAuthBtn -> authType = "map"
+            }
+        }
+
         // 완료버튼
         binding.doneBtn.setOnClickListener{
             // 이미지, 위치정보도 저장해야함
             val communityName = binding.communityName.text.toString().trim()
             val category = binding.categoryTv.text.toString()
-            var authType: String = ""
             val day = binding.dayTextView.text.toString()
-            val time = binding.timeTextView.text.toString()
+            val time = binding.timeTextView.text.toString() + ":00"
             val numbOfPerson = numberOfPerson.toString()
             val introduce = binding.introduce.text.toString().trim()
 
-            // 인증방식
-            binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
-                when(checkId){
-                    R.id.postAuthBtn -> authType = "post"
-                    R.id.locAuthBtn -> authType = "map"
-                }}
 
             if(communityName.isEmpty() || category.isEmpty() || day.isEmpty() || time.isEmpty() ||
                     numbOfPerson.isEmpty() || introduce.isEmpty()) {
@@ -174,17 +203,53 @@ class CommunityCreateActivity : AppCompatActivity() {
             else{
                 val requestFile = RequestBody.create(MediaType.parse("image/*"),  imgFile)
                 val imgRequestBody = MultipartBody.Part.createFormData("communityImg", imgFile.name, requestFile)
-//                val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
-//                val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
-//                val categoryRequestBody : RequestBody = category.toPlainRequestBody()
-//                val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
-//                val dayRequestBody : RequestBody = day.toPlainRequestBody()
-//                val timeRequestBody : RequestBody = time.toPlainRequestBody()
+                Log.d("LISTENER", authType)
+                val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
+                val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
+                val categoryRequestBody : RequestBody = category.toPlainRequestBody()
+                val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
+                val dayRequestBody : RequestBody = day.toPlainRequestBody()
+                val timeRequestBody : RequestBody = time.toPlainRequestBody()
 
                 if(authType.equals("post")) {
-//                    RetrofitService.communityService.makePostCommunity()
+                    RetrofitService.communityService.makePostCommunity(sharedManager.getToken(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                        retrofit2.Callback<MakeCommunity> {
+                        override fun onResponse(
+                            call: Call<MakeCommunity>,
+                            response: Response<MakeCommunity>
+                        ) {
+                            if(response.isSuccessful) {
+                                var result : MakeCommunity? = response.body()
+                                Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
+                            } else {
+                                Log.d("MakeCommunity", "onResponse 실패");
+                            }
+                        }
+
+                        override fun onFailure(call: Call<MakeCommunity>, t: Throwable) {
+                            Log.d("MakeCommunity", "onFailure 에러: " + t.message.toString());
+                        }
+                    })
+
                 } else if (authType.equals("map")) {
-//                    RetrofitService.communityService.makeMapCommunity()
+                    RetrofitService.communityService.makeMapCommunity(sharedManager.getToken(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                        retrofit2.Callback<MakeCommunity> {
+                        override fun onResponse(
+                            call: Call<MakeCommunity>,
+                            response: Response<MakeCommunity>
+                        ) {
+                            if(response.isSuccessful) {
+                                var result : MakeCommunity? = response.body()
+                                Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
+                            } else {
+                                Log.d("MakeCommunity", "onResponse 실패");
+                            }
+                        }
+
+                        override fun onFailure(call: Call<MakeCommunity>, t: Throwable) {
+                            Log.d("MakeCommunity", "onFailure 에러: " + t.message.toString());
+                        }
+                    })
                 }
                 val intent = Intent(this, CommunityMainLocationActivity::class.java)
                 startActivity(intent)
@@ -203,7 +268,7 @@ class CommunityCreateActivity : AppCompatActivity() {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            textview.text = SimpleDateFormat("HH시 mm분").format(cal.time)
+            textview.text = SimpleDateFormat("HH:mm").format(cal.time)
         }
         var timePickerDialog=TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true)
         timePickerDialog.setButton(TimePickerDialog.BUTTON_POSITIVE,"확인",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = SimpleDateFormat("HH시 mm분").format(cal.time) })
@@ -211,12 +276,48 @@ class CommunityCreateActivity : AppCompatActivity() {
         timePickerDialog.show()
     }
 
-//    inner class BitmapRequestBody(private val bitmap: Bitmap) : RequestBody() {
-//        override fun contentType(): MediaType = "image/jpeg".toMediaType()
-//        override fun writeTo(sink: BufferedSink) {
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 99, sink.outputStream())
-//        }
-//    }
-//
-//    private fun String?.toPlainRequestBody() = requireNotNull(this).toRequestBody("text/plain".toMediaTypeOrNull())
+    private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this)
+
+    object FileUtil {
+        // 임시 파일 생성
+        fun createTempFile(context: Context, fileName: String): File {
+            val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            return File(storageDir, fileName)
+        }
+
+        // 파일 내용 스트림 복사
+        fun copyToFile(context: Context, uri: Uri, file: File) {
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(file)
+
+            val buffer = ByteArray(4 * 1024)
+            while (true) {
+                val byteCount = inputStream!!.read(buffer)
+                if (byteCount < 0) break
+                outputStream.write(buffer, 0, byteCount)
+            }
+
+            outputStream.flush()
+        }
+    }
+
+    object UriUtil {
+        // URI -> File
+        fun toFile(context: Context, uri: Uri): File {
+            val fileName = getFileName(context, uri)
+
+            val file = FileUtil.createTempFile(context, fileName)
+            FileUtil.copyToFile(context, uri, file)
+
+            return File(file.absolutePath)
+        }
+
+        // get file name & extension
+        fun getFileName(context: Context, uri: Uri): String {
+            val name = uri.toString().split("/").last()
+            val ext = context.contentResolver.getType(uri)!!.split("/").last()
+
+            return "$name.$ext"
+        }
+    }
 }
