@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
-        Log.d("Why", sharedManager.getToken())
         // 커뮤니티 리스팅
         RetrofitService.userService.getCommunityList(sharedManager.getToken())?.enqueue(object: Callback<CommunityList> {
             override fun onResponse(call: Call<CommunityList>, response: Response<CommunityList>) {

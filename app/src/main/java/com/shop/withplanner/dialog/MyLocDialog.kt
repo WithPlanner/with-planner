@@ -23,11 +23,11 @@ import com.shop.withplanner.dto.Result
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
     private lateinit var binding : DlgMyLocBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(requireContext()) }
 
     // context 사용을 위한 코드
     var location: String? = "목적지를 입력해주세요."
     val body = HashMap<String, String>()
-    private val sharedManager: SharedManager by lazy { SharedManager(requireContext()) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
