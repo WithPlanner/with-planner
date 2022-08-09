@@ -55,7 +55,7 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
                 resultName = locationItems[position].name
                 var longitude = locationItems[position].longitude
                 var latitude = locationItems[position].latitude
-                var roadAddress = locationItems[position].name
+                var roadAddress = locationItems[position].roadAddress
                 var address = locationItems[position].address
 
                 val nextIntent = Intent(this@CommunitySearchLocationActivity, MyLocDialog::class.java)

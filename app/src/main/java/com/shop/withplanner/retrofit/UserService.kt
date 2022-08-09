@@ -48,4 +48,12 @@ interface UserService {
     fun getCommunityList(
         @Header("X-AUTH-TOKEN") token: String
     ): Call<CommunityList>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/community/loc/search/{communityId}")
+    fun sendMyLoc(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body myLoc: MyLoc,
+        @Path("communityId") communityId: Long
+    ): Call<Result>
 }

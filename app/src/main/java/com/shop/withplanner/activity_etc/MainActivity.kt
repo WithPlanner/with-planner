@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         }
         Log.d("Why", sharedManager.getToken())
         // 커뮤니티 리스팅
-        RetrofitService.userService.getCommunityList("Bearer ${sharedManager.getToken()}")?.enqueue(object: Callback<CommunityList> {
+        RetrofitService.userService.getCommunityList(sharedManager.getToken())?.enqueue(object: Callback<CommunityList> {
             override fun onResponse(call: Call<CommunityList>, response: Response<CommunityList>) {
                 if(response.isSuccessful) {
                     val communityList = response.body()
