@@ -21,56 +21,14 @@ data class MainList (
 data class ResultMain(
     @Expose
     @SerializedName("recommendList")
-    var recommendList: List<RecommendList>,
+    var recommendList: List<CommunityList>,
     @Expose
     @SerializedName("myList")
-    var myList: List<MyList>,
+    var myList: List<CommunityList>,
     @Expose
     @SerializedName("hotList")
-    var hotList: List<HotList>,
+    var hotList: List<CommunityList>,
     @Expose
     @SerializedName("newList")
-    var newList: List<NewList>
-)
-
-data class NewList(
-    @Expose
-    @SerializedName("communityId")
-    var communityId: Int,
-    @Expose
-    @SerializedName("name")
-    val name: String,
-    @Expose
-    @SerializedName("communityImg")
-    val communityImg: String
-)
-
-data class HotList(
-    @Expose
-    @SerializedName("communityId")
-    var communityId: Int,
-    @Expose
-    @SerializedName("name")
-    val name: String,
-    @Expose
-    @SerializedName("communityImg")
-    val communityImg: String
-)
-
-data class MyList(
-    @Expose
-    @SerializedName("communityId")
-    var communityId: Int,
-    @Expose
-    @SerializedName("name")
-    val name: String
-)
-
-data class RecommendList(
-    @Expose
-    @SerializedName("communityId")
-    var communityId: Int,
-    @Expose
-    @SerializedName("name")
-    val name: String
+    var newList: List<CommunityList>
 )

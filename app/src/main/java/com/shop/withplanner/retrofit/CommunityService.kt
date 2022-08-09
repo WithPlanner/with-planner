@@ -31,6 +31,13 @@ interface CommunityService {
         @Header("X-AUTH-TOKEN") token : String?,
     ) : Call<MainList>
 
+    @Headers( "content-type: application/json")
+    @GET("/main")
+    fun searchListing(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Query("query") query : String
+    ) : Call<MainList>
+
     @Multipart
     @POST("make/loc")
     fun makeMapCommunity(

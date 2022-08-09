@@ -121,7 +121,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
             } )
 
 
-
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
