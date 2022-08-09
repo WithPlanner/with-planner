@@ -22,6 +22,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityPostBoardBinding
     private val postItems =  mutableListOf<PostModel>()
     private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var category : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
 
         val intent = intent
         var communityId = intent.getLongExtra("communityId", -1L)
-        var category = intent.getStringExtra("category")
+        category = intent.getStringExtra("category").toString()
 
         RetrofitService.postService.getAllPost(sharedManager.getToken(), communityId).enqueue(
             object : retrofit2.Callback<ALlPosts> {
@@ -82,7 +83,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
                 PostModel(
                     post.name,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, "category",
+                    post.images[0].createdAt, category,
                     post.content, 2,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )
