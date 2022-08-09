@@ -14,5 +14,5 @@ data class CommunityList(
 data class Community (
     @SerializedName("communityId") val communityId: Int,
     @SerializedName("name") val name: String,
-//    @SerializedName("communityImg")  val communityImg: Bitmap? = null
+    @SerializedName("communityImg")  val communityImg: String? = null
 )

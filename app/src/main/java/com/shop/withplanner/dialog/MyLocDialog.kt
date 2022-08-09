@@ -102,7 +102,7 @@ class MyLocDialog() : DialogFragment() {
                 val roadAddress: String? = bundle?.getString("roadAddress")
                 val address: String? = bundle?.getString("address")
                 val resultName: String? = bundle?.getString("resultName")
-                val communityId: Long = 5
+                val communityId: Long = 5   // 이거 앞에서 받아올것
 
                 myLoc = MyLoc(longitude!!, latitude!!, roadAddress, address, locationAlias, resultName)
 
