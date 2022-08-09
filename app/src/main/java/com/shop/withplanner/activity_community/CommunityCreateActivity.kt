@@ -28,6 +28,7 @@ import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.ImgUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -96,7 +97,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                     }
                 }
 
-                imgFile = UriUtil.toFile(context, it!!)
+                imgFile = ImgUtil.UriUtil.toFile(context, it!!)
             }
         )
 
@@ -202,7 +203,6 @@ class CommunityCreateActivity : AppCompatActivity() {
             else{
                 val requestFile = RequestBody.create(MediaType.parse("image/*"),  imgFile)
                 val imgRequestBody = MultipartBody.Part.createFormData("communityImg", imgFile.name, requestFile)
-                Log.d("LISTENER", authType)
                 val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
                 val introduceRequestBody : RequestBody = introduce.toPlainRequestBody()
                 val categoryRequestBody : RequestBody = category.toPlainRequestBody()
@@ -245,7 +245,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                                 var result : MakeCommunity? = response.body()
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
                                 var intent = Intent(context, CommunityMainLocationActivity::class.java)
-                                intent.putExtra("communityId", result!!.result.id)
+                                intent.putExtra("communityId", result!!.result.id.toLong())
                                 startActivity(intent)
                                 finish()
                             } else {
@@ -282,47 +282,4 @@ class CommunityCreateActivity : AppCompatActivity() {
     }
 
     private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this)
-
-    object FileUtil {
-        // 임시 파일 생성
-        fun createTempFile(context: Context, fileName: String): File {
-            val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            return File(storageDir, fileName)
-        }
-
-        // 파일 내용 스트림 복사
-        fun copyToFile(context: Context, uri: Uri, file: File) {
-            val inputStream = context.contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(file)
-
-            val buffer = ByteArray(4 * 1024)
-            while (true) {
-                val byteCount = inputStream!!.read(buffer)
-                if (byteCount < 0) break
-                outputStream.write(buffer, 0, byteCount)
-            }
-
-            outputStream.flush()
-        }
-    }
-
-    object UriUtil {
-        // URI -> File
-        fun toFile(context: Context, uri: Uri): File {
-            val fileName = getFileName(context, uri)
-
-            val file = FileUtil.createTempFile(context, fileName)
-            FileUtil.copyToFile(context, uri, file)
-
-            return File(file.absolutePath)
-        }
-
-        // get file name & extension
-        fun getFileName(context: Context, uri: Uri): String {
-            val name = uri.toString().split("/").last()
-            val ext = context.contentResolver.getType(uri)!!.split("/").last()
-
-            return "$name.$ext"
-        }
-    }
 }

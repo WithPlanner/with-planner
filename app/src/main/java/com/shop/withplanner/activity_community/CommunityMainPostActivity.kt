@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityMainPostBinding
 import com.shop.withplanner.dto.CommunityPostMain
+import com.shop.withplanner.dto.Posts
 import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
@@ -56,7 +57,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
                 ) {
                     if(response.isSuccessful) {
                         var result = response.body()!!.result
-                        Log.d("PostCommunityMain", "onResponse 성공: " + result?.toString());
                         communityId = result.communityId.toLong()
                         communityName = result.name
                         communityImg = result.communityImg
@@ -67,7 +67,11 @@ class CommunityMainPostActivity : AppCompatActivity() {
                         currentCount = result.currentCount
                         days = result.days
                         time = result.time
+                        var posts = result.posts
 
+                        if(posts.isNotEmpty()) {
+                            makeCard(posts)
+                        }
 
                         Glide.with(context)
                             .load(communityImg)
@@ -131,18 +135,26 @@ class CommunityMainPostActivity : AppCompatActivity() {
         }
 
         binding.postBtn.setOnClickListener{
-            startActivity(Intent(this, CommunityPostActivity::class.java))
+            var intent = Intent(this, CommunityPostActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            startActivity(intent)
         }
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    fun makeCard(posts: List<Posts>) {
         // 리사이클러뷰
-        for(i in 1..3) {
+        for(post in posts) {
             postItems.add(
                 PostModel(
-                    "수정이",
+                    post.name,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    "2022-07-15 00:00:00", "토익공부",
-                    "단어 100개 외우기 끝", 2,
-                    "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
+                    post.images[0].createdAt, category,
+                    post.content, 2,
+                    post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )
             )
         }
@@ -154,14 +166,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
         // 구분선
         val decoration = DividerItemDecoration(this, RecyclerView.VERTICAL)
         rv.addItemDecoration(decoration)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    fun makeMain() {
-
     }
 
 
