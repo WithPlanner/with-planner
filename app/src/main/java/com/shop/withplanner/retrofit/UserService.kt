@@ -1,10 +1,8 @@
 package com.shop.withplanner.retrofit
 
-import com.shop.withplanner.dto.AuthNumber
-import com.shop.withplanner.dto.EmailAuth
-import com.shop.withplanner.dto.Result
+import android.graphics.Bitmap
+import com.shop.withplanner.dto.*
 import retrofit2.Call
-import com.shop.withplanner.dto.Token
 import retrofit2.http.*
 
 interface UserService {
@@ -43,5 +41,13 @@ interface UserService {
     @POST("/investigation")
     fun recommendCommunity(
         @Body params: HashMap<String, String>,
+    ): Call<Result>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/community/loc/search/{communityId}")
+    fun sendMyLoc(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Body myLoc: MyLoc,
+        @Path("communityId") communityId: Long
     ): Call<Result>
 }
