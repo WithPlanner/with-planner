@@ -110,7 +110,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
                         binding.contentDateTextView.text = createdAt
 
                     } else {
-                        Log.d("PostCommunityMain", "onResponse 실패: ");
+                        Log.d("PostCommunityMain", "onResponse 실패");
                     }
                 }
 
@@ -131,7 +131,10 @@ class CommunityMainPostActivity : AppCompatActivity() {
         }
 
         binding.currentPost.setOnClickListener{
-            startActivity(Intent(this, CommunityPostBoardActivity::class.java))
+            var intent = Intent(this, CommunityPostBoardActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            startActivity(intent)
         }
 
         binding.postBtn.setOnClickListener{
