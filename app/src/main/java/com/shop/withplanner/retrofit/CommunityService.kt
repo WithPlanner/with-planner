@@ -1,9 +1,6 @@
 package com.shop.withplanner.retrofit
 
-import com.shop.withplanner.dto.CommunityPostMain
-import com.shop.withplanner.dto.MainList
-import com.shop.withplanner.dto.MakeCommunity
-import com.shop.withplanner.dto.Result
+import com.shop.withplanner.dto.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

@@ -15,5 +15,9 @@ data class CommunityList(
     val communityImg: String,
     @Expose
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @Expose
+    @SerializedName("category")
+    val category: String
+
 )

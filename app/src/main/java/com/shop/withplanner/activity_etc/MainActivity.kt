@@ -43,9 +43,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+
+        // 리사이클러뷰 및 인텐트 정의
         val recRV = binding.recommendRecyclerView
         val myRV = binding.myRecyclerView
         val hotRV = binding.hotRecyclerView
@@ -53,18 +54,20 @@ class MainActivity : AppCompatActivity() {
         val intent_join = Intent(this@MainActivity, CommunityJoinActivity::class.java)
         val intent_mainpost = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
 
+        // 커뮤니티 GET 해서 리스팅
         RetrofitService.communityService.mainListing(sharedManager.getToken())
             ?.enqueue(object : Callback<MainList> {
                 override fun onResponse(call: Call<MainList>, response: Response<MainList>) {
                     if (response.isSuccessful) {
+
                         var result: MainList? = response.body()
+
                         if (result?.isSuccess == true) {
                             var postList = result.result
-                            // 가능하면 함수 합치기
-                            viewCommunityList(recRV, recommendRV_Items, intent_join,postList.recommendList)     // 회원님을 위한 습관모임
-                            viewCommunityList(myRV, myRV_Items, intent_mainpost, postList.myList)     // 회원님이 참여하는 습관모임
-                            viewCommunityList(hotRV, hotRV_Items, intent_join, postList.hotList)     // 가장 활성화된 습관모임
-                            viewCommunityList(newRV, newRV_Items, intent_join, postList.newList)     // 최신 습관모임
+                            viewCommunityList(recRV, intent_join, recommendRV_Items, postList.recommendList)     // 회원님을 위한 습관모임
+                            viewCommunityList(myRV, intent_mainpost, myRV_Items, postList.myList)     // 회원님이 참여하는 습관모임
+                            viewCommunityList(hotRV, intent_join, hotRV_Items, postList.hotList)     // 가장 활성화된 습관모임
+                            viewCommunityList(newRV, intent_join, newRV_Items, postList.newList)     // 최신 습관모임
 
                             Log.d("MAIN", "onResponse 성공" + result?.toString())
                         }
@@ -86,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 커뮤니티 리스팅 함수
-    private fun viewCommunityList(rv: RecyclerView, items: MutableList<ContentsModel>, intent: Intent, posts : List<CommunityList>) {
+    private fun viewCommunityList(rv: RecyclerView, intent: Intent, items: MutableList<ContentsModel>,  posts : List<CommunityList>) {
         for(post in posts) {
             items.add(
                 ContentsModel(
@@ -100,7 +103,8 @@ class MainActivity : AppCompatActivity() {
 
         contentsAdapter.itemClick = object : ContentsAdapter.ItemClick{
             override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@MainActivity, CommunityJoinActivity::class.java)
+                intent.putExtra("communityId", posts[position].communityId.toLong())
+                Log.d("Community:", posts[position].communityId.toString())
                 startActivity(intent)
             }
         }
