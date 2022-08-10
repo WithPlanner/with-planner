@@ -247,6 +247,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    //경도,위도 -> 주소
     fun callCoordToLoc(
         longitude : String,
         latitude : String

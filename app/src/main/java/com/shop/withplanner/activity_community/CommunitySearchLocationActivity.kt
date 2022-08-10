@@ -49,7 +49,6 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
         binding.rvLocation.adapter = locationAdapter
 
         //클릭 시 이벤트.
-
         locationAdapter.setItemClickListener(object: LocationAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 resultName = locationItems[position].name

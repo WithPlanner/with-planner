@@ -23,8 +23,6 @@ class CommunityPostBoardActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-
-
         // Loc 인증이면
 //        val destination = "도서관"
 //        for(i in 1..10) {
@@ -37,6 +35,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
 //                )
 //            )
 //        }
+
         // Post 인증이면 이게 나오도록 수정 필요
         for(i in 1..10) {
             postItems.add(
