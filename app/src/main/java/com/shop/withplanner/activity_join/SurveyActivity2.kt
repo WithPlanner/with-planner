@@ -79,7 +79,6 @@ class SurveyActivity2 : AppCompatActivity() {
                 override fun onFailure(call: Call<Result>, t: Throwable) {
                     Log.d("SURVEY", "onFailure 에러: " + t.message.toString())
                 }
-
             })
 
             // 제출시 survey1,2 스택에서 없애는 부분 구현하기
