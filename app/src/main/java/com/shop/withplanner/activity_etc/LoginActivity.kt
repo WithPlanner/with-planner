@@ -11,6 +11,8 @@ import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityLoginBinding
 import com.shop.withplanner.dto.Token
 import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.shared_preferences.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,6 +20,7 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     val body = HashMap<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,26 +47,28 @@ class LoginActivity : AppCompatActivity() {
             body.put("email", email)
             body.put("password", password)
 
-//            RetrofitService.userService.login(body)?.enqueue(object : Callback<Token> {
-//                override fun onResponse(call: Call<Token>, response: Response<Token>) {
-//                    if(response.isSuccessful){
-//                        // 정상적으로 통신이 성고된 경우
-//                        var result: Token? = response.body()
-//                        Log.d("LOGIN", "onResponse 성공: " + result?.toString());
-//                        startActivity(intent)
-//                    }else{
-//                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
-//                        Log.d("LOGIN", "onResponse 실패")
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Token>, t: Throwable) {
-//                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
-//                    Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
-//                }
-//            })
-            startActivity(intent)
+            RetrofitService.userService.login(body)?.enqueue(object : Callback<Token> {
+                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+                    if(response.isSuccessful){
+                        // 정상적으로 통신이 성공된 경우
+                        var result: Token? = response.body()
 
+                        val currentUser = User(result?.token)
+                        sharedManager.saveCurrentUser(currentUser)  // token 저장
+
+                        Log.d("LOGIN", "onResponse 성공: " + result?.toString());
+                        startActivity(intent)
+                    }else{
+                        // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
+                        Log.d("LOGIN", "onResponse 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<Token>, t: Throwable) {
+                    // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
+                    Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
+                }
+            })
         }
         // 회원가입 버튼
         binding.joinBtn.setOnClickListener{

@@ -68,7 +68,7 @@ class EmailActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<EmailAuth>, t: Throwable) {
-                        Log.d("EMAIL", "onFailure 에러: " + t.message.toString());
+                        Log.d("EMAIL", "onFailure 에러: " + t.message.toString())
                     }
                 })
             }

@@ -2,10 +2,11 @@ package com.shop.withplanner.shared_preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.shared_preferences.PreferenceHelper.set
 import com.shop.withplanner.shared_preferences.PreferenceHelper.get
 
-class SharedManager(context:Context) {
+class SharedManager(context: Context) {
     private val prefs: SharedPreferences = PreferenceHelper.defaultPrefs(context)
 
     fun saveCurrentUser(user: User) {
@@ -13,6 +14,7 @@ class SharedManager(context:Context) {
         prefs["nickname"] = user.nickname
         prefs["email"] = user.email
         prefs["password"] = user.password
+        prefs["token"] = user.token
     }
 
     fun getCurrentUser(): User {

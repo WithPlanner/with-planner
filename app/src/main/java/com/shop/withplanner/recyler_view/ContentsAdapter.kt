@@ -47,7 +47,6 @@ class ContentsAdapter (val context : Context, val List : MutableList<ContentsMod
             val rvText = itemView.findViewById<TextView>(R.id.rvTextArea)
 
             rvText.text = item.titleText
-            Log.d("TAG", item.imageUrl)
 
             Glide.with(context)
                 .load(item.imageUrl)

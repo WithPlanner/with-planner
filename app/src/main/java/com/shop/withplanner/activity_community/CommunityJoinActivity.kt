@@ -32,8 +32,9 @@ class CommunityJoinActivity: AppCompatActivity() {
         binding.joinBtn.setOnClickListener{
             // 서버에 유저 정보 보내주고 커뮤니티 정보 받아와서 intent
             // type이 map이면 MainLocation, 아니면 PostActivity로
-
-            val intent = Intent(this, CommunityMainLocationActivity::class.java)
+//            val intent = Intent(this, CommunityMainLocationActivity::class.java)
+            val intent = Intent(this, CommunityMainPostActivity::class.java)
+            intent.putExtra("communityId",38L)
             startActivity(intent)
         }
     }

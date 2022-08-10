@@ -13,6 +13,7 @@ import com.shop.withplanner.databinding.ActivityJoinBinding
 import com.shop.withplanner.dto.Result
 import com.shop.withplanner.dto.Token
 import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -98,9 +99,8 @@ class JoinActivity : AppCompatActivity() {
 
             // 조건 모두 충족시 가입 성공
             if(readyToJoin){
-                // 토큰 받아오기, 주소찾기 구현 필요, // 가입 후 이전 액티비티 스택에서 제거(뒤로가기시 회원가입창이 안뜨도록)
-
-                    body.put("email", email)
+                // 서버로 정보 전송
+                body.put("email", email)
                 body.put("pw", password)
                 body.put("name", name)
                 body.put("nickname", nickname)

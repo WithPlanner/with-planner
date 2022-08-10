@@ -1,7 +1,9 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,6 +15,7 @@ import com.shop.withplanner.databinding.ActivityCommunityMainLocationBinding
 import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
+import java.time.LocalTime
 
 
 class CommunityMainLocationActivity : AppCompatActivity() {
@@ -20,6 +23,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCommunityMainLocationBinding
     private val postItems =  mutableListOf<PostModel>()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,8 +52,10 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             startActivity(Intent(this, CommunityPostBoardActivity::class.java))
         }
 
+
         // 리사이클러뷰
         val destination = "도서관"
+        val postDate = "2022-08-09 00:00:00"
         for(i in 1..6) {
             postItems.add(
                 PostModel(
