@@ -11,7 +11,6 @@ import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
 import android.util.Log
 import com.shop.withplanner.activity_community.CommunitySearchLocationActivity
-import com.shop.withplanner.dto.CommunityList
 import com.shop.withplanner.dto.MyLoc
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
@@ -108,7 +107,7 @@ class MyLocDialog() : DialogFragment() {
 
                 Log.d("MYLOC", myLoc.toString())
 
-                RetrofitService.userService.sendMyLoc(sharedManager.getToken(), myLoc, communityId)?.
+                RetrofitService.userService.sendMyLoc(sharedManager.getToken(), myLoc, communityId).
                 enqueue(object:Callback<Result> {
                     override fun onResponse(call: Call<Result>, response: Response<Result>) {
                         if(response.isSuccessful) {

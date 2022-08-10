@@ -3,6 +3,7 @@ package com.shop.withplanner.activity_etc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,18 +11,47 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shop.withplanner.R
 import com.shop.withplanner.activity_community.CommunityCreateActivity
 import com.shop.withplanner.databinding.ActivityMyCalendarBinding
+import com.shop.withplanner.dto.CommunityList
+import com.shop.withplanner.dto.MyPageInfo
 import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
+import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
+import retrofit2.Call
+import retrofit2.Response
 
 class MyCalendarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyCalendarBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     private val items =  mutableListOf<ContentsModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_calendar)
+
+        RetrofitService.userService.myPageListing(sharedManager.getToken()).enqueue(
+            object : retrofit2.Callback<MyPageInfo> {
+                override fun onResponse(call: Call<MyPageInfo>, response: Response<MyPageInfo>) {
+                    if (response.isSuccessful) {
+                        var result = response.body()?.result
+                        binding.profileNickTextView.text = result!!.nickname
+                        binding.nicknameTextView.text = result!!.nickname
+                        binding.profileIdView.text = result!!.email
+                        makeCard(result!!.communities)
+
+                    } else {
+                        Log.d("MYPAGE", "onResponse 실패")
+                    }
+                }
+
+                override fun onFailure(call: Call<MyPageInfo>, t: Throwable) {
+                    Log.d("MYPAGE", "onFailure 에러: " + t.message.toString())
+                }
+
+            }
+        )
 
         // 뒤로가기
         binding.backBtn.setOnClickListener {
@@ -36,24 +66,21 @@ class MyCalendarActivity : AppCompatActivity() {
             startActivity(Intent(this, CommunityCreateActivity::class.java))
         }
 
-        items.add(
-            ContentsModel(
-                "구움양과 by 런던케이크",
-                "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    fun makeCard(communities: List<CommunityList>) {
+        for (community : CommunityList in communities) {
+            items.add(
+                ContentsModel(
+                    community.name,
+                    community.communityImg
+                )
             )
-        )
-        items.add(
-            ContentsModel(
-                "구움양과 by 런던케이크",
-                "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-            )
-        )
-        items.add(
-            ContentsModel(
-                "구움양과 by 런던케이크",
-                "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-            )
-        )
+        }
 
         val rv = binding.recyclerView
         val contentsAdapter = ContentsAdapter(this ,items)
@@ -65,9 +92,5 @@ class MyCalendarActivity : AppCompatActivity() {
         }
 
         rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
-    }
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 }

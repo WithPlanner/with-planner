@@ -50,4 +50,8 @@ interface UserService {
         @Body myLoc: MyLoc,
         @Path("communityId") communityId: Long
     ): Call<Result>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @GET("/mypage")
+    fun myPageListing(@Header("X-AUTH-TOKEN") token: String) : Call<MyPageInfo>
 }
