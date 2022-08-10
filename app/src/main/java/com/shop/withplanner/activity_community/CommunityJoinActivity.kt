@@ -48,10 +48,7 @@ class CommunityJoinActivity: AppCompatActivity() {
 
                         // 커뮤니티 이미지가 없으면 기본 이미지로, 있으면 그 이미지로
                         val image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
-                        if(image == null) {
-                            binding.imageView.setImageResource(R.drawable.ic_launcher_background)
-                        }
-                        else{
+                        if(image != null) {
                             Glide.with(this@CommunityJoinActivity).load(image).into(findViewById(R.id.imageView))
                         }
                     }

@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                 ContentsModel(
                     post.name,
                     post.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
+//                    post.category
                 )
             )
         }

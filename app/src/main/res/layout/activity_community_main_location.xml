@@ -153,29 +153,34 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/mon"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="월"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/tue"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
+                            android:visibility="gone"
                             android:gravity="center"
                             android:text="화"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/wed"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
@@ -183,11 +188,13 @@
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="수"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/thu"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
@@ -195,11 +202,13 @@
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="목"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/fri"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
@@ -207,11 +216,13 @@
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="금"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/sat"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
@@ -219,11 +230,13 @@
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="토"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/sun"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_marginLeft="4dp"
@@ -231,11 +244,13 @@
                             android:background="@drawable/round_btn"
                             android:backgroundTint="@color/green"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:text="일"
                             android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <TextView
+                            android:id="@+id/timeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"

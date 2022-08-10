@@ -23,6 +23,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
     private val postItems =  mutableListOf<PostModel>()
     private val sharedManager: SharedManager by lazy { SharedManager(this) }
     private lateinit var category : String
+    private lateinit var type: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +32,15 @@ class CommunityPostBoardActivity : AppCompatActivity() {
         val intent = intent
         var communityId = intent.getLongExtra("communityId", -1L)
         category = intent.getStringExtra("category").toString()
+        type = intent.getStringExtra("communityType").toString()
 
         RetrofitService.postService.getAllPost(sharedManager.getToken(), communityId).enqueue(
             object : retrofit2.Callback<ALlPosts> {
                 override fun onResponse(call: Call<ALlPosts>, response: Response<ALlPosts>) {
                     if(response.isSuccessful) {
+
                         var result = response.body()!!.result
+
                         if (result.isNotEmpty()) {
                             makeCard(result)
                         }
@@ -55,21 +59,6 @@ class CommunityPostBoardActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
-
-
-
-        // Loc 인증이면
-//        val destination = "도서관"
-//        for(i in 1..10) {
-//            postItems.add(
-//                PostModel(
-//                    "수정이",
-//                    "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-//                    "2022-07-15 00:00:00", "토익공부",
-//                    "오늘의 습관을 ${destination}에서 완료했어요!", 1, null
-//                )
-//            )
-//        }
     }
 
     override fun onBackPressed() {
@@ -78,13 +67,19 @@ class CommunityPostBoardActivity : AppCompatActivity() {
 
     fun makeCard(posts: List<Posts>) {
         // 리사이클러뷰
+        var type_int = 1
+
+        Log.d("type", type)
+        if(type=="mapPost") type_int = 1
+        else if(type=="post") type_int = 2
+
         for (post in posts) {
             postItems.add(
                 PostModel(
                     post.name,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                     post.images[0].createdAt, category,
-                    post.content, 2,
+                    post.content, type_int,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )
             )
