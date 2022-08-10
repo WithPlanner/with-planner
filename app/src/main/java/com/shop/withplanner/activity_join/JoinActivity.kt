@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
 import com.shop.withplanner.SurveyActivity1
+import com.shop.withplanner.SurveyActivity2
 import com.shop.withplanner.activity_etc.LoginActivity
 import com.shop.withplanner.databinding.ActivityJoinBinding
 import com.shop.withplanner.dto.Result
 import com.shop.withplanner.dto.Token
+import com.shop.withplanner.dto.UserId
+import com.shop.withplanner.dto.UserIdResult
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.User
 import retrofit2.Call
@@ -34,8 +37,6 @@ class JoinActivity : AppCompatActivity() {
             binding.email.setText(email)
         }
 
-        intent = Intent(this, LoginActivity::class.java)
-
         var nicknameChecked = false     // 중복확인여부
 
         // 뒤로가기 버튼
@@ -54,7 +55,7 @@ class JoinActivity : AppCompatActivity() {
                         if(response.isSuccessful) {
                             var result: Result? = response.body()
                             nicknameChecked = result!!.result
-                            Toast.makeText(this@JoinActivity, result!!.msg, Toast.LENGTH_LONG).show()
+                            Toast.makeText(this@JoinActivity, result!!.msg, Toast.LENGTH_SHORT).show()
                         } else {
                             Log.d("NICKDUP", "onResponse 실패")
                         }
@@ -77,7 +78,7 @@ class JoinActivity : AppCompatActivity() {
             var readyToJoin = true          // 가입조건 충족여부 확인 변수
 
             if(name.isEmpty() || password.isEmpty() || repassword.isEmpty() || nickname.isEmpty()){
-                Toast.makeText(this, "입력란을 모두 입력해주세요.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "입력란을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
                 readyToJoin = false
             }
 
@@ -105,13 +106,15 @@ class JoinActivity : AppCompatActivity() {
                 body.put("name", name)
                 body.put("nickname", nickname)
 
-                RetrofitService.userService.signup(body)?.enqueue(object : Callback<Result> {
-                    override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                RetrofitService.userService.signup(body)?.enqueue(object : Callback<UserId> {
+                    override fun onResponse(call: Call<UserId>, response: Response<UserId>) {
                         if(response.isSuccessful) {
-                            var result: Result? = response.body();
+                            var result = response.body()?.result;
                             Toast.makeText(this@JoinActivity, result!!.msg, Toast.LENGTH_LONG).show()
-                            if(result!!.result) {
+                            if(result.id > 0) {
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent = Intent(this@JoinActivity, SurveyActivity2::class.java)
+                                intent.putExtra("userId", result.id)
                                 startActivity(intent)
                             }
                         } else {
@@ -119,7 +122,7 @@ class JoinActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<Result>, t: Throwable) {
+                    override fun onFailure(call: Call<UserId>, t: Throwable) {
                         Log.d("JOIN", "onFailure 에러: " + t.message.toString())
                     }
 

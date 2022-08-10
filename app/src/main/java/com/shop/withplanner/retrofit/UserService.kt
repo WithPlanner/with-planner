@@ -1,6 +1,5 @@
 package com.shop.withplanner.retrofit
 
-import android.graphics.Bitmap
 import com.shop.withplanner.dto.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -35,12 +34,12 @@ interface UserService {
     @POST("/sign_up/submit")
     fun signup(
         @Body params: HashMap<String, String>,
-    ): Call<Result>
+    ): Call<UserId>
 
     @Headers("accept: application/json", "content-type: application/json")
     @POST("/investigation")
     fun recommendCommunity(
-        @Body params: HashMap<String, String>,
+        @Body params: InvestigationReq,
     ): Call<Result>
 
     @Headers("accept: application/json", "content-type: application/json")

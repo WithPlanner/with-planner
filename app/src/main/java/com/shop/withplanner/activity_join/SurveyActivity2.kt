@@ -8,8 +8,10 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.shop.withplanner.activity_etc.LoginActivity
 import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivitySurvey2Binding
+import com.shop.withplanner.dto.InvestigationReq
 import com.shop.withplanner.dto.Result
 import com.shop.withplanner.retrofit.RetrofitService
 import retrofit2.Call
@@ -18,9 +20,12 @@ import retrofit2.Response
 
 class SurveyActivity2 : AppCompatActivity() {
     private lateinit var binding : ActivitySurvey2Binding
-    val body = HashMap<String, String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val idIntent = intent
+        var userId = idIntent.getLongExtra("userId", -1L)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_survey2)
 
@@ -56,17 +61,20 @@ class SurveyActivity2 : AppCompatActivity() {
                     }
                 }
             }
+            var requestBody: InvestigationReq = InvestigationReq(
+                userId,
+                answers[0],
+                answers[1],
+                answers[2],
+                answers[3],
+                answers[4],
+                answers[5],
+                answers[6],
+                answers[7]
 
-            body.put("q1", answers[0].toString());
-            body.put("q2", answers[1].toString())
-            body.put("q3", answers[2].toString())
-            body.put("q4", answers[3].toString())
-            body.put("q5", answers[4].toString())
-            body.put("q6", answers[5].toString())
-            body.put("q7", answers[6].toString())
-            body.put("q8", answers[7].toString())
+            )
 
-            RetrofitService.userService.recommendCommunity(body)?.enqueue(object : Callback<Result> {
+            RetrofitService.userService.recommendCommunity(requestBody)?.enqueue(object : Callback<Result> {
                 override fun onResponse(call: Call<Result>, response: Response<Result>) {
                     if(response.isSuccessful) {
                         var result: Result? = response.body()
@@ -83,7 +91,7 @@ class SurveyActivity2 : AppCompatActivity() {
             })
 
             // 제출시 survey1,2 스택에서 없애는 부분 구현하기
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }
