@@ -35,7 +35,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
         RetrofitService.postService.getAllPost(sharedManager.getToken(), communityId).enqueue(
             object : retrofit2.Callback<ALlPosts> {
                 override fun onResponse(call: Call<ALlPosts>, response: Response<ALlPosts>) {
-                    if(response.isSuccessful) {
+                    if (response.isSuccessful) {
                         var result = response.body()!!.result
                         if (result.isNotEmpty()) {
                             makeCard(result)
@@ -52,11 +52,9 @@ class CommunityPostBoardActivity : AppCompatActivity() {
             }
         )
 
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             onBackPressed()
         }
-
-
 
         // Loc 인증이면
 //        val destination = "도서관"

@@ -3,33 +3,33 @@ package com.shop.withplanner.activity_community
 import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.shop.withplanner.R
-import com.shop.withplanner.databinding.ActivityCommunityAuthenticateLocationBinding
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
+import com.shop.withplanner.R
+import com.shop.withplanner.activity_etc.MainActivity
+import com.shop.withplanner.databinding.ActivityCommunityAuthenticateLocationBinding
 import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
-import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
 import com.shop.withplanner.map.coordToAddress.DtoCoordToAddress
+import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
 import retrofit2.Response
-import com.shop.withplanner.activity_etc.MainActivity
 
 
 class CommunityAuthenticateLocationActivity : AppCompatActivity() {
@@ -89,6 +89,42 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    /**
+     * 위,경도 비교해서 인증가능 계산하는 함수
+     * dest_long : 서버에 저장되어 있는 목적지의 longitude
+     * dest_lati : 서버에 저장되어 있는 목적지의 latitude
+     * now_long : 사용자의 현재 longitue
+     * now_lati : 사용자의 현재 latitude
+     */
+    fun isAuthenticOrNot(dest_long: Double, dest_lati:Double, now_long: Double, now_lati : Double): Boolean {
+        var isAuthenticate = false;
+
+        var theta = dest_long - now_long ;
+        var dist = Math.sin(deg2rad(dest_lati)) * Math.sin(deg2rad(now_lati)) + Math.cos(deg2rad(dest_lati)) * Math.cos(deg2rad(now_lati)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+
+        //unit -> meter
+        dist = dist * 1609.344;
+
+        if(dist<100 && dist>0){
+            isAuthenticate = true;
+        }
+        return isAuthenticate;
+    }
+
+    // decimal degrees 를 radians 로 변환
+    private fun deg2rad(deg: Double): Double {
+        return deg * Math.PI / 180.0
+    }
+
+    // radians 를 decimal degrees 로 변환
+    private fun rad2deg(rad: Double): Double {
+        return rad * 180 / Math.PI
     }
 
 
@@ -247,6 +283,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    //경도,위도 -> 주소
     fun callCoordToLoc(
         longitude : String,
         latitude : String

@@ -49,6 +49,7 @@ class MyLocDialog() : DialogFragment() {
                 location = bundle.getString("address")
             }
 
+
         }
     }
 
