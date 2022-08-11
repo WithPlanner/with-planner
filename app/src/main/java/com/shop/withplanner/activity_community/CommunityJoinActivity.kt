@@ -1,21 +1,18 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityJoinBinding
 import com.shop.withplanner.dto.CommunityInfo
-import com.shop.withplanner.dto.CommunityPostMain
+import com.shop.withplanner.dto.JoinCommunity
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
-import com.shop.withplanner.util.Category
 import retrofit2.Call
 import retrofit2.Response
 
@@ -32,6 +29,7 @@ class CommunityJoinActivity: AppCompatActivity() {
 
         var communityId = -1L
         var communityType = ""
+        var userId = 1
 
 
         // 선택한 커뮤니티의 communityId 전달받기
@@ -60,7 +58,6 @@ class CommunityJoinActivity: AppCompatActivity() {
                         if(image != null) {
                             Glide.with(this@CommunityJoinActivity).load(image).into(findViewById(R.id.imageView))
                         }
-                        Log.d("CommunityJoin", "onResponse 성공" +community?.toString())
 
                         //습관 요일
                         for (day in days) {
@@ -88,6 +85,7 @@ class CommunityJoinActivity: AppCompatActivity() {
                                 }
                             }
                         }
+
                         //인증 시간
                         binding.timeTextView.text = time
 
@@ -98,6 +96,7 @@ class CommunityJoinActivity: AppCompatActivity() {
                         else{
                             binding.textviewType.text ="에 게시물로 인증"
                         }
+                        Log.d("CommunityJoinActivity", "onResponse 성공" +community?.toString())
                     }
                     else{
                         Log.d("CommunityJoinActivity", "onResponse 실패")
@@ -115,11 +114,32 @@ class CommunityJoinActivity: AppCompatActivity() {
         // 가입하기 버튼
         binding.joinBtn.setOnClickListener{
             // 커뮤니티 참여
+            RetrofitService.communityService.joinInCommunity(sharedManager.getToken(), communityId).enqueue(
+                object : retrofit2.Callback<JoinCommunity> {
+                    override fun onResponse(call: Call<JoinCommunity>, response: Response<JoinCommunity>) {
+                        if(response.isSuccessful) {
+                            val result = response.body()!!.result
+
+                            userId = result.userId
+                            Log.d("userId", userId.toString())
+                            Log.d("JoinCommunity", "onResponse 성공" +result?.toString())
+                        }
+                        else{
+                            Log.d("JoinCommunity", "onResponse 실패")
+                        }
+                    }
+                    override fun onFailure(call: Call<JoinCommunity>, t: Throwable) {
+                        Log.d("JoinCommunity", "onFailure 에러: " + t.message.toString())
+                    }
+                }
+            )
+
             // 커뮤니티 타입에 따라 다른 액티비티로
             Log.d("communityType", communityType)
             if(communityType == "mapPost") {
                 val intent = Intent(this, CommunityMainLocationActivity::class.java)
                 intent.putExtra("communityId",38L)
+                intent.putExtra("userId", userId)
                 startActivity(intent)
             }
             else if (communityType == "post"){
