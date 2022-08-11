@@ -87,7 +87,7 @@ class MyLocDialog() : DialogFragment() {
         // 확인버튼
         binding.makeBtn.setOnClickListener{
             // 서버에 저장 필요
-            var locationAlias = binding.locationAlias.text.toString().trim()
+            var locationAlias = location
 
             if(location?.isEmpty()!!){
                 binding.location.error = "목적지를 설정해주세요."

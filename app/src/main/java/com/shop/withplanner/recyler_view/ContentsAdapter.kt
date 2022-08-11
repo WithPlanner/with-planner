@@ -45,8 +45,10 @@ class ContentsAdapter (val context : Context, val List : MutableList<ContentsMod
             val rvImg = itemView.findViewById<ImageView>(R.id.rvImageArea)
             rvImg.clipToOutline = true
             val rvText = itemView.findViewById<TextView>(R.id.rvTextArea)
+            val rvName = itemView.findViewById<TextView>(R.id.rvCategoryArea)
 
             rvText.text = item.titleText
+            rvName.text = item.communityName
 
             Glide.with(context)
                 .load(item.imageUrl)
