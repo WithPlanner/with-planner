@@ -8,13 +8,16 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -23,17 +26,31 @@ import com.google.android.gms.location.*
 import com.shop.withplanner.R
 import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivityCommunityAuthenticateLocationBinding
+import com.shop.withplanner.dto.Authentication
+import com.shop.withplanner.dto.AuthenticationRequest
+import com.shop.withplanner.dto.MyLocReceived
+import com.shop.withplanner.dto.MyLocToSendResponse
 import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
 import com.shop.withplanner.map.coordToAddress.DtoCoordToAddress
 import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
+import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.GetTime
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import kotlin.reflect.typeOf
 
 
 class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityAuthenticateLocationBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+
     private val ACCESS_FINE_LOCATION = 1000
     private lateinit var locationManager: LocationManager
     //현재 위치를 가져오기 위한 변수
@@ -45,17 +62,48 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     // retrofit 구성 관련 변수.
     private val coordToLocApi = KakaoApiRetrofitClient.apiService
 
+    // 비교할 경도 위도값
+    var myLongitude: Double = (-1).toDouble()
+    var myLatitude: Double = (-1).toDouble()
+    var curLongitude: Double = (-1).toDouble()
+    var curLatitude: Double = (-1).toDouble()
+    var destination: String = "목적지"
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_community_authenticate_location
-        )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_community_authenticate_location)
 
         mLocationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
+
+        var communityId = intent.getLongExtra("communityId", -1L)
+        communityId = 70 // 임시
+
+        // 고정목적지: 서버에서 주소 받아오기(GET)
+        RetrofitService.locationService.getMyLoc(sharedManager.getToken(), communityId).
+        enqueue(object: Callback<MyLocReceived> {
+            override fun onResponse(call: Call<MyLocReceived>, response: Response<MyLocReceived>) {
+                if(response.isSuccessful) {
+                    val result = response.body()!!.result
+
+                    destination = result.alias.toString()
+                    binding.destination.text = destination
+                    myLongitude = result.longitude
+                    myLatitude = result.latitude
+
+                    Log.d("Authentication", result.toString())
+                }
+                else {
+                    Log.d("Authentication", "onResponse 실패: " + response.errorBody()?.string()!!)
+                }
+            }
+            override fun onFailure(call: Call<MyLocReceived>, t: Throwable) {
+                Log.d("MyLocDialog", "onFailure 에러: " + t.message.toString())
+            }
+        })
 
 
         //위치 추적 버튼
@@ -71,20 +119,57 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         }
 
         binding.joinBtn.setOnClickListener {
-            // 고정목적지: 서버에서 주소 받아오기(GET)
-            binding.destination.text = "고정 목적지"
             // 습관이름 받아오기
-            val habitName = "습관이름"
-            // 고정위치와 현재위치가 같으면 실행
-            // 인증확인 다이얼로그
-            intent = Intent(this, MainActivity::class.java)
-            val builder = AlertDialog.Builder(this).setTitle(habitName)
-                .setMessage("오늘 ${habitName} 인증을 완료했습니다.")
-                .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                    startActivity(intent)
-                    finish()
-                }).show()
+            var titleName = "습관이름"
+
+            // 고정위치와 현재위치가 같으면 인증
+            var isAuthenticate = isAuthenticOrNot(myLongitude, myLatitude, curLongitude, curLatitude)
+            val time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"))
+            val authenticationRequest = AuthenticationRequest(isAuthenticate, time)
+            Log.d("authenticationRequest", authenticationRequest.toString())
+
+            if(isAuthenticate) {
+
+                RetrofitService.locationService.authenticateLocation(sharedManager.getToken(), communityId, authenticationRequest).
+                enqueue(object:Callback<Authentication> {
+                    override fun onResponse(call: Call<Authentication>, response: Response<Authentication>) {
+                        if(response.isSuccessful) {
+                            val result = response.body()!!
+                            Log.d("Authentication", result.code.toString())
+
+                            // 인증 성공
+                            if(result.code == 1000) {
+                                // 인증확인 다이얼로그
+                                showDialog(titleName, "오늘 ${titleName} 인증을 완료했습니다.")
+                            }
+                            // 인증요일이 아님
+                            else if(result.code == 2012) {
+                                showDialog(titleName, "인증 요일이 아닙니다.")
+                            }
+                            else{
+                                showDialog(titleName, "알 수 없는 코드.")
+                            }
+                        }
+                        else {
+                            Log.d("Authentication", "onResponse 실패: " + response.errorBody()?.string()!!)
+                            sharedManager.getToken()
+                        }
+                    }
+                    override fun onFailure(call: Call<Authentication>, t: Throwable) {
+                        Log.d("MyLocDialog", "onFailure 에러: " + t.message.toString())
+                    }
+                })
+            }
+            else{
+                val builder = AlertDialog.Builder(this).setTitle(titleName)
+                    .setMessage("지정된 목적지에서 인증해 주세요.")
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                    }).show()
+            }
         }
+
+
+
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
@@ -270,11 +355,15 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
                 locationResult.lastLocation
-                var latitude = locationResult.lastLocation.latitude
-                var longitude = locationResult.lastLocation.longitude
-                println(latitude+ longitude)
-                setMarker(latitude, longitude)
-                callCoordToLoc(longitude.toString(),latitude.toString())
+//                curLatitude = locationResult.lastLocation.latitude
+//                curLongitude = locationResult.lastLocation.longitude
+                curLatitude = 37.5336136308998
+                curLongitude = 126.876314985863
+                println(curLatitude+ curLongitude)
+                setMarker(curLatitude, curLongitude)
+                Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
+//                callCoordToLoc(curLatitude.toString(), curLongitude.toString())   // 진짜 코드
+                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
             }
         }
 
@@ -311,7 +400,17 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     fun setLocation(addressName:String){
         binding.currentLoc.text = addressName
     }
+
+    fun showDialog(titleName: String, message: String) {
+        val builder = AlertDialog.Builder(this).setTitle(titleName)
+            .setMessage(message)
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                intent = Intent(this@CommunityAuthenticateLocationActivity, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }).show()
     }
+}
 
 
 

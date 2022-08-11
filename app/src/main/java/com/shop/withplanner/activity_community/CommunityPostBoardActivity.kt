@@ -15,10 +15,12 @@ import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Response
 
 class CommunityPostBoardActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityCommunityPostBoardBinding
     private val postItems =  mutableListOf<PostModel>()
     private val sharedManager: SharedManager by lazy { SharedManager(this) }
@@ -33,6 +35,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
         var communityId = intent.getLongExtra("communityId", -1L)
         category = intent.getStringExtra("category").toString()
         type = intent.getStringExtra("communityType").toString()
+
 
         RetrofitService.postService.getAllPost(sharedManager.getToken(), communityId).enqueue(
             object : retrofit2.Callback<ALlPosts> {
@@ -65,7 +68,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
 
     fun makeCard(posts: List<Posts>) {
         // 리사이클러뷰
-        var type_int = 1
+        var type_int = -1
 
         Log.d("type", type)
         if(type=="mapPost") type_int = 1

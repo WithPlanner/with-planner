@@ -109,7 +109,7 @@ class CommunityPostActivity : AppCompatActivity() {
                             startActivity(intent)
 
                         } else {
-                            Log.d("WritePost", "onResponse 실패");
+                            Log.d("WritePost", "onResponse 실패: "+response.errorBody()?.string()!!);
                         }
                     }
 
@@ -121,7 +121,7 @@ class CommunityPostActivity : AppCompatActivity() {
             }
 
             // GET할 것
-            val habitName = "습관이름"
+            val titleName = "습관이름"
 
             // 유저정보, 이미지 받아와서 저장 필요
 
@@ -134,8 +134,8 @@ class CommunityPostActivity : AppCompatActivity() {
             else {
 
                 // 인증확인 다이얼로그
-                val builder = AlertDialog.Builder(this).setTitle(habitName)
-                    .setMessage("오늘의 ${habitName} 인증을 완료했습니다.")
+                val builder = AlertDialog.Builder(this).setTitle(titleName)
+                    .setMessage("오늘의 ${titleName} 인증을 완료했습니다.")
                     .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                         finish()
                     }).show()

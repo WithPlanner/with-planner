@@ -11,7 +11,9 @@ import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
 import android.util.Log
 import com.shop.withplanner.activity_community.CommunitySearchLocationActivity
-import com.shop.withplanner.dto.MyLoc
+import com.shop.withplanner.dto.MyLocReceived
+import com.shop.withplanner.dto.MyLocToSend
+import com.shop.withplanner.dto.MyLocToSendResponse
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
 import retrofit2.Call
@@ -85,33 +87,40 @@ class MyLocDialog() : DialogFragment() {
 
         // 확인버튼
         binding.makeBtn.setOnClickListener{
-            // 서버에 저장 필요
-            var locationAlias = location
-
             if(location?.isEmpty()!!){
                 binding.location.error = "목적지를 설정해주세요."
             }
             else{
                 // 내 위치정보 서버로 전송
                 var bundle = arguments
+                var locationAlias = ""
 
-                var myLoc: MyLoc
+                // 목적지 별칭이 있으면 별칭으로, 없으면 주소로
+                if(binding.locationAlias.text.toString().trim() != "") {
+                    locationAlias = binding.locationAlias.text.toString().trim()
+                }
+                else{
+                    locationAlias = location.toString()
+                }
+
+                var myLocToSend: MyLocToSend
                 val longitude = bundle?.getDouble("longitude")
                 val latitude = bundle?.getDouble("latitude")
                 val roadAddress: String? = bundle?.getString("roadAddress")
                 val address: String? = bundle?.getString("address")
                 val resultName: String? = bundle?.getString("resultName")
-                val communityId: Long = 5   // 이거 앞에서 받아올것
 
-                myLoc = MyLoc(longitude!!, latitude!!, roadAddress, address, locationAlias, resultName)
+                val communityId: Long = 70   // 이거 앞에서 받아올것
 
-                Log.d("MYLOC", myLoc.toString())
+                myLocToSend = MyLocToSend(longitude!!, latitude!!, roadAddress, address, locationAlias, resultName)
 
-                RetrofitService.userService.sendMyLoc(sharedManager.getToken(), myLoc, communityId).
-                enqueue(object:Callback<Result> {
-                    override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                Log.d("MYLOCTOSEND", myLocToSend.toString())
+
+                RetrofitService.locationService.sendMyLoc(sharedManager.getToken(), myLocToSend, communityId).
+                enqueue(object:Callback<MyLocToSendResponse> {
+                    override fun onResponse(call: Call<MyLocToSendResponse>, response: Response<MyLocToSendResponse>) {
                         if(response.isSuccessful) {
-                            val result: Result? = response.body()
+                            val result = response.body()
                             Log.d("MyLocDialog", result.toString())
                         }
                         else {
@@ -119,11 +128,10 @@ class MyLocDialog() : DialogFragment() {
                             sharedManager.getToken()
                         }
                     }
-                    override fun onFailure(call: Call<Result>, t: Throwable) {
+                    override fun onFailure(call: Call<MyLocToSendResponse>, t: Throwable) {
                         Log.d("MyLocDialog", "onFailure 에러: " + t.message.toString())
                     }
                 })
-
 
                 body.put("latitude", bundle!!.getString("latitude").toString())
 
