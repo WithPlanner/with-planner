@@ -57,7 +57,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
                 ) {
                     if(response.isSuccessful) {
                         var result = response.body()!!.result
-                        communityId = result.communityId.toLong()
                         communityName = result.name
                         communityImg = result.communityImg
                         createdAt = result.createdAt
