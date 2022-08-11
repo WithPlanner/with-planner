@@ -74,6 +74,5 @@ class LoginActivity : AppCompatActivity() {
         binding.joinBtn.setOnClickListener{
             startActivity(Intent(this, EmailActivity::class.java))
         }
-
     }
 }
