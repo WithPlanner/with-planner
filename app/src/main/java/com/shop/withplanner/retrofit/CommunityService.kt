@@ -54,4 +54,13 @@ interface CommunityService {
         @Header("X-AUTH-TOKEN") token : String?,
         @Path("communityIdx") communityIdx : Long
     ) : Call<CommunityPostMain>
+
+    @Headers( "content-type: application/json")
+    @GET("community/info/{communityIdx}")
+    fun getCommunityInfo(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Path("communityIdx") communityIdx : Long
+    ) : Call<CommunityInfo>
+
+
 }
