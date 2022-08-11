@@ -24,7 +24,7 @@ import com.shop.withplanner.dto.CommunityList
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
-//import com.shop.withplanner.util.RandImg
+import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val intent_join = Intent(this@MainActivity, CommunityJoinActivity::class.java)
         val intent_mainpost = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
 
-//        binding.myBtn.setImageResource(RandImg.getImg())
+        binding.myBtn.setImageResource(RandImg.getImg())
 
 
         // 커뮤니티 GET 해서 리스팅
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                 ContentsModel(
                     post.name,
                     post.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-//                    post.category
+                    post.category
                 )
             )
         }

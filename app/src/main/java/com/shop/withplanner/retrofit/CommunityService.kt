@@ -62,5 +62,9 @@ interface CommunityService {
         @Path("communityIdx") communityIdx : Long
     ) : Call<CommunityInfo>
 
-
+    @POST("community/join/{communityIdx}")
+    fun joinInCommunity(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Path("communityIdx") communityIdx : Long
+    ): Call<JoinCommunity>
 }
