@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -22,6 +23,8 @@ import retrofit2.Response
 class CommunityJoinActivity: AppCompatActivity() {
     private lateinit var binding : ActivityCommunityJoinBinding
     private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var days : List<String>
+    private lateinit var time : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,7 @@ class CommunityJoinActivity: AppCompatActivity() {
 
         var communityId = -1L
         var communityType = ""
+
 
         // 선택한 커뮤니티의 communityId 전달받기
         if(intent.hasExtra("communityId")) {
@@ -48,6 +52,8 @@ class CommunityJoinActivity: AppCompatActivity() {
                         binding.currentCount.text = community.currentCount.toString()
                         binding.totalCount.text = community.headCount.toString()
                         communityType = community.type
+                        days = community.days
+                        time = community.time
 
                         // 커뮤니티 이미지가 없으면 기본 이미지로, 있으면 그 이미지로
                         val image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
@@ -55,6 +61,43 @@ class CommunityJoinActivity: AppCompatActivity() {
                             Glide.with(this@CommunityJoinActivity).load(image).into(findViewById(R.id.imageView))
                         }
                         Log.d("CommunityJoin", "onResponse 성공" +community?.toString())
+
+                        //습관 요일
+                        for (day in days) {
+                            when (day) {
+                                "월" -> {
+                                    binding.mon.visibility = View.VISIBLE
+                                }
+                                "화" -> {
+                                    binding.tue.visibility = View.VISIBLE
+                                }
+                                "수" -> {
+                                    binding.wed.visibility = View.VISIBLE
+                                }
+                                "목" -> {
+                                    binding.thu.visibility = View.VISIBLE
+                                }
+                                "금" -> {
+                                    binding.fri.visibility = View.VISIBLE
+                                }
+                                "토" -> {
+                                    binding.sat.visibility = View.VISIBLE
+                                }
+                                "일" -> {
+                                    binding.sun.visibility = View.VISIBLE
+                                }
+                            }
+                        }
+                        //인증 시간
+                        binding.timeTextView.text = time
+
+                        //인증 타입
+                        if(communityType.equals("mapPost")){
+                            binding.textviewType.text = "에 현재위치로 인증"
+                            }
+                        else{
+                            binding.textviewType.text ="에 게시물로 인증"
+                        }
                     }
                     else{
                         Log.d("CommunityJoinActivity", "onResponse 실패")
