@@ -24,6 +24,7 @@ import com.shop.withplanner.dto.CommunityList
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         val newRV = binding.newRecyclerView
         val intent_join = Intent(this@MainActivity, CommunityJoinActivity::class.java)
         val intent_mainpost = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
+
+        binding.myBtn.setImageResource(RandImg.getImg())
 
         RetrofitService.communityService.mainListing(sharedManager.getToken())
             ?.enqueue(object : Callback<MainList> {

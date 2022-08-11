@@ -28,7 +28,7 @@ class ContentsAdapter (val context : Context, val List : MutableList<ContentsMod
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         if (itemClick != null) {
-            holder?.itemView.setOnClickListener { v ->
+            holder?.itemView?.setOnClickListener { v ->
                 itemClick!!.onClick(v, position)
             }
         }
@@ -51,7 +51,6 @@ class ContentsAdapter (val context : Context, val List : MutableList<ContentsMod
             Glide.with(context)
                 .load(item.imageUrl)
                 .into(rvImg)
-
         }
     }
 }

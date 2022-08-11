@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.activity_community.CommunityPostInsideActivity
+import com.shop.withplanner.util.RandImg
 import kotlin.reflect.typeOf
 
 class PostsAdapter(val context : Context, private val list: MutableList<PostModel>)
@@ -84,7 +85,8 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
             date.text = item.post_date
             habit.text = item.post_habit
             comment.text = item.post_content
-            Glide.with(itemView).load(item.post_icon).into(icon)
+//            Glide.with(itemView).load(item.post_icon).into(icon)
+            icon.setImageResource(RandImg.getImg())
         }
     }
 
@@ -103,7 +105,8 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
             habit.text = item.post_habit
             comment.text = item.post_content
             Glide.with(itemView).load(item.post_img).into(image)
-            Glide.with(itemView).load(item.post_icon).into(icon)
+//            Glide.with(itemView).load(item.post_icon).into(icon)
+            icon.setImageResource(RandImg.getImg())
         }
     }
 }

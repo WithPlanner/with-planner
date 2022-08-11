@@ -17,6 +17,7 @@ import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Response
 
@@ -30,6 +31,8 @@ class MyCalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_calendar)
+
+        binding.profileImg.setImageResource(RandImg.getImg())
 
         RetrofitService.userService.myPageListing(sharedManager.getToken()).enqueue(
             object : retrofit2.Callback<MyPageInfo> {
