@@ -273,9 +273,10 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 var latitude = locationResult.lastLocation.latitude
                 var longitude = locationResult.lastLocation.longitude
                 println(latitude+ longitude)
+                Log.d("현재 위도 경도 갖고오는 테스트",latitude.toString() + ","+longitude.toString())
                 setMarker(latitude, longitude)
                 callCoordToLoc(longitude.toString(),latitude.toString())
-            }
+        }
         }
 
     //뒤로가기
@@ -299,13 +300,14 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                     kakaoList.value = response.body()
                     Log.d("주소", kakaoList.value!!.documents[0].toString())
                     setLocation(kakaoList.value!!.documents[0].road_address.address_name)
-
                 }
 
                 override fun onFailure(call: Call<DtoCoordToAddress>, t: Throwable) {
                     t.printStackTrace()
                 }
             })
+
+
     }
     //currentLoc에 값 넣어주는 함수
     fun setLocation(addressName:String){
