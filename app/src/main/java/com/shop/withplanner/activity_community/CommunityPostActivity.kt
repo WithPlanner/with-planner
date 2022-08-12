@@ -17,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
+import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivityCommunityPostBinding
 import com.shop.withplanner.dto.CommunityPostMain
 import com.shop.withplanner.dto.IdAndMsg
@@ -53,8 +54,7 @@ class CommunityPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_post)
 
-        val idIntent = intent
-        var communityId = idIntent.getLongExtra("communityId", -1L)
+        var communityId = intent.getLongExtra("communityId", -1L)
 
         // 권한 확인
         checkPermission.launch(permissionList)
@@ -88,6 +88,12 @@ class CommunityPostActivity : AppCompatActivity() {
             val title = binding.title.text.toString().trim()
             val content = binding.content.text.toString().trim()
 
+            // 습관이름
+            var category = ""
+            category = intent.getStringExtra("category").toString()
+
+
+            // 게시물 내용물이 모두 입력되었다면 서버 전송
             if(title.isEmpty() || content.isEmpty()) {
                 Toast.makeText(this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -97,66 +103,60 @@ class CommunityPostActivity : AppCompatActivity() {
                     MultipartBody.Part.createFormData("img", imgFile.name, requestFile)
                 val nameRequestBody: RequestBody = title.toPlainRequestBody()
                 val contentRequestBody: RequestBody = content.toPlainRequestBody()
+
                 RetrofitService.postService.writePost(sharedManager.getToken(), communityId, imgRequestBody, nameRequestBody, contentRequestBody)?.enqueue(object :
                 retrofit2.Callback<IdAndMsg> {
                     override fun onResponse(call: Call<IdAndMsg>, response: Response<IdAndMsg>) {
                         if(response.isSuccessful) {
                             var result : IdAndMsgResult = response.body()!!.result
-                            Toast.makeText(this@CommunityPostActivity, result.msg, Toast.LENGTH_SHORT).show()
 
-                            var intent = Intent(this@CommunityPostActivity, CommunityPostInsideActivity::class.java)
-                            intent.putExtra("postId", result.id)
-                            startActivity(intent)
+                            if(response.body()!!.code == 1000) {
 
+                                val builder = AlertDialog.Builder(this@CommunityPostActivity).setTitle(category)
+                                    .setMessage("오늘의 ${category} 인증을 완료했습니다.")
+                                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                                        var intent = Intent(this@CommunityPostActivity, CommunityPostBoardActivity::class.java)
+                                        intent.putExtra("communityId", communityId)
+                                        intent.putExtra("category", category)
+                                        intent.putExtra("communityType", "post")
+                                        startActivity(intent)
+                                        finish()
+                                    }).show()
+                            }
+                            else{
+                                showDialog(category, "${response.body()!!.code}: 서버 전송에 실패했습니다.")
+                            }
                         } else {
-                            Log.d("WritePost", "onResponse 실패");
+                            Log.d("WritePost", "onResponse 실패: "+response.errorBody()?.string()!!)
                         }
                     }
-
                     override fun onFailure(call: Call<IdAndMsg>, t: Throwable) {
                         Log.d("WritePost", "onFailure 에러: " + t.message.toString());
                     }
-
                 })
             }
 
-            // GET할 것
-            val habitName = "습관이름"
-
-            // 유저정보, 이미지 받아와서 저장 필요
-
-            if(title.isEmpty()){
-                Toast.makeText(this, "제목을 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            else if(content.isEmpty()) {
-                Toast.makeText(this, "내용을 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            else {
-
-                // 인증확인 다이얼로그
-                val builder = AlertDialog.Builder(this).setTitle(habitName)
-                    .setMessage("오늘의 ${habitName} 인증을 완료했습니다.")
-                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
-                        finish()
-                    }).show()
-            }
         }
 
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
-
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK && requestCode == 100) {
             binding.imageArea.setImageURI(data?.data)
         }
     }
-
     override fun onBackPressed() {
         super.onBackPressed()
     }
-    private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this)
+    private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this!!)
+
+    fun showDialog(titleName: String, message: String) {
+        val builder = AlertDialog.Builder(this).setTitle(titleName)
+            .setMessage(message)
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+            }).show()
+    }
 }

@@ -111,7 +111,7 @@
         <activity
             android:name=".activity_community.CommunityJoinActivity"
             android:exported="false"
-            android:noHistory="true" />
+            android:noHistory="true"/>
         <activity
             android:name="com.shop.withplanner.map.MapActivity"
             android:exported="false" />

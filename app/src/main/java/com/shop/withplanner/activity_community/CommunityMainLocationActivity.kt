@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityMainLocationBinding
 import com.shop.withplanner.dialog.MyLocDialog
-import com.shop.withplanner.dto.CommunityPostMain
-import com.shop.withplanner.dto.Posts
+import com.shop.withplanner.dto.CommunityMapPostMain
+import com.shop.withplanner.dto.MapPosts
 import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
@@ -30,7 +30,6 @@ class CommunityMainLocationActivity : AppCompatActivity() {
     private val postItems =  mutableListOf<PostModel>()
 
     var communityId = -1L
-    var communityType = ""
     var category = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,14 +41,13 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             communityId = intent.getLongExtra("communityId", -1L)
         }
 
-        RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
-            object : retrofit2.Callback<CommunityPostMain> {
-                override fun onResponse( call: Call<CommunityPostMain>, response: Response<CommunityPostMain>) {
+        RetrofitService.communityService.getMapPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+            object : retrofit2.Callback<CommunityMapPostMain> {
+                override fun onResponse( call: Call<CommunityMapPostMain>, response: Response<CommunityMapPostMain>) {
                     if(response.isSuccessful) {
 
                         val community = response.body()!!.result
 
-                        communityType = community.type
                         category = community.category
 
                         binding.titleTextView.text = community.name
@@ -60,13 +58,13 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                         binding.contentTextView.text = community.introduce
 
                         // 최신 게시글
-                        val posts = community.posts
+                        val posts = community.mapPosts
                         if(posts.isNotEmpty()) {
                             makeCard(posts)
                         }
 
-                        // 커뮤니티 이미지
                         val image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
+                        // 커뮤니티 이미지
                         if(image != null) {
                             Glide.with(this@CommunityMainLocationActivity).load(image).into(findViewById(R.id.mainImg))
                         }
@@ -104,7 +102,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                         Log.d("CommunityMainLocationAc", "onResponse 실패")
                     }
                 }
-                override fun onFailure(call: Call<CommunityPostMain>, t: Throwable) {
+                override fun onFailure(call: Call<CommunityMapPostMain>, t: Throwable) {
                     Log.d("CommunityMainLocationAc", "onFailure 에러: " + t.message.toString())
                 }
             }
@@ -115,13 +113,11 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
         // 위치인증 버튼
         binding.locAuthBtn.setOnClickListener{
-            // 저장된 목적지가 없다면 dlg_my_loc로. 그렇지 않다면 위치인증 화면으로.
-            if(true){
-                MyLocDialog().show(supportFragmentManager, "목적지 설정")
-            }
-            else{
-                startActivity(Intent(this, CommunityAuthenticateLocationActivity::class.java))
-            }
+            // 위치인증 화면으로.
+            intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            startActivity(intent)
         }
 
         binding.calendarBtn.setOnClickListener{
@@ -132,7 +128,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             intent = Intent(this, CommunityPostBoardActivity::class.java)
             intent.putExtra("communityId", communityId)
             intent.putExtra("category", category)
-            intent.putExtra("communityType", communityType)
+            intent.putExtra("communityType", "mapPost")
             startActivity(intent)
         }
     }
@@ -141,15 +137,14 @@ class CommunityMainLocationActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun makeCard(posts: List<Posts>) {
+    fun makeCard(posts: List<MapPosts>) {
         // 리사이클러뷰
         for(post in posts) {
             postItems.add(
                 PostModel(
-                    post.name,
+                    post.nickName,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, category,
-                    post.content, 1
+                    post.updatedAt, category, "${post.location}에서 오늘의 습관을 완료했어요!", 1
                 )
             )
         }

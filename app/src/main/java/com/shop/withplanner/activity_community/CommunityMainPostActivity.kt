@@ -39,108 +39,113 @@ class CommunityMainPostActivity : AppCompatActivity() {
     private var currentCount : Int = 0
     private lateinit var days : List<String>
     private lateinit var time : String
+    private lateinit var communityType: String
     var context : Context = this
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_community_main_post)
+            super.onCreate(savedInstanceState)
+            binding = DataBindingUtil.setContentView(this, R.layout.activity_community_main_post)
 
-        val idIntent = intent
-        var communityId = idIntent.getLongExtra("communityId", -1L)
+            val idIntent = intent
+            var communityId = idIntent.getLongExtra("communityId", -1L)
 
-        RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
-            object : retrofit2.Callback<CommunityPostMain> {
-                override fun onResponse(
-                    call: Call<CommunityPostMain>,
-                    response: Response<CommunityPostMain>
-                ) {
-                    if(response.isSuccessful) {
-                        var result = response.body()!!.result
-                        communityName = result.name
-                        communityImg = result.communityImg
-                        createdAt = result.createdAt
-                        introduce = result.introduce
-                        category = Category.category2string(result.category)
-                        headCount = result.headCount
-                        currentCount = result.currentCount
-                        days = result.days
-                        time = result.time
-                        var posts = result.posts
+            RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+                object : retrofit2.Callback<CommunityPostMain> {
+                    override fun onResponse(
+                        call: Call<CommunityPostMain>,
+                        response: Response<CommunityPostMain>
+                    ) {
+                        if (response.isSuccessful) {
+                            var result = response.body()!!.result
+                            communityName = result.name
+                            communityImg = result.communityImg
+                            createdAt = result.createdAt
+                            introduce = result.introduce
+                            category = Category.category2string(result.category)
+                            headCount = result.headCount
+                            currentCount = result.currentCount
+                            days = result.days
+                            time = result.time
+                            communityType = result.type
+                            var posts = result.posts
 
-                        if(posts.isNotEmpty()) {
-                            makeCard(posts)
-                        }
+                            Log.d("posts", posts.toString())
+                            if (posts.isNotEmpty()) {
+                                makeCard(posts)
+                            }
 
-                        Glide.with(context)
-                            .load(communityImg)
-                            .into(binding.mainImg)
-                        binding.titleTextView.text = communityName
-                        binding.validTextView.text = category
-                        binding.teamCountTextView.text = "$currentCount / $headCount"
-                        binding.dateTextView.text = createdAt
-                        for (day in days) {
-                            when (day) {
-                                "월" -> {
-                                    binding.mon.visibility = View.VISIBLE
-                                }
-                                "화" -> {
-                                    binding.tue.visibility = View.VISIBLE
-                                }
-                                "수" -> {
-                                    binding.wed.visibility = View.VISIBLE
-                                }
-                                "목" -> {
-                                    binding.thu.visibility = View.VISIBLE
-                                }
-                                "금" -> {
-                                    binding.fri.visibility = View.VISIBLE
-                                }
-                                "토" -> {
-                                    binding.sat.visibility = View.VISIBLE
-                                }
-                                "일" -> {
-                                    binding.sun.visibility = View.VISIBLE
+                            Glide.with(context)
+                                .load(communityImg)
+                                .into(binding.mainImg)
+                            binding.titleTextView.text = communityName
+                            binding.validTextView.text = category
+                            binding.teamCountTextView.text = "$currentCount / $headCount"
+                            binding.dateTextView.text = createdAt
+
+                            for (day in days) {
+                                when (day) {
+                                    "월" -> {
+                                        binding.mon.visibility = View.VISIBLE
+                                    }
+                                    "화" -> {
+                                        binding.tue.visibility = View.VISIBLE
+                                    }
+                                    "수" -> {
+                                        binding.wed.visibility = View.VISIBLE
+                                    }
+                                    "목" -> {
+                                        binding.thu.visibility = View.VISIBLE
+                                    }
+                                    "금" -> {
+                                        binding.fri.visibility = View.VISIBLE
+                                    }
+                                    "토" -> {
+                                        binding.sat.visibility = View.VISIBLE
+                                    }
+                                    "일" -> {
+                                        binding.sun.visibility = View.VISIBLE
+                                    }
                                 }
                             }
-                        }
-                        binding.timeTextView.text = time
-                        binding.contentTextView.text = introduce
-                        binding.contentDateTextView.text = createdAt
+                            binding.timeTextView.text = time
+                            binding.contentTextView.text = introduce
+                            binding.contentDateTextView.text = createdAt
 
-                    } else {
-                        Log.d("PostCommunityMain", "onResponse 실패");
+                        } else {
+                            Log.d("PostCommunityMain", "onResponse 실패");
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CommunityPostMain>, t: Throwable) {
+                        Log.d("PostCommunityMain", "onFailure 에러: " + t.message.toString());
                     }
                 }
+            )
 
-                override fun onFailure(call: Call<CommunityPostMain>, t: Throwable) {
-                    Log.d("PostCommunityMain", "onFailure 에러: " + t.message.toString());
-                }
+            binding.backBtn.setOnClickListener {
+                onBackPressed()
+            }
 
-            } )
+            binding.calendarBtn.setOnClickListener {
+                startActivity(Intent(this, CommunityCalendarActivity::class.java))
+            }
 
+            binding.currentPost.setOnClickListener {
+                var intent = Intent(this, CommunityPostBoardActivity::class.java)
+                intent.putExtra("communityId", communityId)
+                intent.putExtra("category", category)
+                intent.putExtra("communityType", communityType)
+                startActivity(intent)
+            }
 
-        binding.backBtn.setOnClickListener {
-            onBackPressed()
+            binding.postBtn.setOnClickListener {
+                var intent = Intent(this, CommunityPostActivity::class.java)
+                intent.putExtra("communityId", communityId)
+                intent.putExtra("category", category)
+                startActivity(intent)
+            }
         }
-
-        binding.calendarBtn.setOnClickListener{
-            startActivity(Intent(this, CommunityCalendarActivity::class.java))
-        }
-
-        binding.currentPost.setOnClickListener{
-            var intent = Intent(this, CommunityPostBoardActivity::class.java)
-            intent.putExtra("communityId", communityId)
-            intent.putExtra("category", category)
-            startActivity(intent)
-        }
-
-        binding.postBtn.setOnClickListener{
-            var intent = Intent(this, CommunityPostActivity::class.java)
-            intent.putExtra("communityId", communityId)
-            startActivity(intent)
-        }
-    }
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -151,23 +156,21 @@ class CommunityMainPostActivity : AppCompatActivity() {
         for(post in posts) {
             postItems.add(
                 PostModel(
-                    post.name,
+                    post.writerNickname,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, category,
+                    post.images[0].createdAt, post.name,
                     post.content, 2,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )
             )
         }
         val rv = binding.recyclerView
+        rv.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         val postsAdapter = PostsAdapter(this ,postItems)
         rv.adapter = postsAdapter
-        rv.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         // 구분선
         val decoration = DividerItemDecoration(this, RecyclerView.VERTICAL)
         rv.addItemDecoration(decoration)
     }
-
-
 }

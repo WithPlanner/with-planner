@@ -31,10 +31,14 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
     private var resultName = "" //선택한 장소의 이름.
     private var pageNum = 1 //페이지 번호
 
+    var communityId = -1L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_community_search_location)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_search_location)
+
+        communityId = intent.getLongExtra("communityId", -1L)
 
         binding.searchBtn.setOnClickListener{
             val text = binding.location.text.toString()
@@ -65,6 +69,7 @@ class CommunitySearchLocationActivity : AppCompatActivity() {
                 bundle.putDouble("latitude",latitude)
                 bundle.putString("roadAddress",roadAddress)
                 bundle.putString("address",address)
+                bundle.putLong("communityId", communityId)
                 fragment.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌.
 
                 fragment.show(supportFragmentManager,"프래그먼트로 전환")

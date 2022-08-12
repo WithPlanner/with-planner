@@ -56,7 +56,7 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
             val intent = Intent(holder.itemView?.context, CommunityPostInsideActivity::class.java)
 
             // 게시물 정보 넘겨주기
-            val postContents = arrayListOf<String>(obj.post_name, obj.post_icon, obj.post_date, obj.post_habit, obj.post_content)
+            val postContents = arrayListOf<String>(obj.post_name, obj.post_icon, obj.post_date, obj.post_title, obj.post_content)
             intent.putExtra("postContents", postContents)
             intent.putExtra("post_type", obj.type)
             if(obj.post_img!=null) {
@@ -77,13 +77,13 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
         val nname: TextView = itemView.findViewById(R.id.nickname)
         val icon: ImageView = itemView.findViewById(R.id.iconImg)
         val date: TextView = itemView.findViewById(R.id.date)
-        val habit: TextView = itemView.findViewById(R.id.habbit)
+        val title: TextView = itemView.findViewById(R.id.title)
         val comment: TextView = itemView.findViewById(R.id.content)
 
         fun bindItems(item: PostModel) {
             nname.text = item.post_name
             date.text = item.post_date
-            habit.text = item.post_habit
+            title.text = item.post_title
             comment.text = item.post_content
 //            Glide.with(itemView).load(item.post_icon).into(icon)
             icon.setImageResource(RandImg.getImg())
@@ -95,14 +95,14 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
         val nname: TextView = itemView.findViewById(R.id.nickname)
         val icon: ImageView = itemView.findViewById(R.id.iconImg)
         val date: TextView = itemView.findViewById(R.id.date)
-        val habit: TextView = itemView.findViewById(R.id.habbit)
+        val title: TextView = itemView.findViewById(R.id.title)
         val image: ImageView = itemView.findViewById(R.id.image)
         val comment: TextView = itemView.findViewById(R.id.content)
 
         fun bindItems(item: PostModel) {
             nname.text = item.post_name
             date.text = item.post_date
-            habit.text = item.post_habit
+            title.text = item.post_title
             comment.text = item.post_content
             Glide.with(itemView).load(item.post_img).into(image)
 //            Glide.with(itemView).load(item.post_icon).into(icon)

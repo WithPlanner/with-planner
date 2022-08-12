@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        getHashKey()
 
         // 리사이클러뷰 및 인텐트 정의
         val recRV = binding.recommendRecyclerView
@@ -116,6 +117,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val contentsAdapter = ContentsAdapter(this, items)
         rv.adapter = contentsAdapter
 
@@ -144,7 +146,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(selectedIntent)
                 }
             }
-            rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
 
 
