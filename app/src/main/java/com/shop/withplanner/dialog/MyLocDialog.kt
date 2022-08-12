@@ -41,7 +41,6 @@ class MyLocDialog() : DialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.dialog_fullscreen)
         isCancelable = true
-        binding.errorText.visibility = View.INVISIBLE
 
         var bundle = arguments
 
