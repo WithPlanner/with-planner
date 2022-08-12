@@ -69,6 +69,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     var curLatitude: Double = (-1).toDouble()
     var destination: String = "목적지"
 
+    var communityId = 1L
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +81,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
-        var communityId = intent.getLongExtra("communityId", -1L)
-        communityId = 70 // 임시
+        communityId = intent.getLongExtra("communityId", -1L)
 
         // 고정목적지: 서버에서 주소 받아오기(GET)
         RetrofitService.locationService.getMyLoc(sharedManager.getToken(), communityId).
@@ -355,15 +356,15 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
                 locationResult.lastLocation
-//                curLatitude = locationResult.lastLocation.latitude
-//                curLongitude = locationResult.lastLocation.longitude
-                curLatitude = 37.5336136308998
-                curLongitude = 126.876314985863
+                curLatitude = locationResult.lastLocation.latitude
+                curLongitude = locationResult.lastLocation.longitude
+//                curLatitude = 37.5336136308998
+//                curLongitude = 126.876314985863
                 println(curLatitude+ curLongitude)
                 setMarker(curLatitude, curLongitude)
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
-//                callCoordToLoc(curLatitude.toString(), curLongitude.toString())   // 진짜 코드
-                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
+                callCoordToLoc(curLatitude.toString(), curLongitude.toString())   // 진짜 코드
+//                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
             }
         }
 

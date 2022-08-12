@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityJoinBinding
+import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.dto.CommunityInfo
 import com.shop.withplanner.dto.JoinCommunity
 import com.shop.withplanner.retrofit.RetrofitService
@@ -29,7 +31,7 @@ class CommunityJoinActivity: AppCompatActivity() {
 
         var communityId = -1L
         var communityType = ""
-        var userId = 1
+        var userId = -1
 
 
         // 선택한 커뮤니티의 communityId 전달받기
@@ -134,17 +136,18 @@ class CommunityJoinActivity: AppCompatActivity() {
                 }
             )
 
-            // 커뮤니티 타입에 따라 다른 액티비티로
-            Log.d("communityType", communityType)
+            // 커뮤니티 타입이 post면 postMain, loc면 목적지 설정 프래그먼트로
             if(communityType == "mapPost") {
-                val intent = Intent(this, CommunityMainLocationActivity::class.java)
-                intent.putExtra("communityId",38L)
-                intent.putExtra("userId", userId)
-                startActivity(intent)
+
+                var bundle = Bundle()
+                bundle.putLong("communityId", communityId)
+                val dialog = MyLocDialog()
+                dialog.arguments = bundle
+                dialog.show(supportFragmentManager, "목적지 설정")
             }
             else if (communityType == "post"){
                 val intent = Intent(this, CommunityMainPostActivity::class.java)
-                intent.putExtra("communityId",38L)
+                intent.putExtra("communityId",-1L)
                 startActivity(intent)
             }
         }

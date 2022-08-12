@@ -155,9 +155,9 @@ class CommunityMainPostActivity : AppCompatActivity() {
         for(post in posts) {
             postItems.add(
                 PostModel(
-                    post.name,
+                    post.writerNickname,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, category,
+                    post.images[0].createdAt, post.name,
                     post.content, 2,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )

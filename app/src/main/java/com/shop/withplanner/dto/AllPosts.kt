@@ -17,3 +17,18 @@ data class ALlPosts (
     @SerializedName("result")
     var result: List<Posts>
 )
+
+data class ALlMapPosts (
+    @Expose
+    @SerializedName("isSuccess")
+    var isSuccess: Boolean,
+    @Expose
+    @SerializedName("code")
+    var code: Int,
+    @Expose
+    @SerializedName("message")
+    val message: String,
+    @Expose
+    @SerializedName("result")
+    var result: List<MapPosts>
+)

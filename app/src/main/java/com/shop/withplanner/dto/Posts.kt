@@ -20,3 +20,24 @@ data class Posts(
     @SerializedName("writerNickname")
     val writerNickname: String
 )
+
+data class MapPosts(
+    @Expose
+    @SerializedName("mapPostId")
+    var mapPostId: Int,
+    @Expose
+    @SerializedName("userId")
+    val userId: Int,
+    @Expose
+    @SerializedName("nickName")
+    val nickName: String,
+    @Expose
+    @SerializedName("profileImg")
+    var profileImg: String?,
+    @Expose
+    @SerializedName("location")
+    val location: String,
+    @Expose
+    @SerializedName("updatedAt")
+    val updatedAt: String
+)
