@@ -116,6 +116,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             // 위치인증 화면으로.
             intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
             intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
             startActivity(intent)
         }
 

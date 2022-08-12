@@ -142,6 +142,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
             binding.postBtn.setOnClickListener {
                 var intent = Intent(this, CommunityPostActivity::class.java)
                 intent.putExtra("communityId", communityId)
+                intent.putExtra("category", category)
                 startActivity(intent)
             }
         }

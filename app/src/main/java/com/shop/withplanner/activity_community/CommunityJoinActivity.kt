@@ -147,7 +147,7 @@ class CommunityJoinActivity: AppCompatActivity() {
             }
             else if (communityType == "post"){
                 val intent = Intent(this, CommunityMainPostActivity::class.java)
-                intent.putExtra("communityId",-1L)
+                intent.putExtra("communityId",communityId)
                 startActivity(intent)
             }
         }

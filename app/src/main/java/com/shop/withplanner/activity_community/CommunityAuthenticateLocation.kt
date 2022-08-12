@@ -70,6 +70,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     var destination: String = "목적지"
 
     var communityId = 1L
+    var titleName = ""
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -82,6 +83,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         }
 
         communityId = intent.getLongExtra("communityId", -1L)
+        titleName = intent.getStringExtra("category").toString()
 
         // 고정목적지: 서버에서 주소 받아오기(GET)
         RetrofitService.locationService.getMyLoc(sharedManager.getToken(), communityId).
@@ -120,9 +122,6 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         }
 
         binding.joinBtn.setOnClickListener {
-            // 습관이름 받아오기
-            var titleName = "습관이름"
-
             // 고정위치와 현재위치가 같으면 인증
             var isAuthenticate = isAuthenticOrNot(myLongitude, myLatitude, curLongitude, curLatitude)
             val time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"))
@@ -141,7 +140,17 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                             // 인증 성공
                             if(result.code == 1000) {
                                 // 인증확인 다이얼로그
-                                showDialog(titleName, "오늘 ${titleName} 인증을 완료했습니다.")
+                                val builder = AlertDialog.Builder(this@CommunityAuthenticateLocationActivity).setTitle(titleName)
+                                    .setMessage("오늘의 ${titleName} 인증을 완료했습니다.")
+                                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                                        intent = Intent(this@CommunityAuthenticateLocationActivity,
+                                            CommunityPostBoardActivity::class.java)
+                                        intent.putExtra("communityId", communityId)
+                                        intent.putExtra("category", titleName)
+                                        intent.putExtra("communityType", "mapPost")
+                                        startActivity(intent)
+                                        finish()
+                                    }).show()
                             }
                             // 인증요일이 아님
                             else if(result.code == 2012) {
