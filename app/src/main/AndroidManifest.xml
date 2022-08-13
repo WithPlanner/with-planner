@@ -32,7 +32,8 @@
 
         <activity
             android:name=".activity_community.CommunityPostInsideActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activity_community.CommunityPostActivity"
             android:exported="false" />
@@ -111,7 +112,7 @@
         <activity
             android:name=".activity_community.CommunityJoinActivity"
             android:exported="false"
-            android:noHistory="true" />
+            android:noHistory="true"/>
         <activity
             android:name="com.shop.withplanner.map.MapActivity"
             android:exported="false" />

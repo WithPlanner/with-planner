@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        getHashKey()
 
         // 리사이클러뷰 및 인텐트 정의
         val recRV = binding.recommendRecyclerView
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                             viewCommunityList(hotRV, hotRV_Items, postList.hotList, intent_join)     // 가장 활성화된 습관모임
                             viewCommunityList(newRV, newRV_Items, postList.newList, intent_join)     // 최신 습관모임
 
+                            Log.d("최신 습관 모임", postList.newList.toString())
 
                             Log.d("MAIN", "onResponse 성공" + result?.toString())
                         }
@@ -98,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     // 커뮤니티 리스팅 함수
     private fun viewCommunityList(      // intent2: 회원님이 참여하는 습관모임에서만 사용.
         rv: RecyclerView, items: MutableList<ContentsModel>, posts: List<CommunityList>,
@@ -116,6 +122,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         val contentsAdapter = ContentsAdapter(this, items)
         rv.adapter = contentsAdapter
 
@@ -144,7 +151,6 @@ class MainActivity : AppCompatActivity() {
                     startActivity(selectedIntent)
                 }
             }
-            rv.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         }
 
 

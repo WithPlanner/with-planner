@@ -1,5 +1,6 @@
 package com.shop.withplanner.dialog
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,14 @@ import com.shop.withplanner.activity_community.CommunityAuthenticateLocationActi
 import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.shop.withplanner.activity_community.CommunityMainLocationActivity
 import com.shop.withplanner.activity_community.CommunitySearchLocationActivity
-import com.shop.withplanner.dto.MyLoc
+import com.shop.withplanner.activity_etc.MainActivity
+import com.shop.withplanner.dto.MyLocReceived
+import com.shop.withplanner.dto.MyLocToSend
+import com.shop.withplanner.dto.MyLocToSendResponse
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
 import retrofit2.Call
@@ -26,6 +33,7 @@ class MyLocDialog() : DialogFragment() {
 
     // context 사용을 위한 코드
     var location: String? = "목적지를 입력해주세요."
+    var communityId: Long? = -1L
     val body = HashMap<String, String>()
 
 
@@ -35,6 +43,8 @@ class MyLocDialog() : DialogFragment() {
         isCancelable = true
 
         var bundle = arguments
+
+        communityId = bundle?.getLong("communityId", -1L)
 
         if(bundle!=null){
             Log.d("위도", bundle!!.getDouble("latitude").toString())
@@ -60,79 +70,93 @@ class MyLocDialog() : DialogFragment() {
         binding.location.text  = location
 
         binding.helpBtn.setOnClickListener{
-//            val location = binding.location.text.toString().trim()
-//            val locationAlias = binding.locationAlias.text.toString().trim()
-//
-//            if(location.isEmpty()){
-//                binding.location.error = "목적지를 설정해주세요."
-//            }
-//            else if(locationAlias.isEmpty()){
-//                binding.locationAlias.error = "별칭을 입력해주세요."
-//            }
-//            else{
-//                val intent = Intent(activity, CommunityAuthenticateLocationActivity::class.java)
-//                startActivity(intent)
-//                dismiss()
-//            }
+
         }
+
         // 지도 or 목적지 textView 클릭시 검색 창으로 이동
+        val intent = Intent(requireContext(), CommunitySearchLocationActivity::class.java)
+        intent.putExtra("communityId", communityId)
+
         binding.addLocBtn.setOnClickListener{
-            startActivity(Intent(activity, CommunitySearchLocationActivity::class.java))
+            startActivity(intent)
         }
         binding.location.setOnClickListener{
-            startActivity(Intent(activity,CommunitySearchLocationActivity::class.java))
+            startActivity(intent)
         }
 
         // 확인버튼
         binding.makeBtn.setOnClickListener{
-            // 서버에 저장 필요
-            var locationAlias = location
-
             if(location?.isEmpty()!!){
                 binding.location.error = "목적지를 설정해주세요."
             }
             else{
                 // 내 위치정보 서버로 전송
                 var bundle = arguments
+                var locationAlias = ""
 
-                var myLoc: MyLoc
+                // 목적지 별칭이 있으면 별칭으로, 없으면 주소로
+                if(binding.locationAlias.text.toString().trim() != "") {
+                    locationAlias = binding.locationAlias.text.toString().trim()
+                }
+                else{
+                    locationAlias = location.toString()
+                }
+
+                var myLocToSend: MyLocToSend
                 val longitude = bundle?.getDouble("longitude")
                 val latitude = bundle?.getDouble("latitude")
                 val roadAddress: String? = bundle?.getString("roadAddress")
                 val address: String? = bundle?.getString("address")
                 val resultName: String? = bundle?.getString("resultName")
-                val communityId: Long = 5   // 이거 앞에서 받아올것
 
-                myLoc = MyLoc(longitude!!, latitude!!, roadAddress, address, locationAlias, resultName)
+                myLocToSend = MyLocToSend(longitude!!, latitude!!, roadAddress, address, locationAlias, resultName)
 
-                Log.d("MYLOC", myLoc.toString())
+                Log.d("MYLOCTOSEND", myLocToSend.toString())
 
-                RetrofitService.userService.sendMyLoc(sharedManager.getToken(), myLoc, communityId).
-                enqueue(object:Callback<Result> {
-                    override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                RetrofitService.locationService.sendMyLoc(sharedManager.getToken(), myLocToSend, communityId!!).
+                enqueue(object:Callback<MyLocToSendResponse> {
+                    override fun onResponse(call: Call<MyLocToSendResponse>, response: Response<MyLocToSendResponse>) {
                         if(response.isSuccessful) {
-                            val result: Result? = response.body()
-                            Log.d("MyLocDialog", result.toString())
+
+                            val result = response.body()!!
+
+                            when (result.code) {
+                                1000 -> {
+                                    Toast.makeText(requireContext(), "목적지 설정 완료", Toast.LENGTH_SHORT).show()
+
+                                    val intent = Intent(activity, CommunityMainLocationActivity::class.java)
+                                    intent.putExtra("communityId", communityId)
+                                    startActivity(intent)
+                                    dismiss()
+                                }
+                                2008 -> {
+                                    binding.errorText.visibility = View.VISIBLE
+                                    binding.errorText.text = "${result.code}: 존재하지 않는 커뮤니티입니다."
+                                }
+                                else -> {
+                                    Log.d("MyLocDialog", result.toString())
+                                }
+                            }
                         }
                         else {
                             Log.d("MyLocDialog", "onResponse 실패: " + response.errorBody()?.string()!!)
-                            sharedManager.getToken()
+                            binding.errorText.visibility = View.VISIBLE
+                            binding.errorText.text = "서버 전송에 실패했습니다."
                         }
                     }
-                    override fun onFailure(call: Call<Result>, t: Throwable) {
+                    override fun onFailure(call: Call<MyLocToSendResponse>, t: Throwable) {
                         Log.d("MyLocDialog", "onFailure 에러: " + t.message.toString())
+                        binding.errorText.visibility = View.VISIBLE
+                        binding.errorText.text = "통신 오류가 발생했습니다."
                     }
                 })
 
+//                body.put("latitude", bundle!!.getString("latitude").toString())
 
-                body.put("latitude", bundle!!.getString("latitude").toString())
-
-                val intent = Intent(activity, CommunityAuthenticateLocationActivity::class.java)
-                startActivity(intent)
-                dismiss()
             }
 
         }
         return binding.root
     }
+
 }

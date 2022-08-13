@@ -18,7 +18,7 @@ object Category {
             "nightRoutine" -> return "나이트 루틴"
             "houseClean" -> return "집 정돈"
             "prepareEmployment" -> return "취업 준비"
-            "healthHabit" -> return "건강 습관 형성"
+            "healthtitle" -> return "건강 습관 형성"
             "read" -> return "독서"
             else -> return "오류"
         }
