@@ -29,6 +29,9 @@ data class CommunityPostResult(
     @SerializedName("createdAt")
     val createdAt: String,
     @Expose
+    @SerializedName("updatedAt")
+    val updatedAt: String,
+    @Expose
     @SerializedName("introduce")
     val introduce: String,
     @Expose

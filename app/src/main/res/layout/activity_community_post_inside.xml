@@ -157,6 +157,7 @@
                 android:background="@color/green" />
 
             <LinearLayout
+                android:id="@+id/commentBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10sp"

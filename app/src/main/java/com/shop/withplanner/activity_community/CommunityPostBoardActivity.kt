@@ -118,7 +118,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
                     PostModel(
                         post.writerNickname,
                         "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                        post.images[0].createdAt, post.name,
+                        post.updatedAt, post.name,
                         post.content, type_int,
                         post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                         post.postId, communityId
