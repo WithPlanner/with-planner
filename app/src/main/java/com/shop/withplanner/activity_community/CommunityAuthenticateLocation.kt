@@ -365,15 +365,6 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
                 locationResult.lastLocation
-<<<<<<< HEAD
-                var latitude = locationResult.lastLocation.latitude
-                var longitude = locationResult.lastLocation.longitude
-                println(latitude+ longitude)
-                Log.d("현재 위도 경도 갖고오는 테스트",latitude.toString() + ","+longitude.toString())
-                setMarker(latitude, longitude)
-                callCoordToLoc(longitude.toString(),latitude.toString())
-        }
-=======
                 curLatitude = locationResult.lastLocation.latitude
                 curLongitude = locationResult.lastLocation.longitude
 //                curLatitude = 37.5336136308998
@@ -381,10 +372,9 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 println(curLatitude+ curLongitude)
                 setMarker(curLatitude, curLongitude)
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
-                callCoordToLoc(curLatitude.toString(), curLongitude.toString())   // 진짜 코드
+                callCoordToLoc(curLongitude.toString(),curLatitude.toString()) //진짜진짜코드
 //                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
             }
->>>>>>> f96b3119325e0d02e2291a49486406cf56053abf
         }
 
     //뒤로가기

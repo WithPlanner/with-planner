@@ -18,7 +18,10 @@ data class Posts(
     var images: List<Images>,
     @Expose
     @SerializedName("writerNickname")
-    val writerNickname: String
+    val writerNickname: String,
+    @Expose
+    @SerializedName("updatedAt")
+    val updatedAt: String
 )
 
 data class MapPosts(

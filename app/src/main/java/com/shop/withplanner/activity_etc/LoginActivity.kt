@@ -58,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
 
                         Log.d("LOGIN", "onResponse 성공: " + result?.toString());
                         startActivity(intent)
+
                     }else{
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         Log.d("LOGIN", "onResponse 실패")

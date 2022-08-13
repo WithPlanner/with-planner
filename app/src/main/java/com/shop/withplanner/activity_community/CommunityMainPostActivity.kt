@@ -151,15 +151,18 @@ class CommunityMainPostActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+
     fun makeCard(posts: List<Posts>) {
         // 리사이클러뷰
         for(post in posts) {
             postItems.add(
                 PostModel(
-                    post.writerNickname,
+                    post.name,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, post.name,
-                    post.content, 2,
+                    post.updatedAt,
+                    post.name,
+                    post.content,
+                    2,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
                 )
             )
