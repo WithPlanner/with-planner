@@ -9,7 +9,7 @@ interface UserService {
     @POST("/login")
     fun login(
         @Body params: HashMap<String, String>,
-    ): Call<Token>
+    ): Call<LoginDto>
 
     @Headers( "content-type: application/json")
     @POST("/sign_up/check_valid_email")

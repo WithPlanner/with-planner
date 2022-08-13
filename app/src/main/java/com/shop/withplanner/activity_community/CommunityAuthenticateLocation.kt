@@ -372,7 +372,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 println(curLatitude+ curLongitude)
                 setMarker(curLatitude, curLongitude)
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
-                callCoordToLoc(curLongitude.toString(), curLatitude.toString())   // 진짜 코드
+                callCoordToLoc(curLongitude.toString(),curLatitude.toString()) //진짜진짜코드
+//                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
 //                callCoordToLoc("126.876314985863","37.53361363089" +
 //                        "98")   // TEST
             }
@@ -399,13 +400,14 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                     kakaoList.value = response.body()
                     Log.d("주소", kakaoList.value!!.documents[0].toString())
                     setLocation(kakaoList.value!!.documents[0].road_address.address_name)
-
                 }
 
                 override fun onFailure(call: Call<DtoCoordToAddress>, t: Throwable) {
                     t.printStackTrace()
                 }
             })
+
+
     }
     //currentLoc에 값 넣어주는 함수
     fun setLocation(addressName:String){

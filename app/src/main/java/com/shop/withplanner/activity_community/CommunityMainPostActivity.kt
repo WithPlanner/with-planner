@@ -154,6 +154,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+
     fun makeCard(posts: List<Posts>) {
         // 리사이클러뷰
         for(post in posts) {

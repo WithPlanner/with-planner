@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.EmailActivity
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityLoginBinding
+import com.shop.withplanner.dto.LoginDto
 import com.shop.withplanner.dto.Token
 import com.shop.withplanner.retrofit.RetrofitService
 import com.shop.withplanner.shared_preferences.SharedManager
@@ -47,24 +48,33 @@ class LoginActivity : AppCompatActivity() {
             body.put("email", email)
             body.put("password", password)
 
-            RetrofitService.userService.login(body)?.enqueue(object : Callback<Token> {
-                override fun onResponse(call: Call<Token>, response: Response<Token>) {
+            RetrofitService.userService.login(body)?.enqueue(object : Callback<LoginDto> {
+                override fun onResponse(call: Call<LoginDto>, response: Response<LoginDto>) {
                     if(response.isSuccessful){
                         // 정상적으로 통신이 성공된 경우
-                        var result: Token? = response.body()
+                        var result: LoginDto? = response.body()
 
-                        val currentUser = User(result?.token)
-                        sharedManager.saveCurrentUser(currentUser)  // token 저장
+                        if(result!!.code == 1000){
+                            val currentUser = User(result.result.jwtToken)
+                            sharedManager.saveCurrentUser(currentUser)  // token 저장
 
-                        Log.d("LOGIN", "onResponse 성공: " + result?.toString());
-                        startActivity(intent)
+                            Log.d("LOGIN", "onResponse 성공: " + result?.toString());
+                            startActivity(intent)
+                        }
+                        else if(result.code == 2007){
+                            Log.d("LOGIN실패", "존재하지 않는 이메일입니다.")
+                        }
+                        else if(result.code == 2017){
+                            Log.d("LOGIN실패", "잘못된 비밀번호 입니다. ")
+                        }
+
                     }else{
                         // 통신이 실패한 경우(응답코드 3xx, 4xx 등)
                         Log.d("LOGIN", "onResponse 실패")
                     }
                 }
 
-                override fun onFailure(call: Call<Token>, t: Throwable) {
+                override fun onFailure(call: Call<LoginDto>, t: Throwable) {
                     // 통신 실패 (인터넷 끊킴, 예외 발생 등 시스템적인 이유)
                     Log.d("LOGIN", "onFailure 에러: " + t.message.toString());
                 }

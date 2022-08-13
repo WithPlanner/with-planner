@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                             viewCommunityList(hotRV, hotRV_Items, postList.hotList, intent_join)     // 가장 활성화된 습관모임
                             viewCommunityList(newRV, newRV_Items, postList.newList, intent_join)     // 최신 습관모임
 
+                            Log.d("최신 습관 모임", postList.newList.toString())
 
                             Log.d("MAIN", "onResponse 성공" + result?.toString())
                         }
