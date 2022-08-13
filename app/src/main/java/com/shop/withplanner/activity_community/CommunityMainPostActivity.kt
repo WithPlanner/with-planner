@@ -33,6 +33,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
     private lateinit var communityName : String
     private lateinit var communityImg : String
     private lateinit var createdAt : String
+    private lateinit var updatedAt : String
     private lateinit var introduce : String
     private lateinit var category : String
     private var headCount : Int = 0
@@ -61,6 +62,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
                             communityName = result.name
                             communityImg = result.communityImg
                             createdAt = result.createdAt
+                            updatedAt = result.updatedAt
                             introduce = result.introduce
                             category = Category.category2string(result.category)
                             headCount = result.headCount
@@ -82,6 +84,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
                             binding.validTextView.text = category
                             binding.teamCountTextView.text = "$currentCount / $headCount"
                             binding.dateTextView.text = createdAt
+                            binding.contentDateTextView.text = updatedAt
 
                             for (day in days) {
                                 when (day) {
@@ -158,7 +161,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
                 PostModel(
                     post.writerNickname,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.images[0].createdAt, post.name,
+                    post.updatedAt, post.name,
                     post.content, 2,
                     post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                     post.postId, communityId

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
@@ -52,9 +53,10 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                                 binding.nickname.text = result.nickName
                                 binding.date.text = result.updatedAt
                                 val location = result.location
+                                binding.content.text = "${location}에서 오늘의 습관을 완료했어요!"
 
-                                // 게시글 이미지
                                 binding.image.visibility = View.GONE
+                                binding.habbit.text = ""
 
                                 // 댓글
                                 for(comment in result.comments) {
@@ -124,7 +126,6 @@ class CommunityPostInsideActivity : AppCompatActivity() {
             )
         }
 
-
         // 댓글 입력
         binding.commentBtn.setOnClickListener{
             body.put("comment", binding.comment.text.toString().trim())
@@ -149,6 +150,11 @@ class CommunityPostInsideActivity : AppCompatActivity() {
             )
         }
 
+        // 댓글입력버튼 클릭시 소프트키보드 내리기
+        binding.commentBtn.setOnClickListener{
+            softkeyboardHide()
+        }
+
         binding.backBtn.setOnClickListener{
             onBackPressed()
         }
@@ -156,5 +162,19 @@ class CommunityPostInsideActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
     }
+
+    // 댓글창 외에 다른곳을 누르면 소프트키보드 내려감
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+        return true
+    }
+
+    // 키보드 내리기
+    fun softkeyboardHide() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.comment.windowToken, 0)
+    }
+
 
 }
