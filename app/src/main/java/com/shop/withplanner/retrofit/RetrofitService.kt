@@ -19,5 +19,6 @@ class RetrofitService {
         val communityService : CommunityService = retrofit.create(CommunityService::class.java)
         val postService : PostService = retrofit.create(PostService::class.java)
         val locationService: LocationService = retrofit.create(LocationService::class.java)
+        val commentService: CommentService = retrofit.create(CommentService::class.java)
     }
 }

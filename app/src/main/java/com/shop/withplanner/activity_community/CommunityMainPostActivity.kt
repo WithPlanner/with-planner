@@ -40,6 +40,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
     private lateinit var days : List<String>
     private lateinit var time : String
     private lateinit var communityType: String
+    var communityId: Long = -1L
     var context : Context = this
 
 
@@ -47,8 +48,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
             super.onCreate(savedInstanceState)
             binding = DataBindingUtil.setContentView(this, R.layout.activity_community_main_post)
 
-            val idIntent = intent
-            var communityId = idIntent.getLongExtra("communityId", -1L)
+            communityId = intent.getLongExtra("communityId", -1L)
 
             RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
                 object : retrofit2.Callback<CommunityPostMain> {
@@ -160,7 +160,8 @@ class CommunityMainPostActivity : AppCompatActivity() {
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                     post.images[0].createdAt, post.name,
                     post.content, 2,
-                    post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
+                    post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
+                    post.postId, communityId
                 )
             )
         }

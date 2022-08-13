@@ -144,7 +144,8 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                 PostModel(
                     post.nickName,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.updatedAt, category, "${post.location}에서 오늘의 습관을 완료했어요!", 1
+                    post.updatedAt, category, "${post.location}에서 오늘의 습관을 완료했어요!", 1,
+                    null, post.mapPostId, communityId
                 )
             )
         }
