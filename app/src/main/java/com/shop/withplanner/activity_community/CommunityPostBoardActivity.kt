@@ -120,7 +120,8 @@ class CommunityPostBoardActivity : AppCompatActivity() {
                         "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                         post.images[0].createdAt, post.name,
                         post.content, type_int,
-                        post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
+                        post.images[0].imgUrl + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
+                        post.postId, communityId
                     )
                 )
             }
@@ -135,7 +136,8 @@ class CommunityPostBoardActivity : AppCompatActivity() {
                         post.nickName,
                         "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                         post.updatedAt, category,
-                        "${post.location}에서 오늘의 습관을 완료했어요!", type_int,
+                        "${post.location}에서 오늘의 습관을 완료했어요!", type_int, null,
+                        post.mapPostId, communityId
                     )
                 )
             }

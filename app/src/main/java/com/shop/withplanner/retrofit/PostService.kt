@@ -1,8 +1,6 @@
 package com.shop.withplanner.retrofit
 
-import com.shop.withplanner.dto.ALlMapPosts
-import com.shop.withplanner.dto.ALlPosts
-import com.shop.withplanner.dto.IdAndMsg
+import com.shop.withplanner.dto.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -30,4 +28,16 @@ interface PostService {
         @Header("X-AUTH-TOKEN") token : String?,
         @Path("communityIdx") communityIdx : Long
     ) : Call<ALlMapPosts>
+
+    @GET("/community/post/detail/{postIdx}")
+    fun getPostDetail(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Path("postIdx") communityIdx : Long
+    ) : Call<PostDetail>
+
+    @GET("/community/map-post/detail/{mapPostIdx}")
+    fun getMapPostDetail(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Path("mapPostIdx") communityIdx : Long
+    ) : Call<MapPostDetail>
 }

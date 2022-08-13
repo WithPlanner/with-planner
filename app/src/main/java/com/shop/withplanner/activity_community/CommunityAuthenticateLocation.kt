@@ -374,6 +374,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
                 callCoordToLoc(curLongitude.toString(),curLatitude.toString()) //진짜진짜코드
 //                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
+//                callCoordToLoc("126.876314985863","37.53361363089" +
+//                        "98")   // TEST
             }
         }
 

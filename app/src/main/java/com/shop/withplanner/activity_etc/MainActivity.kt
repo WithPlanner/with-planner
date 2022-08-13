@@ -100,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     // 커뮤니티 리스팅 함수
     private fun viewCommunityList(      // intent2: 회원님이 참여하는 습관모임에서만 사용.
         rv: RecyclerView, items: MutableList<ContentsModel>, posts: List<CommunityList>,
