@@ -56,7 +56,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                                 binding.content.text = "${location}에서 오늘의 습관을 완료했어요!"
 
                                 binding.image.visibility = View.GONE
-                                binding.habbit.text = ""
+//                                binding.habbit.text = ""
 
                                 // 댓글
                                 for(comment in result.comments) {
@@ -138,6 +138,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                             var result = response.body()!!.result
                             Log.d("sendComment", "onResponse 성공 $result")
                             binding.comment.text = null
+                            softkeyboardHide()
 
                         } else {
                             Log.d("sendComment", "onResponse 실패");
@@ -148,11 +149,6 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                     }
                 }
             )
-        }
-
-        // 댓글입력버튼 클릭시 소프트키보드 내리기
-        binding.commentBtn.setOnClickListener{
-            softkeyboardHide()
         }
 
         binding.backBtn.setOnClickListener{
