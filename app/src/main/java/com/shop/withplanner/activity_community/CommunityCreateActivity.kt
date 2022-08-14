@@ -115,8 +115,8 @@ class CommunityCreateActivity : AppCompatActivity() {
         //3. 인증방식
         binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
             when(checkId){
-                R.id.postAuthBtn -> binding.chooseLocationLinear.visibility = View.GONE
-                R.id.locAuthBtn -> binding.chooseLocationLinear.visibility = View.VISIBLE
+                R.id.post_btn -> binding.chooseLocationLinear.visibility = View.GONE
+                R.id.location_btn -> binding.chooseLocationLinear.visibility = View.VISIBLE
             }}
 
 
@@ -174,14 +174,6 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 numberOfPerson = parent?.getItemAtPosition(pos) as Int
-            }
-        }
-
-        // 인증방식
-        binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
-            when(checkId){
-                R.id.postAuthBtn -> authType = "post"
-                R.id.locAuthBtn -> authType = "map"
             }
         }
 

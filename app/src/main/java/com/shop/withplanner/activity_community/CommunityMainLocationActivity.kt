@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityMainLocationBinding
-import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.dto.CommunityMapPostMain
 import com.shop.withplanner.dto.MapPosts
 import com.shop.withplanner.recyler_view.PostModel
@@ -31,6 +30,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
     var communityId = -1L
     var category = ""
+    var communityName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                         val community = response.body()!!.result
 
                         category = community.category
+                        communityName = community.name
 
                         binding.titleTextView.text = community.name
                         binding.validTextView.text = category
@@ -117,6 +118,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
             intent.putExtra("communityId", communityId)
             intent.putExtra("category", category)
+            intent.putExtra("communityName",communityName)
             startActivity(intent)
         }
 
