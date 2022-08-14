@@ -1,9 +1,11 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.EmailActivity
@@ -38,6 +40,10 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.email.text.toString().trim()
             val password = binding.password.text.toString().trim()
 
+            //로그인 버튼 누를때 워닝 메시지 갱신
+            binding.warningEmail.visibility = View.INVISIBLE;
+            binding.warningPassword.visibility = View.INVISIBLE;
+
             if(email.isEmpty()) {
                 binding.email.error = "메일주소를 입력해주세요."
             }
@@ -57,15 +63,19 @@ class LoginActivity : AppCompatActivity() {
                         if(result!!.code == 1000){
                             val currentUser = User(result.result.jwtToken)
                             sharedManager.saveCurrentUser(currentUser)  // token 저장
+                            binding.warningEmail.visibility = View.GONE;
+                            binding.warningPassword.visibility = View.GONE;
 
                             Log.d("LOGIN", "onResponse 성공: " + result?.toString());
                             startActivity(intent)
                         }
                         else if(result.code == 2007){
                             Log.d("LOGIN실패", "존재하지 않는 이메일입니다.")
+                            binding.warningEmail.visibility = View.VISIBLE;
                         }
                         else if(result.code == 2017){
                             Log.d("LOGIN실패", "잘못된 비밀번호 입니다. ")
+                            binding.warningPassword.visibility = View.VISIBLE;
                         }
 
                     }else{
