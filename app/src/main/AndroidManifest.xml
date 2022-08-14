@@ -2,19 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.shop.withplanner">
-    <!--인터넷 권한 설정-->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--위치 권한 설정-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-    <!-- 저장소 권한 -->
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!-- 카메라 권한 -->
+    <!-- 인터넷 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치 권한 설정 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 저장소 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 카메라 권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -25,15 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WithPlanner"
         android:usesCleartextTraffic="true">
+        <!-- 카카오 키 등록 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="${kakaoMapAppKey}" />
 
-
-        <!-- 카카오 키 등록-->
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value ="${kakaoMapAppKey}" />
-
+        <activity
+            android:name=".activity_etc.SearchActivity"
+            android:exported="false" />
         <activity
             android:name=".activity_community.CommunityPostInsideActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity_community.CommunityPostActivity"
             android:exported="false" />
@@ -47,7 +43,7 @@
             android:name="com.shop.withplanner.EmailActivity"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.SettingActivity"
+            android:name=".activity_etc.SettingActivity"
             android:exported="false" />
         <activity
             android:name="com.shop.withplanner.not_used.CommunityInfoBoardActivity"
@@ -65,10 +61,10 @@
             android:name="com.shop.withplanner.SurveyActivity2"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.LoginActivity"
+            android:name=".activity_etc.LoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.SplashActivity"
+            android:name=".activity_etc.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,10 +82,10 @@
             android:name=".activity_community.CommunityCalendarActivity"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.MyCalendarActivity"
+            android:name=".activity_etc.MyCalendarActivity"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.MainActivity"
+            android:name=".activity_etc.MainActivity"
             android:exported="true" />
         <activity
             android:name=".activity_community.CommunityCreateActivity"
@@ -98,7 +94,7 @@
             android:name=".activity_community.CommunitySearchLocationActivity"
             android:exported="false" />
         <activity
-            android:name="com.shop.withplanner.activity_etc.CategoryActivity"
+            android:name=".activity_etc.CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".activity_community.CommunityAuthenticateLocationActivity"
@@ -112,7 +108,7 @@
         <activity
             android:name=".activity_community.CommunityJoinActivity"
             android:exported="false"
-            android:noHistory="true"/>
+            android:noHistory="true" />
         <activity
             android:name="com.shop.withplanner.map.MapActivity"
             android:exported="false" />

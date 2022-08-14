@@ -57,6 +57,13 @@ class MainActivity : AppCompatActivity() {
         binding.myBtn.setOnClickListener {
             startActivity(Intent(this, MyCalendarActivity::class.java))
         }
+
+        // 검색
+        binding.searchBtn.setOnClickListener{
+            intent = Intent(this, SearchActivity::class.java)
+            intent.putExtra("searchWord", binding.searchText.text.toString().trim())
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

@@ -19,7 +19,6 @@ class UserAdapter(val context : Context, val userList: MutableList<UserModel>): 
         val v = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_user, parent, false)
         return ViewHolder(v)
     }
-
     var itemClick: ContentsAdapter.ItemClick? = null
 
     override fun onBindViewHolder(holder: UserAdapter.ViewHolder, position: Int) {
