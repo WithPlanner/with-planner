@@ -40,4 +40,10 @@ interface PostService {
         @Header("X-AUTH-TOKEN") token : String?,
         @Path("mapPostIdx") communityIdx : Long
     ) : Call<MapPostDetail>
+
+    @GET("/main/search")
+    fun getSearchCommunity(
+        @Header("X-AUTH-TOKEN") token : String?,
+        @Query("query") query: String
+    ) : Call<SearchList>
 }
