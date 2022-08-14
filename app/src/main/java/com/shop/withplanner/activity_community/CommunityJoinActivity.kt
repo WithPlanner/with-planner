@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,13 +22,14 @@ import retrofit2.Response
 
 class CommunityJoinActivity: AppCompatActivity() {
     private lateinit var binding : ActivityCommunityJoinBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     private lateinit var days : List<String>
     private lateinit var time : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_join)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         var communityId = -1L
         var communityType = ""
@@ -40,7 +42,7 @@ class CommunityJoinActivity: AppCompatActivity() {
         }
 
         // 커뮤니티 정보 GET
-        RetrofitService.communityService.getCommunityInfo(sharedManager.getToken(), communityId).enqueue(
+        RetrofitService.communityService.getCommunityInfo(sharedPreference.getString("token", null).toString(), communityId).enqueue(
             object : retrofit2.Callback<CommunityInfo> {
                 override fun onResponse(
                     call: Call<CommunityInfo>, response: Response<CommunityInfo>) {
@@ -116,7 +118,7 @@ class CommunityJoinActivity: AppCompatActivity() {
         // 가입하기 버튼
         binding.joinBtn.setOnClickListener{
             // 커뮤니티 참여
-            RetrofitService.communityService.joinInCommunity(sharedManager.getToken(), communityId).enqueue(
+            RetrofitService.communityService.joinInCommunity(sharedPreference.getString("token", null).toString(), communityId).enqueue(
                 object : retrofit2.Callback<JoinCommunity> {
                     override fun onResponse(call: Call<JoinCommunity>, response: Response<JoinCommunity>) {
                         if(response.isSuccessful) {

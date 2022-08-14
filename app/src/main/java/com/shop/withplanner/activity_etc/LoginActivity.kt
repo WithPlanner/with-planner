@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,12 +24,13 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     val body = HashMap<String, String>()
+    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         // 토큰 받아와서 확인하기, 아이디, 비밀번호 찾기, 자동로그인 구현 필요
         val intent = Intent(this, MainActivity::class.java)
@@ -50,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
             else if(password.isEmpty()) {
                 binding.password.error = "비밀번호를 입력해주세요."
             }
-
             body.put("email", email)
             body.put("password", password)
 
@@ -61,8 +62,11 @@ class LoginActivity : AppCompatActivity() {
                         var result: LoginDto? = response.body()
 
                         if(result!!.code == 1000){
-                            val currentUser = User(result.result.jwtToken)
-                            sharedManager.saveCurrentUser(currentUser)  // token 저장
+                            // 토큰 저장
+                            val editor  : SharedPreferences.Editor = sharedPreference.edit()
+                            editor.putString("token", result.result.jwtToken)
+                            editor.commit()
+
                             binding.warningEmail.visibility = View.GONE;
                             binding.warningPassword.visibility = View.GONE;
 

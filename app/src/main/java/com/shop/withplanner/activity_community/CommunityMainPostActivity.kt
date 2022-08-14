@@ -2,6 +2,7 @@ package com.shop.withplanner.activity_community
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,7 +29,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityCommunityMainPostBinding
     private val postItems =  mutableListOf<PostModel>()
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
 
     private lateinit var communityName : String
     private lateinit var communityImg : String
@@ -48,6 +49,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             binding = DataBindingUtil.setContentView(this, R.layout.activity_community_main_post)
+            sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
             communityId = intent.getLongExtra("communityId", -1L)
 
@@ -80,7 +82,7 @@ class CommunityMainPostActivity : AppCompatActivity() {
 
         postItems.clear()
 
-        RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+        RetrofitService.communityService.getPostCommunityMain(sharedPreference.getString("token", null).toString(), communityId).enqueue(
             object : retrofit2.Callback<CommunityPostMain> {
                 override fun onResponse(
                     call: Call<CommunityPostMain>,

@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -26,7 +27,7 @@ import retrofit2.Response
 class CommunityMainLocationActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityCommunityMainLocationBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     private val postItems =  mutableListOf<PostModel>()
 
     var communityId = -1L
@@ -69,10 +70,11 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         postItems.clear()
 
-        RetrofitService.communityService.getMapPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+        RetrofitService.communityService.getMapPostCommunityMain(sharedPreference.getString("token", null).toString(), communityId).enqueue(
             object : retrofit2.Callback<CommunityMapPostMain> {
                 override fun onResponse( call: Call<CommunityMapPostMain>, response: Response<CommunityMapPostMain>) {
                     if(response.isSuccessful) {

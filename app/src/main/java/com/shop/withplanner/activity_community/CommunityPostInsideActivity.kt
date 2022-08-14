@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,9 +24,9 @@ import retrofit2.Response
 
 class CommunityPostInsideActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityPostInsideBinding
+    private lateinit var sharedPreference: SharedPreferences
     private val commentItems = mutableListOf<CommentModel>()
     val commentLVAdapter = CommentAdapter(commentItems)
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
 
     var postId: Int = -1
     var communityId: Long = -1L
@@ -36,6 +37,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_post_inside)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         // 게시물 정보 불러오기
         postId = intent.getIntExtra("postId", -1)
@@ -44,7 +46,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
         category = intent.getStringExtra("category").toString()
 
         if(postType == "mapPost") {
-            RetrofitService.postService.getMapPostDetail(sharedManager.getToken(), postId.toLong()).enqueue(
+            RetrofitService.postService.getMapPostDetail(sharedPreference.getString("token", null).toString(), postId.toLong()).enqueue(
                 object : retrofit2.Callback<MapPostDetail> {
                     override fun onResponse(call: Call<MapPostDetail>, response: Response<MapPostDetail>) {
                         if(response.isSuccessful) {
@@ -85,7 +87,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
             )
         }
         else if(postType == "post") {
-            RetrofitService.postService.getPostDetail(sharedManager.getToken(), postId.toLong()).enqueue(
+            RetrofitService.postService.getPostDetail(sharedPreference.getString("token", null).toString(), postId.toLong()).enqueue(
                 object : retrofit2.Callback<PostDetail> {
                     override fun onResponse(call: Call<PostDetail>, response: Response<PostDetail>) {
                         if(response.isSuccessful) {
@@ -131,7 +133,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
         binding.commentBtn.setOnClickListener{
             body.put("comment", binding.comment.text.toString().trim())
 
-            RetrofitService.commentService.sendComment(sharedManager.getToken(), communityId, postId, body).enqueue(
+            RetrofitService.commentService.sendComment(sharedPreference.getString("token", null).toString(), communityId, postId, body).enqueue(
                 object : retrofit2.Callback<CommentResponse> {
                     override fun onResponse(call: Call<CommentResponse>, response: Response<CommentResponse>) {
                         if(response.isSuccessful) {

@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -14,20 +15,21 @@ import retrofit2.Call
 import retrofit2.Response
 
 class SplashActivity : AppCompatActivity() {
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
-        if(sharedManager.getToken() == null) {
+        if(sharedPreference.getString("token", null).toString() == null) {
             Handler().postDelayed({
                 startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 finish()
             }, 3000)
         }
         else{
-            RetrofitService.userService.autoLogin(sharedManager.getToken()).enqueue(
+            RetrofitService.userService.autoLogin(sharedPreference.getString("token", null).toString()).enqueue(
                 object : retrofit2.Callback<AutoLogin> {
                     override fun onResponse(call: Call<AutoLogin>, response: Response<AutoLogin>) {
                         if(response.isSuccessful) {
@@ -40,8 +42,13 @@ class SplashActivity : AppCompatActivity() {
                                     finish()
                                 }, 3000)
                             }
-                            else{
-                                //회원가입이 안되어있으므로 JoinActivity
+                            // 토큰이 유효하지 않음
+                            else if (result.code == 2011){
+                                // 토큰 삭제
+                                val editor = sharedPreference.edit()
+                                editor.clear()
+                                editor.commit()
+
                                 Handler().postDelayed({
                                     startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                                     finish()

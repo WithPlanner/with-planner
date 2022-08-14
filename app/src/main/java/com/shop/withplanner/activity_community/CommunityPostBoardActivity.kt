@@ -1,5 +1,6 @@
 package com.shop.withplanner.activity_community
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,14 +27,15 @@ class CommunityPostBoardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCommunityPostBoardBinding
     private val postItems =  mutableListOf<PostModel>()
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     private lateinit var category : String
     private lateinit var type: String
     private var communityId: Long = -1L
+    private lateinit var sharedPreference: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_post_board)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         val intent = intent
         communityId = intent.getLongExtra("communityId", -1L)
@@ -55,7 +57,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
     fun getPosts() {
         Log.d("type", type)
         if(type=="post"){
-            RetrofitService.postService.getAllPost(sharedManager.getToken(), communityId).enqueue(
+            RetrofitService.postService.getAllPost(sharedPreference.getString("token", null).toString(), communityId).enqueue(
                 object : retrofit2.Callback<ALlPosts> {
                     override fun onResponse(call: Call<ALlPosts>, response: Response<ALlPosts>) {
                         if(response.isSuccessful) {
@@ -76,7 +78,7 @@ class CommunityPostBoardActivity : AppCompatActivity() {
             )
         }
         else if(type=="mapPost") {
-            RetrofitService.postService.getAllMapPost(sharedManager.getToken(), communityId).enqueue(
+            RetrofitService.postService.getAllMapPost(sharedPreference.getString("token", null).toString(), communityId).enqueue(
                 object : retrofit2.Callback<ALlMapPosts> {
                     override fun onResponse(call: Call<ALlMapPosts>, response: Response<ALlMapPosts>) {
                         if(response.isSuccessful) {

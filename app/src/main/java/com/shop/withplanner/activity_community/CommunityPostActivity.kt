@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
@@ -37,7 +38,7 @@ import java.io.File
 class CommunityPostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityPostBinding
     val context : Context = this
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     lateinit var imgFile : File
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -53,6 +54,7 @@ class CommunityPostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_post)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         var communityId = intent.getLongExtra("communityId", -1L)
 
@@ -104,7 +106,7 @@ class CommunityPostActivity : AppCompatActivity() {
                 val nameRequestBody: RequestBody = title.toPlainRequestBody()
                 val contentRequestBody: RequestBody = content.toPlainRequestBody()
 
-                RetrofitService.postService.writePost(sharedManager.getToken(), communityId, imgRequestBody, nameRequestBody, contentRequestBody)?.enqueue(object :
+                RetrofitService.postService.writePost(sharedPreference.getString("token", null).toString(), communityId, imgRequestBody, nameRequestBody, contentRequestBody)?.enqueue(object :
                 retrofit2.Callback<IdAndMsg> {
                     override fun onResponse(call: Call<IdAndMsg>, response: Response<IdAndMsg>) {
                         if(response.isSuccessful) {

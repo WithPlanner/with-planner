@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,17 +25,18 @@ import retrofit2.Response
 class MyCalendarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyCalendarBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     private val items =  mutableListOf<ContentsModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_calendar)
 
         binding.profileImg.setImageResource(RandImg.getImg())
 
-        RetrofitService.userService.myPageListing(sharedManager.getToken()).enqueue(
+        RetrofitService.userService.myPageListing(sharedPreference.getString("token", null).toString()).enqueue(
             object : retrofit2.Callback<MyPageInfo> {
                 override fun onResponse(call: Call<MyPageInfo>, response: Response<MyPageInfo>) {
                     if (response.isSuccessful) {

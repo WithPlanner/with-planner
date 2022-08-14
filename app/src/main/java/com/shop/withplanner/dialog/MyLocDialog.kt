@@ -1,5 +1,6 @@
 package com.shop.withplanner.dialog
 
+import android.content.Context.MODE_PRIVATE
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import com.shop.withplanner.R
 import com.shop.withplanner.activity_community.CommunityAuthenticateLocationActivity
 import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -29,7 +31,7 @@ import com.shop.withplanner.dto.Result
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
     private lateinit var binding : DlgMyLocBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(requireContext()) }
+    private lateinit var sharedPreference: SharedPreferences
 
     // context 사용을 위한 코드
     var location: String? = "목적지를 입력해주세요."
@@ -40,6 +42,7 @@ class MyLocDialog() : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.dialog_fullscreen)
+        sharedPreference = requireContext().getSharedPreferences("token", MODE_PRIVATE)
         isCancelable = true
 
         var bundle = arguments
@@ -113,7 +116,7 @@ class MyLocDialog() : DialogFragment() {
 
                 Log.d("MYLOCTOSEND", myLocToSend.toString())
 
-                RetrofitService.locationService.sendMyLoc(sharedManager.getToken(), myLocToSend, communityId!!).
+                RetrofitService.locationService.sendMyLoc(sharedPreference.getString("token", null).toString(), myLocToSend, communityId!!).
                 enqueue(object:Callback<MyLocToSendResponse> {
                     override fun onResponse(call: Call<MyLocToSendResponse>, response: Response<MyLocToSendResponse>) {
                         if(response.isSuccessful) {

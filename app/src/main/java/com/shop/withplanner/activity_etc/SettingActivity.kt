@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -13,13 +14,14 @@ import com.shop.withplanner.shared_preferences.SharedManager
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     val functionList = mutableListOf<SettingModel>()
     val functionName = listOf<String>("닉네임 변경", "비밀번호 변경", "알림 설정", "로그아웃")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_setting)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         for(name in functionName) {
             functionList.add(SettingModel(name))
@@ -36,6 +38,11 @@ class SettingActivity : AppCompatActivity() {
         binding.functionLV.setOnItemClickListener{ parent, view, position, id ->
             when(functionName[position]) {
                  "로그아웃" -> {
+                     // 토큰 삭제
+                     val editor = sharedPreference.edit()
+                     editor.clear()
+                     editor.commit()
+
                      val intent = Intent(this, LoginActivity::class.java)
                      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                      startActivity(intent)

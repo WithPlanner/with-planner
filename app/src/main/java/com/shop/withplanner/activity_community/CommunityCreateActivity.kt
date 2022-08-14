@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -51,7 +52,7 @@ class CommunityCreateActivity : AppCompatActivity() {
 
     val context : Context = this
 
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
 
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -75,6 +76,7 @@ class CommunityCreateActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_create)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         //1. 사진 선택
         checkPermission.launch(permissionList)
@@ -211,7 +213,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                 val timeRequestBody : RequestBody = time.toPlainRequestBody()
 
                 if(authType.equals("post")) {
-                    RetrofitService.communityService.makePostCommunity(sharedManager.getToken(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                    RetrofitService.communityService.makePostCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
                         retrofit2.Callback<MakeCommunity> {
                         override fun onResponse(
                             call: Call<MakeCommunity>,
@@ -235,7 +237,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                     })
 
                 } else if (authType.equals("map")) {
-                    RetrofitService.communityService.makeMapCommunity(sharedManager.getToken(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                    RetrofitService.communityService.makeMapCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
                         retrofit2.Callback<MakeCommunity> {
                         override fun onResponse(
                             call: Call<MakeCommunity>,
