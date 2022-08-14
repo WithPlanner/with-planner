@@ -15,8 +15,6 @@ import com.shop.withplanner.databinding.ActivityLoginBinding
 import com.shop.withplanner.dto.LoginDto
 import com.shop.withplanner.dto.Token
 import com.shop.withplanner.retrofit.RetrofitService
-
-import com.shop.withplanner.shared_preferences.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

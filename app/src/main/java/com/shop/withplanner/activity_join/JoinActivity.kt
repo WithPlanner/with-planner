@@ -16,7 +16,6 @@ import com.shop.withplanner.dto.Token
 import com.shop.withplanner.dto.UserId
 import com.shop.withplanner.dto.UserIdResult
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.User
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
