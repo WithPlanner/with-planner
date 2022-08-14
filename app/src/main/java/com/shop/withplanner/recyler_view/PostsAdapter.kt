@@ -60,6 +60,7 @@ class PostsAdapter(val context : Context, private val list: MutableList<PostMode
             else if(obj.type == 2) intent.putExtra("postType", "post")
             intent.putExtra("postId", obj.post_id)
             intent.putExtra("communityId", obj.community_id)
+            intent.putExtra("category", obj.category)
 
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }

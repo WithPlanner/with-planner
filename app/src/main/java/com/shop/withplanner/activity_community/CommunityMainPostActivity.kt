@@ -51,81 +51,6 @@ class CommunityMainPostActivity : AppCompatActivity() {
 
             communityId = intent.getLongExtra("communityId", -1L)
 
-            RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
-                object : retrofit2.Callback<CommunityPostMain> {
-                    override fun onResponse(
-                        call: Call<CommunityPostMain>,
-                        response: Response<CommunityPostMain>
-                    ) {
-                        if (response.isSuccessful) {
-                            var result = response.body()!!.result
-                            communityName = result.name
-                            communityImg = result.communityImg
-                            createdAt = result.createdAt
-                            updatedAt = result.updatedAt
-                            introduce = result.introduce
-                            category = Category.category2string(result.category)
-                            headCount = result.headCount
-                            currentCount = result.currentCount
-                            days = result.days
-                            time = result.time
-                            communityType = result.type
-                            var posts = result.posts
-
-                            Log.d("posts", posts.toString())
-                            if (posts.isNotEmpty()) {
-                                makeCard(posts)
-                            }
-
-                            Glide.with(context)
-                                .load(communityImg)
-                                .into(binding.mainImg)
-                            binding.titleTextView.text = communityName
-                            binding.validTextView.text = category
-                            binding.teamCountTextView.text = "$currentCount / $headCount"
-                            binding.dateTextView.text = createdAt
-                            binding.contentDateTextView.text = updatedAt
-
-                            for (day in days) {
-                                when (day) {
-                                    "월" -> {
-                                        binding.mon.visibility = View.VISIBLE
-                                    }
-                                    "화" -> {
-                                        binding.tue.visibility = View.VISIBLE
-                                    }
-                                    "수" -> {
-                                        binding.wed.visibility = View.VISIBLE
-                                    }
-                                    "목" -> {
-                                        binding.thu.visibility = View.VISIBLE
-                                    }
-                                    "금" -> {
-                                        binding.fri.visibility = View.VISIBLE
-                                    }
-                                    "토" -> {
-                                        binding.sat.visibility = View.VISIBLE
-                                    }
-                                    "일" -> {
-                                        binding.sun.visibility = View.VISIBLE
-                                    }
-                                }
-                            }
-                            binding.timeTextView.text = time
-                            binding.contentTextView.text = introduce
-                            binding.contentDateTextView.text = createdAt
-
-                        } else {
-                            Log.d("PostCommunityMain", "onResponse 실패");
-                        }
-                    }
-
-                    override fun onFailure(call: Call<CommunityPostMain>, t: Throwable) {
-                        Log.d("PostCommunityMain", "onFailure 에러: " + t.message.toString());
-                    }
-                }
-            )
-
             binding.backBtn.setOnClickListener {
                 onBackPressed()
             }
@@ -149,6 +74,87 @@ class CommunityMainPostActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+    override fun onResume() {
+        super.onResume()
+
+        postItems.clear()
+
+        RetrofitService.communityService.getPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+            object : retrofit2.Callback<CommunityPostMain> {
+                override fun onResponse(
+                    call: Call<CommunityPostMain>,
+                    response: Response<CommunityPostMain>
+                ) {
+                    if (response.isSuccessful) {
+                        var result = response.body()!!.result
+                        communityName = result.name
+                        communityImg = result.communityImg
+                        createdAt = result.createdAt
+                        updatedAt = result.updatedAt
+                        introduce = result.introduce
+                        category = Category.category2string(result.category)
+                        headCount = result.headCount
+                        currentCount = result.currentCount
+                        days = result.days
+                        time = result.time
+                        communityType = result.type
+                        var posts = result.posts
+
+                        Log.d("posts", posts.toString())
+                        if (posts.isNotEmpty()) {
+                            makeCard(posts)
+                        }
+
+                        Glide.with(context)
+                            .load(communityImg)
+                            .into(binding.mainImg)
+                        binding.titleTextView.text = communityName
+                        binding.validTextView.text = category
+                        binding.teamCountTextView.text = "$currentCount / $headCount"
+                        binding.dateTextView.text = createdAt
+                        binding.contentDateTextView.text = updatedAt
+
+                        for (day in days) {
+                            when (day) {
+                                "월" -> {
+                                    binding.mon.visibility = View.VISIBLE
+                                }
+                                "화" -> {
+                                    binding.tue.visibility = View.VISIBLE
+                                }
+                                "수" -> {
+                                    binding.wed.visibility = View.VISIBLE
+                                }
+                                "목" -> {
+                                    binding.thu.visibility = View.VISIBLE
+                                }
+                                "금" -> {
+                                    binding.fri.visibility = View.VISIBLE
+                                }
+                                "토" -> {
+                                    binding.sat.visibility = View.VISIBLE
+                                }
+                                "일" -> {
+                                    binding.sun.visibility = View.VISIBLE
+                                }
+                            }
+                        }
+                        binding.timeTextView.text = time
+                        binding.contentTextView.text = introduce
+                        binding.contentDateTextView.text = createdAt
+
+                    } else {
+                        Log.d("PostCommunityMain", "onResponse 실패");
+                    }
+                }
+
+                override fun onFailure(call: Call<CommunityPostMain>, t: Throwable) {
+                    Log.d("PostCommunityMain", "onFailure 에러: " + t.message.toString());
+                }
+            }
+        )
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()

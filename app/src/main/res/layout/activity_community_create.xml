@@ -250,12 +250,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/chooseLocation_linear"
+                    android:id="@+id/chooseLocationLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:visibility="gone">
+                    android:layout_marginRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -280,7 +279,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:text="위치인증에서 선택한 위치; 보여주는 텍뷰~"
+                        android:hint="인증할 장소를 설정하세요."
                         android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>

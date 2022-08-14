@@ -24,11 +24,13 @@ import retrofit2.Response
 class CommunityPostInsideActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityPostInsideBinding
     private val commentItems = mutableListOf<CommentModel>()
+    val commentLVAdapter = CommentAdapter(commentItems)
     private val sharedManager: SharedManager by lazy { SharedManager(this) }
 
     var postId: Int = -1
     var communityId: Long = -1L
     var postType = ""
+    var category = ""
     val body = HashMap<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +41,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
         postId = intent.getIntExtra("postId", -1)
         communityId = intent.getLongExtra("communityId", -1L)
         postType = intent.getStringExtra("postType").toString()
+        category = intent.getStringExtra("category").toString()
 
         if(postType == "mapPost") {
             RetrofitService.postService.getMapPostDetail(sharedManager.getToken(), postId.toLong()).enqueue(
@@ -52,11 +55,11 @@ class CommunityPostInsideActivity : AppCompatActivity() {
 
                                 binding.nickname.text = result.nickName
                                 binding.date.text = result.updatedAt
+                                binding.habbit.text = category
                                 val location = result.location
                                 binding.content.text = "${location}에서 오늘의 습관을 완료했어요!"
 
                                 binding.image.visibility = View.GONE
-//                                binding.habbit.text = ""
 
                                 // 댓글
                                 for(comment in result.comments) {
@@ -64,7 +67,6 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                                         CommentModel(comment.nickname, comment.comment
                                         ))
                                 }
-                                val commentLVAdapter = CommentAdapter(commentItems)
                                 binding.commentLV.adapter = commentLVAdapter
                             }
 
@@ -108,7 +110,6 @@ class CommunityPostInsideActivity : AppCompatActivity() {
                                         CommentModel(comment.nickname, comment.comment
                                         ))
                                 }
-                                val commentLVAdapter = CommentAdapter(commentItems)
                                 binding.commentLV.adapter = commentLVAdapter
                             }
 
@@ -137,8 +138,14 @@ class CommunityPostInsideActivity : AppCompatActivity() {
 
                             var result = response.body()!!.result
                             Log.d("sendComment", "onResponse 성공 $result")
+
+                            // 리프레쉬
+                            commentItems.add(CommentModel(result.nickname, result.comment))
+                            commentLVAdapter.notifyDataSetChanged()
+
                             binding.comment.text = null
                             softkeyboardHide()
+
 
                         } else {
                             Log.d("sendComment", "onResponse 실패");
@@ -155,6 +162,7 @@ class CommunityPostInsideActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
     }
@@ -171,6 +179,4 @@ class CommunityPostInsideActivity : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.comment.windowToken, 0)
     }
-
-
 }

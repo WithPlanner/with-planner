@@ -41,6 +41,37 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             communityId = intent.getLongExtra("communityId", -1L)
         }
 
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+        // 위치인증 버튼
+        binding.locAuthBtn.setOnClickListener{
+            // 위치인증 화면으로.
+            intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            startActivity(intent)
+        }
+
+        binding.calendarBtn.setOnClickListener{
+            startActivity(Intent(this, CommunityCalendarActivity::class.java))
+        }
+
+        binding.currentPost.setOnClickListener{
+            intent = Intent(this, CommunityPostBoardActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            intent.putExtra("communityType", "mapPost")
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        postItems.clear()
+
         RetrofitService.communityService.getMapPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
             object : retrofit2.Callback<CommunityMapPostMain> {
                 override fun onResponse( call: Call<CommunityMapPostMain>, response: Response<CommunityMapPostMain>) {
@@ -95,7 +126,6 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                                     binding.sun.visibility = View.VISIBLE
                                 }
                             }
-
                         }
                     }
                     else{
@@ -107,30 +137,6 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                 }
             }
         )
-        binding.backBtn.setOnClickListener {
-            onBackPressed()
-        }
-
-        // 위치인증 버튼
-        binding.locAuthBtn.setOnClickListener{
-            // 위치인증 화면으로.
-            intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
-            intent.putExtra("communityId", communityId)
-            intent.putExtra("category", category)
-            startActivity(intent)
-        }
-
-        binding.calendarBtn.setOnClickListener{
-            startActivity(Intent(this, CommunityCalendarActivity::class.java))
-        }
-
-        binding.currentPost.setOnClickListener{
-            intent = Intent(this, CommunityPostBoardActivity::class.java)
-            intent.putExtra("communityId", communityId)
-            intent.putExtra("category", category)
-            intent.putExtra("communityType", "mapPost")
-            startActivity(intent)
-        }
     }
 
     override fun onBackPressed() {
@@ -145,7 +151,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                     post.nickName,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                     post.updatedAt, category, "${post.location}에서 오늘의 습관을 완료했어요!", 1,
-                    null, post.mapPostId, communityId
+                    null, post.mapPostId, communityId, category
                 )
             )
         }

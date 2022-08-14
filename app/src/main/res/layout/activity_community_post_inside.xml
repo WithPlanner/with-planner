@@ -114,7 +114,7 @@
                         android:layout_marginTop="4sp"
                         android:gravity="center"
                         android:text="단어 100개 외우기 끝"
-                        android:textSize="13sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </LinearLayout>

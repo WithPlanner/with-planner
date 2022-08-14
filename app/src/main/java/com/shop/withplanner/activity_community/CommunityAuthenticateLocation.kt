@@ -92,6 +92,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 if(response.isSuccessful) {
                     val result = response.body()!!.result
 
+                    binding.guideText1.text = "${result.nickname}의 목적지"
+                    binding.guideText2.text = "현재 ${result.nickname}의 위치"
                     destination = result.alias.toString()
                     binding.destination.text = destination
                     myLongitude = result.longitude
@@ -367,13 +369,13 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 locationResult.lastLocation
                 curLatitude = locationResult.lastLocation.latitude
                 curLongitude = locationResult.lastLocation.longitude
-//                curLatitude = 37.5336136308998
-//                curLongitude = 126.876314985863
+                curLatitude = 37.5336136308998
+                curLongitude = 126.876314985863
                 println(curLatitude+ curLongitude)
                 setMarker(curLatitude, curLongitude)
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())
-                callCoordToLoc(curLongitude.toString(),curLatitude.toString()) //진짜진짜코드
-//                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
+//                callCoordToLoc(curLongitude.toString(),curLatitude.toString()) //진짜진짜코드
+                callCoordToLoc("126.876314985863","37.5336136308998")   // TEST
 //                callCoordToLoc("126.876314985863","37.53361363089" +
 //                        "98")   // TEST
             }

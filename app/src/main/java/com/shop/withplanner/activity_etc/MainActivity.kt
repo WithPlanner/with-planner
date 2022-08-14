@@ -49,6 +49,23 @@ class MainActivity : AppCompatActivity() {
 
         getHashKey()
 
+        binding.myBtn.setImageResource(RandImg.getImg())
+
+        // 마이페이지로
+        binding.myBtn.setOnClickListener {
+            startActivity(Intent(this, MyCalendarActivity::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 클리어
+        myRV_Items.clear()
+        recommendRV_Items.clear()
+        hotRV_Items.clear()
+        newRV_Items.clear()
+
         // 리사이클러뷰 및 인텐트 정의
         val recRV = binding.recommendRecyclerView
         val myRV = binding.myRecyclerView
@@ -58,11 +75,6 @@ class MainActivity : AppCompatActivity() {
         val intent_mainpost = Intent(this@MainActivity, CommunityMainPostActivity::class.java)
         val intent_mainLocPost =
             Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
-
-        val type = "post"
-
-        binding.myBtn.setImageResource(RandImg.getImg())
-
 
         // 커뮤니티 GET 해서 리스팅
         RetrofitService.communityService.mainListing(sharedManager.getToken())
@@ -93,15 +105,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-
-        // 마이페이지로
-        binding.myBtn.setOnClickListener {
-            startActivity(Intent(this, MyCalendarActivity::class.java))
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     // 커뮤니티 리스팅 함수
