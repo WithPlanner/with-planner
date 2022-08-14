@@ -45,4 +45,10 @@ interface UserService {
     @Headers("accept: application/json", "content-type: application/json")
     @GET("/mypage")
     fun myPageListing(@Header("X-AUTH-TOKEN") token: String) : Call<MyPageInfo>
+
+    @Headers("accept: application/json", "content-type: application/json")
+    @POST("/auto-login")
+    fun autoLogin(
+        @Header("X-AUTH-TOKEN") token: String
+    ): Call<AutoLogin>
 }

@@ -8,10 +8,12 @@ import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivitySettingBinding
 import com.shop.withplanner.recyler_view.SettingAdapter
 import com.shop.withplanner.recyler_view.SettingModel
+import com.shop.withplanner.shared_preferences.SharedManager
 
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
+    private val sharedManager: SharedManager by lazy { SharedManager(this) }
     val functionList = mutableListOf<SettingModel>()
     val functionName = listOf<String>("닉네임 변경", "비밀번호 변경", "알림 설정", "로그아웃")
 

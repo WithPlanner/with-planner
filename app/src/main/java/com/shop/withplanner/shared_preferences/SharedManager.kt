@@ -10,19 +10,7 @@ class SharedManager(context: Context) {
     private val prefs: SharedPreferences = PreferenceHelper.defaultPrefs(context)
 
     fun saveCurrentUser(user: User) {
-        prefs["name"] = user.name
-        prefs["nickname"] = user.nickname
-        prefs["email"] = user.email
-        prefs["password"] = user.password
         prefs["token"] = user.token
-    }
-
-    fun getCurrentUser(): User {
-        return User().apply {
-            nickname = prefs["nickname", ""]
-            email = prefs["email", ""]
-            password = prefs["password", ""]
-        }
     }
 
     fun saveToken(token: String) {
