@@ -164,7 +164,7 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/postAuthBtn"
+                        android:id="@+id/post_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -173,7 +173,7 @@
                         android:textColor="@color/black" />
 
                     <RadioButton
-                        android:id="@+id/locAuthBtn"
+                        android:id="@+id/location_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -253,6 +253,7 @@
                     android:id="@+id/chooseLocationLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -282,6 +283,50 @@
                         android:hint="인증할 장소를 설정하세요."
                         android:textColor="@color/black" />
                 </LinearLayout>
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#ffffff"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="#ffffff"
+                android:text="공개 여부"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/public_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="2"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/public_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="공개"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/private_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="비공개"
+                    android:textColor="@color/black" />
+            </RadioGroup>
+
             </LinearLayout>
 
             <View
@@ -333,14 +378,16 @@
                 <EditText
                     android:id="@+id/introduce"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="top"
                     android:hint="습관 모임을 소개할 짧은 글을 작성해주세요"
                     android:textSize="13sp" />
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 </layout>

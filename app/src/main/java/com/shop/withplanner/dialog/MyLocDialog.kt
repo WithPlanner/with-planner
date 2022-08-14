@@ -132,10 +132,6 @@ class MyLocDialog() : DialogFragment() {
                                     startActivity(intent)
                                     dismiss()
                                 }
-                                2008 -> {
-                                    binding.errorText.visibility = View.VISIBLE
-                                    binding.errorText.text = "${result.code}: 존재하지 않는 커뮤니티입니다."
-                                }
                                 else -> {
                                     Log.d("MyLocDialog", result.toString())
                                 }

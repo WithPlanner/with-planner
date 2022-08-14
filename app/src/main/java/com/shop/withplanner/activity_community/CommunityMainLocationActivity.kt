@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivityCommunityMainLocationBinding
-import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.dto.CommunityMapPostMain
 import com.shop.withplanner.dto.MapPosts
 import com.shop.withplanner.recyler_view.PostModel
@@ -32,6 +31,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
     var communityId = -1L
     var category = ""
+    var communityName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,8 +80,9 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                     if(response.isSuccessful) {
 
                         val community = response.body()!!.result
-
+                        communityName = community.name
                         category = Category.category2string(community.category)
+
 
                         binding.titleTextView.text = community.name
                         binding.validTextView.text = category
@@ -139,6 +140,32 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                 }
             }
         )
+
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+        // 위치인증 버튼
+        binding.locAuthBtn.setOnClickListener{
+            // 위치인증 화면으로.
+            intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            intent.putExtra("communityName",communityName)
+            startActivity(intent)
+        }
+
+        binding.calendarBtn.setOnClickListener{
+            startActivity(Intent(this, CommunityCalendarActivity::class.java))
+        }
+
+        binding.currentPost.setOnClickListener{
+            intent = Intent(this, CommunityPostBoardActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            intent.putExtra("communityType", "mapPost")
+            startActivity(intent)
+        }
     }
 
     override fun onBackPressed() {

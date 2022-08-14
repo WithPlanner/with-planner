@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.shop.withplanner.R
 import com.shop.withplanner.activity_etc.CategoryActivity
+import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.retrofit.RetrofitService
@@ -117,8 +118,8 @@ class CommunityCreateActivity : AppCompatActivity() {
         //3. 인증방식
         binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
             when(checkId){
-                R.id.postAuthBtn -> binding.chooseLocationLinear.visibility = View.GONE
-                R.id.locAuthBtn -> binding.chooseLocationLinear.visibility = View.VISIBLE
+                R.id.post_btn -> binding.chooseLocationLinear.visibility = View.GONE
+                R.id.location_btn -> authType = "map"
             }}
 
 
@@ -179,21 +180,13 @@ class CommunityCreateActivity : AppCompatActivity() {
             }
         }
 
-        // 인증방식
-        binding.authRadioGroup.setOnCheckedChangeListener{group, checkId ->
-            when(checkId){
-                R.id.postAuthBtn -> authType = "post"
-                R.id.locAuthBtn -> authType = "map"
-            }
-        }
-
         // 완료버튼
         binding.doneBtn.setOnClickListener{
             // 이미지, 위치정보도 저장해야함
             val communityName = binding.communityName.text.toString().trim()
             val category = binding.categoryTv.text.toString()
             val day = binding.dayTextView.text.toString()
-            val time = binding.timeTextView.text.toString() + ":00"
+            val time = binding.timeTextView.text.toString()+":00"
             val numbOfPerson = numberOfPerson.toString()
             val introduce = binding.introduce.text.toString().trim()
 
@@ -245,8 +238,10 @@ class CommunityCreateActivity : AppCompatActivity() {
                         ) {
                             if(response.isSuccessful) {
                                 var result : MakeCommunity? = response.body()
+                               // showDialog("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
+
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
-                                var intent = Intent(context, CommunityMainLocationActivity::class.java)
+                                var intent = Intent(context, CommunitySearchLocationActivity::class.java)
                                 intent.putExtra("communityId", result!!.result.id.toLong())
                                 startActivity(intent)
                                 finish()
@@ -272,16 +267,27 @@ class CommunityCreateActivity : AppCompatActivity() {
 
     private fun getTime(textview: TextView, context: Context){
         val cal = Calendar.getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        val timeSetListener = TimePickerDialog.OnTimeSetListener{ timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, minute)
-            textview.text = SimpleDateFormat("kk:mm").format(cal.time)
+            textview.text = SimpleDateFormat("HH:mm").format(cal.time)
         }
-        var timePickerDialog=TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true)
-        timePickerDialog.setButton(TimePickerDialog.BUTTON_POSITIVE,"확인",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = SimpleDateFormat("HH시 mm분").format(cal.time) })
-        timePickerDialog.setButton(TimePickerDialog.BUTTON_NEGATIVE,"취소",DialogInterface.OnClickListener{timePickerDialog,which ->textview.text = " " })
+        var timePickerDialog=TimePickerDialog(context, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false)
         timePickerDialog.show()
     }
 
     private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this)
+
+    fun showDialog(titleName: String, message: String, communityId: Long) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this).setTitle(titleName)
+            .setMessage(message)
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                intent = Intent(this@CommunityCreateActivity, CommunitySearchLocationActivity::class.java)
+                intent.putExtra("communityId", communityId)
+                startActivity(intent)
+                finish()
+            }).show()
+    }
+
+
 }
