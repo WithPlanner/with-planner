@@ -19,7 +19,7 @@ import com.shop.withplanner.dto.MapPosts
 import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.Category
 import retrofit2.Call
 import retrofit2.Response
 
@@ -81,7 +81,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
 
                         val community = response.body()!!.result
 
-                        category = community.category
+                        category = Category.category2string(community.category)
 
                         binding.titleTextView.text = community.name
                         binding.validTextView.text = category

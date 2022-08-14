@@ -28,7 +28,7 @@ import com.shop.withplanner.activity_etc.CategoryActivity
 import com.shop.withplanner.databinding.ActivityCommunityCreateBinding
 import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import com.shop.withplanner.util.ImgUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody

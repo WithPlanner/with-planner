@@ -17,7 +17,7 @@ import com.shop.withplanner.dto.MyPageInfo
 import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Response

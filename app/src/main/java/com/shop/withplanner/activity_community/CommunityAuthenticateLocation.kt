@@ -35,7 +35,6 @@ import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
 import com.shop.withplanner.map.coordToAddress.DtoCoordToAddress
 import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
 import com.shop.withplanner.util.GetTime
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint

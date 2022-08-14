@@ -10,7 +10,7 @@ import com.shop.withplanner.R
 import com.shop.withplanner.dto.ALlPosts
 import com.shop.withplanner.dto.AutoLogin
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import retrofit2.Call
 import retrofit2.Response
 

@@ -9,7 +9,7 @@ import com.shop.withplanner.R
 import com.shop.withplanner.databinding.ActivitySettingBinding
 import com.shop.withplanner.recyler_view.SettingAdapter
 import com.shop.withplanner.recyler_view.SettingModel
-import com.shop.withplanner.shared_preferences.SharedManager
+
 
 class SettingActivity : AppCompatActivity() {
 

@@ -25,7 +25,7 @@ import com.shop.withplanner.dto.IdAndMsg
 import com.shop.withplanner.dto.IdAndMsgResult
 import com.shop.withplanner.dto.MakeCommunity
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import com.shop.withplanner.util.ImgUtil
 import okhttp3.MediaType
 import okhttp3.MultipartBody

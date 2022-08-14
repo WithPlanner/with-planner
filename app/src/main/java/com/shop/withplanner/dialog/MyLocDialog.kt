@@ -22,7 +22,7 @@ import com.shop.withplanner.dto.MyLocReceived
 import com.shop.withplanner.dto.MyLocToSend
 import com.shop.withplanner.dto.MyLocToSendResponse
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

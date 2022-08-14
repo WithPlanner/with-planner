@@ -17,7 +17,7 @@ import com.shop.withplanner.dto.MapPostDetail
 import com.shop.withplanner.dto.PostDetail
 import com.shop.withplanner.recyler_view.*
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import org.w3c.dom.Comment
 import retrofit2.Call
 import retrofit2.Response

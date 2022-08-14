@@ -25,7 +25,8 @@ import com.shop.withplanner.dto.CommunityList
 
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
+import com.shop.withplanner.util.Category
 import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Callback
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 ContentsModel(
                     post.name,
                     post.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.category
+                    Category.category2string(post.category)
                 )
             )
         }

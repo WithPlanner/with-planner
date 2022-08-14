@@ -15,7 +15,7 @@ import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.dto.CommunityInfo
 import com.shop.withplanner.dto.JoinCommunity
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
 import retrofit2.Call
 import retrofit2.Response
 
