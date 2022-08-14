@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_etc
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.Signature
@@ -24,7 +25,8 @@ import com.shop.withplanner.dto.CommunityList
 
 import com.shop.withplanner.dto.MainList
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+
+import com.shop.withplanner.util.Category
 import com.shop.withplanner.util.RandImg
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,17 +39,35 @@ import java.security.NoSuchAlgorithmException
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sharedPreference: SharedPreferences
     private val myRV_Items = mutableListOf<ContentsModel>()
     private val recommendRV_Items = mutableListOf<ContentsModel>()
     private val hotRV_Items = mutableListOf<ContentsModel>()
     private val newRV_Items = mutableListOf<ContentsModel>()
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         getHashKey()
+
+        binding.myBtn.setImageResource(RandImg.getImg())
+
+        // 마이페이지로
+        binding.myBtn.setOnClickListener {
+            startActivity(Intent(this, MyCalendarActivity::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
+
+        // 클리어
+        myRV_Items.clear()
+        recommendRV_Items.clear()
+        hotRV_Items.clear()
+        newRV_Items.clear()
 
         // 리사이클러뷰 및 인텐트 정의
         val recRV = binding.recommendRecyclerView
@@ -59,13 +79,8 @@ class MainActivity : AppCompatActivity() {
         val intent_mainLocPost =
             Intent(this@MainActivity, CommunityMainLocationActivity::class.java)
 
-        val type = "post"
-
-        binding.myBtn.setImageResource(RandImg.getImg())
-
-
         // 커뮤니티 GET 해서 리스팅
-        RetrofitService.communityService.mainListing(sharedManager.getToken())
+        RetrofitService.communityService.mainListing(sharedPreference.getString("token", null).toString())
             ?.enqueue(object : Callback<MainList> {
                 override fun onResponse(call: Call<MainList>, response: Response<MainList>) {
                     if (response.isSuccessful) {
@@ -93,15 +108,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-
-        // 마이페이지로
-        binding.myBtn.setOnClickListener {
-            startActivity(Intent(this, MyCalendarActivity::class.java))
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     // 커뮤니티 리스팅 함수
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 ContentsModel(
                     post.name,
                     post.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
-                    post.category
+                    Category.category2string(post.category)
                 )
             )
         }

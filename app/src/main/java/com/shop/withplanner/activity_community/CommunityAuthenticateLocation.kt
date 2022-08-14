@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -34,7 +35,6 @@ import com.shop.withplanner.map.coordToAddress.CoordToAddressApi
 import com.shop.withplanner.map.coordToAddress.DtoCoordToAddress
 import com.shop.withplanner.map.coordToAddress.KakaoApiRetrofitClient
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
 import com.shop.withplanner.util.GetTime
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -51,7 +51,7 @@ import kotlin.reflect.typeOf
 
 class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCommunityAuthenticateLocationBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
 
     private val ACCESS_FINE_LOCATION = 1000
     private lateinit var locationManager: LocationManager
@@ -81,6 +81,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_authenticate_location)
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
         mLocationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -93,7 +94,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
 
 
         // 고정목적지: 서버에서 주소 받아오기(GET)
-        RetrofitService.locationService.getMyLoc(sharedManager.getToken(), communityId).
+        RetrofitService.locationService.getMyLoc(sharedPreference.getString("token", null).toString(), communityId).
         enqueue(object: Callback<MyLocReceived> {
             override fun onResponse(call: Call<MyLocReceived>, response: Response<MyLocReceived>) {
                 if(response.isSuccessful) {
@@ -142,7 +143,8 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
             Log.d("authenticationRequest", authenticationRequest.toString())
 
             if(isAuthenticate) {
-                RetrofitService.locationService.authenticateLocation(sharedManager.getToken(), communityId, authenticationRequest).
+
+                RetrofitService.locationService.authenticateLocation(sharedPreference.getString("token", null).toString(), communityId, authenticationRequest).
                 enqueue(object:Callback<Authentication> {
                     override fun onResponse(call: Call<Authentication>, response: Response<Authentication>) {
                         if(response.isSuccessful) {
@@ -183,7 +185,7 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                         }
                         else {
                             Log.d("Authentication", "onResponse 실패: " + response.errorBody()?.string()!!)
-                            sharedManager.getToken()
+                            sharedPreference.getString("token", null).toString()
                         }
                     }
                     override fun onFailure(call: Call<Authentication>, t: Throwable) {
@@ -385,8 +387,6 @@ class CommunityAuthenticateLocationActivity : AppCompatActivity() {
                 locationResult.lastLocation
                 curLatitude = locationResult.lastLocation.latitude
                 curLongitude = locationResult.lastLocation.longitude
-//                curLatitude = 37.5336136308998
-//                curLongitude = 126.876314985863
                 println(curLatitude+ curLongitude)
                 setMarker(curLatitude, curLongitude)
                 Log.d("현재 위도 경도 갖고오는 테스트",curLatitude.toString() + ","+curLongitude.toString())

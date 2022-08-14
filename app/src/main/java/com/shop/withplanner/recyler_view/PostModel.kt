@@ -9,7 +9,8 @@ class PostModel(
     val type: Int,       // 게시물 타입
     val post_img: String? = null,
     val post_id: Int,
-    val community_id: Long
+    val community_id: Long,
+    val category: String? = null,
 ){
     companion object {
         const val LOC_TYPE = 1          // 위치인증 게시물

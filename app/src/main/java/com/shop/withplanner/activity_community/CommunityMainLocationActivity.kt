@@ -1,6 +1,7 @@
 package com.shop.withplanner.activity_community
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,7 +18,7 @@ import com.shop.withplanner.dto.MapPosts
 import com.shop.withplanner.recyler_view.PostModel
 import com.shop.withplanner.recyler_view.PostsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
-import com.shop.withplanner.shared_preferences.SharedManager
+import com.shop.withplanner.util.Category
 import retrofit2.Call
 import retrofit2.Response
 
@@ -25,7 +26,7 @@ import retrofit2.Response
 class CommunityMainLocationActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityCommunityMainLocationBinding
-    private val sharedManager: SharedManager by lazy { SharedManager(this) }
+    private lateinit var sharedPreference: SharedPreferences
     private val postItems =  mutableListOf<PostModel>()
 
     var communityId = -1L
@@ -41,15 +42,47 @@ class CommunityMainLocationActivity : AppCompatActivity() {
             communityId = intent.getLongExtra("communityId", -1L)
         }
 
-        RetrofitService.communityService.getMapPostCommunityMain(sharedManager.getToken(), communityId).enqueue(
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
+        // 위치인증 버튼
+        binding.locAuthBtn.setOnClickListener{
+            // 위치인증 화면으로.
+            intent = Intent(this, CommunityAuthenticateLocationActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            startActivity(intent)
+        }
+
+        binding.calendarBtn.setOnClickListener{
+            startActivity(Intent(this, CommunityCalendarActivity::class.java))
+        }
+
+        binding.currentPost.setOnClickListener{
+            intent = Intent(this, CommunityPostBoardActivity::class.java)
+            intent.putExtra("communityId", communityId)
+            intent.putExtra("category", category)
+            intent.putExtra("communityType", "mapPost")
+            startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
+
+        postItems.clear()
+
+        RetrofitService.communityService.getMapPostCommunityMain(sharedPreference.getString("token", null).toString(), communityId).enqueue(
             object : retrofit2.Callback<CommunityMapPostMain> {
                 override fun onResponse( call: Call<CommunityMapPostMain>, response: Response<CommunityMapPostMain>) {
                     if(response.isSuccessful) {
 
                         val community = response.body()!!.result
-
-                        category = community.category
                         communityName = community.name
+                        category = Category.category2string(community.category)
+
 
                         binding.titleTextView.text = community.name
                         binding.validTextView.text = category
@@ -96,7 +129,6 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                                     binding.sun.visibility = View.VISIBLE
                                 }
                             }
-
                         }
                     }
                     else{
@@ -108,6 +140,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                 }
             }
         )
+
         binding.backBtn.setOnClickListener {
             onBackPressed()
         }
@@ -147,7 +180,7 @@ class CommunityMainLocationActivity : AppCompatActivity() {
                     post.nickName,
                     "https://mp-seoul-image-production-s3.mangoplate.com/46651_1630510033594478.jpg?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80",
                     post.updatedAt, category, "${post.location}에서 오늘의 습관을 완료했어요!", 1,
-                    null, post.mapPostId, communityId
+                    null, post.mapPostId, communityId, category
                 )
             )
         }

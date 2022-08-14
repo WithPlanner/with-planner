@@ -6,6 +6,7 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
+
             <type value="SERIAL_NUMBER" />
             <value value="05157df5435e1506" />
           </Key>
