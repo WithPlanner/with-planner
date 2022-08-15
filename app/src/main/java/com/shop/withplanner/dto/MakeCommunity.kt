@@ -24,5 +24,8 @@ data class ResultMakeCommunity(
     var id: Int,
     @Expose
     @SerializedName("msg")
-    val msg: String
+    val msg: String,
+    @Expose
+    @SerializedName("publicType")
+    val publicType: String
 )
