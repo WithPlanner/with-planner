@@ -2,6 +2,7 @@ package com.shop.withplanner.activity_community
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -50,10 +51,13 @@ class CommunityCreateActivity : AppCompatActivity() {
     var numberOfPerson = 1  // 인원을 담는 변수
     lateinit var imgFile : File
     var authType: String = "post"
-
+    var publicType: String = "publicType"
     val context : Context = this
 
     private lateinit var sharedPreference: SharedPreferences
+
+    lateinit var progress_Dialog : ProgressDialog
+    private var email_dialog : AlertDialog ? = null
 
     // 공용저장소 권한 확인
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -78,6 +82,7 @@ class CommunityCreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_create)
         sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
+
 
         //1. 사진 선택
         checkPermission.launch(permissionList)
@@ -162,6 +167,12 @@ class CommunityCreateActivity : AppCompatActivity() {
             startActivity(Intent(this, CommunitySearchLocationActivity::class.java))
         }
 
+        //공개, 비공개 여부 선택
+        binding.publicRadioGroup.setOnCheckedChangeListener{group, checkId ->
+            when(checkId){
+                R.id.public_btn -> publicType = "publicType"
+                R.id.private_btn-> publicType = "privateType"
+            }}
 
         //7. 뒤로가기 버튼 클릭시 이벤트
         binding.backBtn.setOnClickListener{
@@ -189,6 +200,7 @@ class CommunityCreateActivity : AppCompatActivity() {
             val time = binding.timeTextView.text.toString()+":00"
             val numbOfPerson = numberOfPerson.toString()
             val introduce = binding.introduce.text.toString().trim()
+            val publicType = publicType
 
 
             if(communityName.isEmpty() || category.isEmpty() || day.isEmpty() || time.isEmpty() ||
@@ -196,6 +208,9 @@ class CommunityCreateActivity : AppCompatActivity() {
                 Toast.makeText(this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else{
+                //프로그레스바 보여줌
+                getProgressShow()
+
                 val requestFile = RequestBody.create(MediaType.parse("image/*"),  imgFile)
                 val imgRequestBody = MultipartBody.Part.createFormData("communityImg", imgFile.name, requestFile)
                 val nameRequestBody : RequestBody = communityName.toPlainRequestBody()
@@ -204,9 +219,10 @@ class CommunityCreateActivity : AppCompatActivity() {
                 val headCountRequestBody : RequestBody = numbOfPerson.toPlainRequestBody()
                 val dayRequestBody : RequestBody = day.toPlainRequestBody()
                 val timeRequestBody : RequestBody = time.toPlainRequestBody()
+                val publicTypeRequestBody : RequestBody = publicType.toPlainRequestBody()
 
                 if(authType.equals("post")) {
-                    RetrofitService.communityService.makePostCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                    RetrofitService.communityService.makePostCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody, publicTypeRequestBody)?.enqueue(object :
                         retrofit2.Callback<MakeCommunity> {
                         override fun onResponse(
                             call: Call<MakeCommunity>,
@@ -217,8 +233,18 @@ class CommunityCreateActivity : AppCompatActivity() {
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
                                 var intent = Intent(context, CommunityMainPostActivity::class.java)
                                 intent.putExtra("communityId", result!!.result.id.toLong())
-                                startActivity(intent)
-                                finish()
+
+                                //성공적으로 통신 했으므로 프로그래스 팝업창 닫기
+                                getProgressHidden()
+
+                                //생성한 커뮤니티가 비공개 습관 모임일 경우 다이얼로그로 메일 확인하라고 안내
+                                if(result!!.result.publicType.toString()=="privateType"){
+                                    email_dialog = showDialog2("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
+                                    email_dialog!!.show()
+                                }
+
+                               // startActivity(intent)
+                               // finish()
                             } else {
                                 Log.d("MakeCommunity", "onResponse 실패");
                             }
@@ -230,7 +256,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                     })
 
                 } else if (authType.equals("map")) {
-                    RetrofitService.communityService.makeMapCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody)?.enqueue(object :
+                    RetrofitService.communityService.makeMapCommunity(sharedPreference.getString("token", null).toString(), imgRequestBody, nameRequestBody, introduceRequestBody, categoryRequestBody, headCountRequestBody, dayRequestBody, timeRequestBody, publicTypeRequestBody)?.enqueue(object :
                         retrofit2.Callback<MakeCommunity> {
                         override fun onResponse(
                             call: Call<MakeCommunity>,
@@ -238,13 +264,22 @@ class CommunityCreateActivity : AppCompatActivity() {
                         ) {
                             if(response.isSuccessful) {
                                 var result : MakeCommunity? = response.body()
-                               // showDialog("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
+
+                                //성공적으로 통신 했으므로 프로그래스 팝업창 닫기
+                                getProgressHidden()
+
+                                //생성한 커뮤니티가 비공개 습관 모임일 경우 다이얼로그로 메일 확인하라고 안내
+                                if(result!!.result.publicType.toString()=="privateType"){
+                                    email_dialog = showDialog("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
+                                    email_dialog!!.show()
+                                }
+
 
                                 Log.d("MakeCommunity", "onResponse 성공: " + result?.toString());
-                                var intent = Intent(context, CommunitySearchLocationActivity::class.java)
-                                intent.putExtra("communityId", result!!.result.id.toLong())
-                                startActivity(intent)
-                                finish()
+                                //var intent = Intent(context, CommunitySearchLocationActivity::class.java)
+                                //intent.putExtra("communityId", result!!.result.id.toLong())
+                                //startActivity(intent)
+                               // finish()
                             } else {
                                 Log.d("MakeCommunity", "onResponse 실패");
                             }
@@ -253,6 +288,7 @@ class CommunityCreateActivity : AppCompatActivity() {
                         override fun onFailure(call: Call<MakeCommunity>, t: Throwable) {
                             Log.d("MakeCommunity", "onFailure 에러: " + t.message.toString());
                         }
+
                     })
                 }
 
@@ -278,8 +314,9 @@ class CommunityCreateActivity : AppCompatActivity() {
 
     private fun String?.toPlainRequestBody() = RequestBody.create(MediaType.parse("text/plain"), this)
 
-    fun showDialog(titleName: String, message: String, communityId: Long) {
-        val builder = androidx.appcompat.app.AlertDialog.Builder(this).setTitle(titleName)
+    fun showDialog(titleName: String, message: String, communityId: Long): AlertDialog? {
+        val builder = AlertDialog.Builder(this)
+            .setTitle(titleName)
             .setMessage(message)
             .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
                 intent = Intent(this@CommunityCreateActivity, CommunitySearchLocationActivity::class.java)
@@ -287,6 +324,57 @@ class CommunityCreateActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }).show()
+        return builder
+    }
+
+    fun showDialog2(titleName: String, message: String, communityId: Long): AlertDialog? {
+        val builder = AlertDialog.Builder(this)
+            .setTitle(titleName)
+            .setMessage(message)
+            .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                intent = Intent(this@CommunityCreateActivity, CommunityMainPostActivity::class.java)
+                intent.putExtra("communityId", communityId)
+                startActivity(intent)
+                finish()
+            }).show()
+        return builder
+    }
+
+
+
+
+    // 원형 프로그래스 팝업창 호출 부분
+    fun getProgressShow(){
+        try{
+            var str_tittle = "위드플래너"
+            var str_message = "커뮤니티를 생성 중입니다. \n" +
+                    "잠시만 기다려주세요"
+            progress_Dialog = ProgressDialog(this@CommunityCreateActivity)
+            progress_Dialog.setTitle(str_tittle) //팝업창 타이틀 지정
+            progress_Dialog.setIcon(R.drawable.logo500) //팝업창 아이콘 지정
+            progress_Dialog.setMessage(str_message) //팝업창 내용 지정
+            progress_Dialog.setCancelable(false) //외부 레이아웃 클릭시도 팝업창이 사라지지않게 설정
+            progress_Dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER) //프로그레스 원형 표시 설정
+            try {
+                progress_Dialog.show()
+            }
+            catch (e : Exception){
+                e.printStackTrace()
+            }
+        }
+        catch(e : Exception){
+            e.printStackTrace()
+        }
+    }
+    // 원형 프로그래스 팝업창 닫기 부분
+    fun getProgressHidden(){
+        try {
+            progress_Dialog.dismiss()
+            progress_Dialog.cancel()
+        }
+        catch (e : Exception){
+            e.printStackTrace()
+        }
     }
 
 

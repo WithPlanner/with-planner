@@ -19,7 +19,8 @@ interface CommunityService {
         @Part("category") category : RequestBody,
         @Part("headCount") headCount : RequestBody,
         @Part("day") day : RequestBody,
-        @Part("time") time : RequestBody
+        @Part("time") time : RequestBody,
+        @Part("publicType") publicType : RequestBody
     ) : Call<MakeCommunity>
 
     @Headers( "content-type: application/json")
@@ -45,7 +46,8 @@ interface CommunityService {
         @Part("category") category : RequestBody,
         @Part("headCount") headCount : RequestBody,
         @Part("day") day : RequestBody,
-        @Part("time") time : RequestBody
+        @Part("time") time : RequestBody,
+        @Part("publicType") publicType : RequestBody
     ) : Call<MakeCommunity>
 
     @Headers( "content-type: application/json")
