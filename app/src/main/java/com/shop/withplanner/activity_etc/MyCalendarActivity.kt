@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shop.withplanner.R
 import com.shop.withplanner.activity_community.CommunityCreateActivity
+import com.shop.withplanner.activity_community.CommunityMainLocationActivity
+import com.shop.withplanner.activity_community.CommunityMainPostActivity
 import com.shop.withplanner.databinding.ActivityMyCalendarBinding
 import com.shop.withplanner.dto.CommunityList
 import com.shop.withplanner.dto.MyPageInfo
 import com.shop.withplanner.recyler_view.ContentsModel
 import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.util.Category
 
 import com.shop.withplanner.util.RandImg
 import retrofit2.Call
@@ -27,6 +30,8 @@ class MyCalendarActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyCalendarBinding
     private lateinit var sharedPreference: SharedPreferences
     private val items =  mutableListOf<ContentsModel>()
+
+    var communityType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +87,8 @@ class MyCalendarActivity : AppCompatActivity() {
             items.add(
                 ContentsModel(
                     community.name,
-                    community.communityImg
+                    community.communityImg,
+                    Category.category2string(community.category)
                 )
             )
         }
@@ -93,6 +99,22 @@ class MyCalendarActivity : AppCompatActivity() {
 
         contentsAdapter.itemClick = object : ContentsAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
+
+                communityType = communities[position].type
+                Log.d("communityType", communities[position].type)
+
+                intent = null
+                // 어떤 인텐트로 이동할지 결정
+                if (communityType == "post") {
+                    intent = Intent(this@MyCalendarActivity, CommunityMainPostActivity::class.java)
+                }
+                else if (communityType == "mapPost") {
+                        intent = Intent(this@MyCalendarActivity, CommunityMainLocationActivity::class.java)
+                }
+
+                intent?.putExtra("communityId", communities[position].communityId.toLong())
+                Log.d("Community:", communities[position].communityId.toString())
+                startActivity(intent)
             }
         }
 

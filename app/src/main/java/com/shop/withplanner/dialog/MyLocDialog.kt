@@ -8,17 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.shop.withplanner.R
-import com.shop.withplanner.activity_community.CommunityAuthenticateLocationActivity
 import com.shop.withplanner.databinding.DlgMyLocBinding
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import com.shop.withplanner.activity_community.CommunityMainLocationActivity
 import com.shop.withplanner.activity_community.CommunitySearchLocationActivity
-import com.shop.withplanner.activity_etc.MainActivity
-import com.shop.withplanner.dto.MyLocReceived
 import com.shop.withplanner.dto.MyLocToSend
 import com.shop.withplanner.dto.MyLocToSendResponse
 import com.shop.withplanner.retrofit.RetrofitService
@@ -26,7 +22,6 @@ import com.shop.withplanner.retrofit.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.shop.withplanner.dto.Result
 
 class MyLocDialog() : DialogFragment() {
     // dlg_my_loc의 다이얼로그 프래그먼트
