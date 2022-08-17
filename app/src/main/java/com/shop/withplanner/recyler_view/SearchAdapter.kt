@@ -41,6 +41,7 @@ class SearchAdapter(val context : Context, val searchList: MutableList<SearchMod
         val img: ImageView = itemView.findViewById(R.id.communityImg)
         val postIcon: ImageView = itemView.findViewById(R.id.postIcon)
         val mapIcon: ImageView = itemView.findViewById(R.id.mapIcon)
+        val lockIcon: ImageView = itemView.findViewById(R.id.lockImg)
 
 
         fun bindItems(item: SearchModel) {
@@ -59,6 +60,12 @@ class SearchAdapter(val context : Context, val searchList: MutableList<SearchMod
             else if(item.community_type == "위치 인증") {
                 postIcon.visibility = View.INVISIBLE
                 mapIcon.visibility = View.VISIBLE
+            }
+            if(item.community_publicType == "publicType") {
+                lockIcon.visibility = View.INVISIBLE
+            }
+            else if(item.community_publicType == "privateType") {
+                lockIcon.visibility = View.VISIBLE
             }
         }
     }

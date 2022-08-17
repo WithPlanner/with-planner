@@ -15,5 +15,8 @@ data class ResultX(
     val introduce: String,
     val name: String,
     val time: String,
-    val type: String
+    val type: String,
+    val publicType: String,
+    val password: String,
+
 )

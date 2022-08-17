@@ -1,15 +1,20 @@
 package com.shop.withplanner.activity_community
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.RatingBar
+import androidx.annotation.UiThread
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.shop.withplanner.R
+import com.shop.withplanner.activity_etc.MainActivity
 import com.shop.withplanner.databinding.ActivityCommunityJoinBinding
 import com.shop.withplanner.dialog.MyLocDialog
 import com.shop.withplanner.dto.CommunityInfo
@@ -18,6 +23,7 @@ import com.shop.withplanner.retrofit.RetrofitService
 
 import retrofit2.Call
 import retrofit2.Response
+import kotlin.concurrent.thread
 
 
 class CommunityJoinActivity: AppCompatActivity() {
@@ -25,16 +31,16 @@ class CommunityJoinActivity: AppCompatActivity() {
     private lateinit var sharedPreference: SharedPreferences
     private lateinit var days : List<String>
     private lateinit var time : String
+    var communityId = -1L
+    var communityType = ""
+    var userId = -1
+    var publicType = ""
+    var password: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_community_join)
         sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
-
-        var communityId = -1L
-        var communityType = ""
-        var userId = -1
-
 
         // 선택한 커뮤니티의 communityId 전달받기
         if(intent.hasExtra("communityId")) {
@@ -56,6 +62,17 @@ class CommunityJoinActivity: AppCompatActivity() {
                         communityType = community.type
                         days = community.days
                         time = community.time
+                        binding.timeTextView.text = time
+                        publicType = community.publicType
+                        password = community.password
+
+                        // 공개 비공개 여부 표시
+                        if(publicType == "publicType") {
+                            binding.publicType.text = "[공개]"
+                        }
+                        else if(publicType == "privateType") {
+                            binding.publicType.text = "[비공개]"
+                        }
 
                         // 커뮤니티 이미지가 없으면 기본 이미지로, 있으면 그 이미지로
                         val image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
@@ -89,10 +106,6 @@ class CommunityJoinActivity: AppCompatActivity() {
                                 }
                             }
                         }
-
-                        //인증 시간
-                        binding.timeTextView.text = time
-
                         //인증 타입
                         if(communityType.equals("mapPost")){
                             binding.textviewType.text = "에 현재위치로 인증"
@@ -117,44 +130,83 @@ class CommunityJoinActivity: AppCompatActivity() {
 
         // 가입하기 버튼
         binding.joinBtn.setOnClickListener{
-            // 커뮤니티 참여
-            RetrofitService.communityService.joinInCommunity(sharedPreference.getString("token", null).toString(), communityId).enqueue(
-                object : retrofit2.Callback<JoinCommunity> {
-                    override fun onResponse(call: Call<JoinCommunity>, response: Response<JoinCommunity>) {
-                        if(response.isSuccessful) {
-                            val result = response.body()!!.result
-
-                            userId = result.userId
-                            Log.d("userId", userId.toString())
-                            Log.d("JoinCommunity", "onResponse 성공" +result?.toString())
-                        }
-                        else{
-                            Log.d("JoinCommunity", "onResponse 실패")
-                        }
-                    }
-                    override fun onFailure(call: Call<JoinCommunity>, t: Throwable) {
-                        Log.d("JoinCommunity", "onFailure 에러: " + t.message.toString())
-                    }
-                }
-            )
-
-            // 커뮤니티 타입이 post면 postMain, loc면 목적지 설정 프래그먼트로
-            if(communityType == "mapPost") {
-
-                var bundle = Bundle()
-                bundle.putLong("communityId", communityId)
-                val dialog = MyLocDialog()
-                dialog.arguments = bundle
-                dialog.show(supportFragmentManager, "목적지 설정")
+            // 공개 커뮤니티라면 바로 가입, 비공개 커뮤니티면 패스워드 입력
+            if(publicType == "publicType"){
+                join()
             }
-            else if (communityType == "post"){
-                val intent = Intent(this, CommunityMainPostActivity::class.java)
-                intent.putExtra("communityId",communityId)
-                startActivity(intent)
+            else if(publicType == "privateType") {
+                thread {
+                    runOnUiThread{
+                        val builder = AlertDialog.Builder(this)
+                        val dialogView = layoutInflater.inflate(R.layout.dlg_password, null)
+                        val dialogText = dialogView.findViewById<EditText>(R.id.password)
+
+                        builder.setView(dialogView)
+                            .setPositiveButton("확인") { dialogInterface, i ->
+                                val inputPassword = dialogText.text.toString().trim()
+                                Log.d("입력잘됨", inputPassword)
+                                if(inputPassword == password) {
+                                    join()
+                                }
+                                else{
+                                    val builder = AlertDialog.Builder(this).setTitle("실패")
+                                        .setMessage("비밀번호가 틀렸습니다.")
+                                        .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                                        }).show()
+                                }
+
+                            }
+                            .setNegativeButton("취소") { dialogInterface, i ->
+                            }
+                            .show()
+                    }
+
+                }
             }
         }
     }
-    override fun onBackPressed() {
-        super.onBackPressed()
+
+    override fun onRestart() {
+        super.onRestart()
+
+
+    }
+
+    fun join() {
+        Log.d("왜 실행된척함", "아오")
+        RetrofitService.communityService.joinInCommunity(sharedPreference.getString("token", null).toString(), communityId).enqueue(
+            object : retrofit2.Callback<JoinCommunity> {
+                override fun onResponse(call: Call<JoinCommunity>, response: Response<JoinCommunity>) {
+                    if(response.isSuccessful) {
+                        val result = response.body()!!.result
+
+                        userId = result.userId
+                        Log.d("userId", userId.toString())
+                        Log.d("JoinCommunity", "onResponse 성공" +result?.toString())
+                    }
+                    else{
+                        Log.d("JoinCommunity", "onResponse 실패")
+                    }
+                }
+                override fun onFailure(call: Call<JoinCommunity>, t: Throwable) {
+                    Log.d("JoinCommunity", "onFailure 에러: " + t.message.toString())
+                }
+            }
+        )
+
+        // 커뮤니티 타입이 post면 postMain, loc면 목적지 설정 프래그먼트로
+        if(communityType == "mapPost") {
+
+            var bundle = Bundle()
+            bundle.putLong("communityId", communityId)
+            val dialog = MyLocDialog()
+            dialog.arguments = bundle
+            dialog.show(supportFragmentManager, "목적지 설정")
+        }
+        else if (communityType == "post"){
+            val intent = Intent(this, CommunityMainPostActivity::class.java)
+            intent.putExtra("communityId",communityId)
+            startActivity(intent)
+        }
     }
 }

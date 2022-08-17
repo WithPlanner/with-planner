@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_arrow_back_48px"
-            android:layout_weight="0.7"
+            android:layout_weight="0.5"
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/backBtn"
@@ -36,6 +36,11 @@
             android:textSize="18sp"
             android:textColor="@color/black"
             android:layout_weight="3.3"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="0.5"/>
 
     </LinearLayout>
     <LinearLayout

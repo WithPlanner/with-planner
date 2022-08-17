@@ -101,6 +101,7 @@
             android:exported="true" />
         <activity
             android:name=".activity_community.CommunitySearchLocationActivity"
+            android:noHistory="true"
             android:exported="false" />
         <activity
             android:name=".activity_etc.CategoryActivity"
@@ -117,7 +118,8 @@
         <activity
             android:name=".activity_community.CommunityJoinActivity"
             android:exported="false"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name="com.shop.withplanner.map.MapActivity"
             android:exported="false" />

@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
 
                             Log.d("최신 습관 모임", postList.newList.toString())
 
-                            Log.d("MAIN", "onResponse 성공" + result?.toString())
+                            Log.d("MAIN", "onResponse 성공" + result?.message)
                         }
                     } else {
                         Log.d("MAIN", "onResponse 실패")
