@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "342534023965",
+    "project_id": "withplanner",
+    "storage_bucket": "withplanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342534023965:android:52831d652d0ef571248ff4",
+        "android_client_info": {
+          "package_name": "com.shop.withplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342534023965-cnlbf7uhh32qv0ma8gb3ime335ckrqu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4DPV_l-z-VU1iMZTeXpvZn8yU3rx10yc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342534023965-cnlbf7uhh32qv0ma8gb3ime335ckrqu5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

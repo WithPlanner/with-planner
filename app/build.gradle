@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 //localProperties에 저장한 값.
@@ -69,6 +70,10 @@ dependencies {
     //map - google map api
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.google.android.gms:play-services-location:19.0.0'
+
+    //push알림
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
 
     // cardView
     implementation 'androidx.cardview:cardview:1.0.0'
