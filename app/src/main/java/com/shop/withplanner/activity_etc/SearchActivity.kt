@@ -20,6 +20,7 @@ import com.shop.withplanner.recyler_view.ContentsAdapter
 import com.shop.withplanner.recyler_view.SearchAdapter
 import com.shop.withplanner.recyler_view.SearchModel
 import com.shop.withplanner.retrofit.RetrofitService
+import com.shop.withplanner.util.Category
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,7 +62,7 @@ class SearchActivity : AppCompatActivity() {
 
                                     if(community.communityImg != null) image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
 
-                                    search_items.add(SearchModel(community.name, community.category, type, publicType, image))
+                                    search_items.add(SearchModel(community.name,Category.category2string(community.category), type, publicType, image))
                                 }
 
                                 val rv = binding.searchRecyclerView
@@ -119,9 +120,8 @@ class SearchActivity : AppCompatActivity() {
 
                                 if(community.communityImg != null) image = community.communityImg + "?fit=around|512:512&crop=512:512;*,*&output-format=jpg&output-quality=80"
 
-                                search_items.add(SearchModel(community.name, community.category, type, publicType, image))
+                                search_items.add(SearchModel(community.name, Category.category2string(community.category), type, publicType, image))
                             }
-
                             val rv = binding.searchRecyclerView
                             rv.layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
                             val searchAdapter = SearchAdapter(this@SearchActivity, search_items)
