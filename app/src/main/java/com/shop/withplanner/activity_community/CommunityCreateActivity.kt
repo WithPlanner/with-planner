@@ -242,6 +242,12 @@ class CommunityCreateActivity : AppCompatActivity() {
                                     email_dialog = showDialog2("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
                                     email_dialog!!.show()
                                 }
+                                else if (result!!.result.publicType.toString()=="publicType"){
+                                    var intent = Intent(context, CommunityMainPostActivity::class.java)
+                                    intent.putExtra("communityId", result!!.result.id.toLong())
+                                    startActivity(intent)
+                                    finish()
+                                }
 
                                // startActivity(intent)
                                // finish()
@@ -272,6 +278,12 @@ class CommunityCreateActivity : AppCompatActivity() {
                                 if(result!!.result.publicType.toString()=="privateType"){
                                     email_dialog = showDialog("메일 확인 안내", "비공개 습관 모임의 비밀번호를 메일로 전송했습니다.", result!!.result.id.toLong())
                                     email_dialog!!.show()
+                                }
+                                else if (result!!.result.publicType.toString()=="publicType"){
+                                    var intent = Intent(context, CommunitySearchLocationActivity::class.java)
+                                    intent.putExtra("communityId", result!!.result.id.toLong())
+                                    startActivity(intent)
+                                    finish()
                                 }
 
 
