@@ -35,6 +35,8 @@ class SearchActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
         sharedPreference = getSharedPreferences("token", MODE_PRIVATE)
 
+        searchWord = intent.getStringExtra("searchWord").toString()
+
         binding.searchBtn.setOnClickListener{
 
             searchWord = binding.searchText.text.toString().trim()
@@ -94,7 +96,6 @@ class SearchActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        searchWord = intent.getStringExtra("searchWord").toString()
         binding.searchText.setText(searchWord)
         search_items.clear()
 
